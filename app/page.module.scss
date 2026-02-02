@@ -1,0 +1,72 @@
+@use '../styles/variables/colors' as *;
+
+.main {
+  min-height: 100vh;
+  background-color: mix(white, $background, 50%);
+  padding: $spacing-8 $spacing-4;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-12;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: $font-bold;
+  color: $foreground;
+  margin-bottom: $spacing-2;
+}
+
+.subtitle {
+  font-size: $text-lg;
+  color: mix(white, $foreground, 60%);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: $spacing-12;
+}
+
+.sectionTitle {
+  font-size: $text-xl;
+  font-weight: $font-semibold;
+  color: $foreground;
+  margin-bottom: $spacing-4;
+  padding-bottom: $spacing-2;
+  border-bottom: 1px solid $border;
+}
+
+.demoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: $spacing-6;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-3;
+  align-items: center;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.footer {
+  margin-top: $spacing-12;
+  padding-top: $spacing-6;
+  border-top: 1px solid $border;
+  text-align: center;
+  color: mix(white, $foreground, 60%);
+  font-size: $text-sm;
+}
