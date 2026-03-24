@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "title": "Input",
+  "description": "输入框组件，支持 label、error 校验、helperText 辅助文本",
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/tile-ui/input/input.tsx",
+      "content": "import React, { useId } from 'react';\nimport styles from './input.module.scss';\n\n// --- Inlined from @tile-ui/core ---\ninterface InputBaseProps {\n  label?: string;\n  error?: string;\n  helperText?: string;\n}\n\nfunction getInputIds(id: string) {\n  return { input: id, error: `${id}-error`, helper: `${id}-helper` };\n}\n\nfunction getInputAriaProps(\n  ids: ReturnType<typeof getInputIds>,\n  error?: string,\n  helperText?: string\n) {\n  return {\n    'aria-invalid': !!error || undefined,\n    'aria-describedby': error ? ids.error : helperText ? ids.helper : undefined,\n  };\n}\n// --- End inlined ---\n\nexport interface InputProps\n  extends React.InputHTMLAttributes<HTMLInputElement>,\n    InputBaseProps {}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(\n  (\n    {\n      className = '',\n      label,\n      error,\n      helperText,\n      required,\n      id: providedId,\n      type = 'text',\n      ...props\n    },\n    ref\n  ) => {\n    const generatedId = useId();\n    const id = providedId || generatedId;\n    const ids = getInputIds(id);\n    const ariaProps = getInputAriaProps(ids, error, helperText);\n\n    return (\n      <div className={styles.inputWrapper}>\n        {label && (\n          <label\n            htmlFor={id}\n            className={`${styles.label} ${required ? styles.required : ''}`}\n          >\n            {label}\n          </label>\n        )}\n        <input\n          ref={ref}\n          id={id}\n          type={type}\n          className={`${styles.input} ${error ? styles.error : ''} ${className}`}\n          {...ariaProps}\n          {...props}\n        />\n        {error && (\n          <span id={ids.error} className={styles.errorText}>\n            {error}\n          </span>\n        )}\n        {!error && helperText && (\n          <span id={ids.helper} className={styles.helperText}>\n            {helperText}\n          </span>\n        )}\n      </div>\n    );\n  }\n);\n\nInput.displayName = 'Input';\n\nexport { Input };\nexport default Input;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/tile-ui/input/input.module.scss",
+      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.inputWrapper {\n  display: flex;\n  flex-direction: column;\n  gap: $spacing-1;\n  width: 100%;\n}\n\n.input {\n  display: flex;\n  height: 2.25rem;\n  width: 100%;\n  border-radius: $radius;\n  border: 1px solid $border;\n  background-color: $background;\n  padding: 0 $spacing-3;\n  font-size: $text-sm;\n  color: $foreground;\n  transition: all $transition-fast;\n  outline: none;\n\n  &::placeholder {\n    color: color.mix(white, $foreground, 60%);\n  }\n\n  &:focus {\n    outline: none;\n    border-color: $ring;\n    box-shadow: 0 0 0 1px $ring;\n  }\n\n  &:disabled,\n  &.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n    cursor: not-allowed;\n    background-color: color.mix(white, $background, 50%);\n  }\n\n  &.error {\n    border-color: $destructive;\n\n    &:focus {\n      border-color: $destructive;\n      box-shadow: 0 0 0 1px $destructive;\n    }\n  }\n}\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n\n.helperText {\n  font-size: $text-xs;\n  color: color.mix(white, $foreground, 60%);\n  line-height: $leading-normal;\n}\n\n.errorText {\n  font-size: $text-xs;\n  color: $destructive;\n  line-height: $leading-normal;\n}\n",
+      "type": "registry:file",
+      "target": "components/ui/input/input.module.scss"
+    }
+  ],
+  "type": "registry:ui"
+}

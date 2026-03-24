@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "多行文本域组件，支持 label、error 校验、helperText 辅助文本",
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/tile-ui/textarea/textarea.tsx",
+      "content": "import React, { useId } from 'react';\nimport styles from './textarea.module.scss';\n\n// --- Inlined from @tile-ui/core ---\ninterface TextareaBaseProps {\n  label?: string;\n  error?: string;\n  helperText?: string;\n}\n\nfunction getTextareaIds(id: string) {\n  return { textarea: id, error: `${id}-error`, helper: `${id}-helper` };\n}\n\nfunction getTextareaAriaProps(\n  ids: ReturnType<typeof getTextareaIds>,\n  error?: string,\n  helperText?: string\n) {\n  return {\n    'aria-invalid': !!error || undefined,\n    'aria-describedby': error ? ids.error : helperText ? ids.helper : undefined,\n  };\n}\n// --- End inlined ---\n\nexport interface TextareaProps\n  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,\n    TextareaBaseProps {}\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(\n  (\n    {\n      className = '',\n      label,\n      error,\n      helperText,\n      required,\n      id: providedId,\n      ...props\n    },\n    ref\n  ) => {\n    const generatedId = useId();\n    const id = providedId || generatedId;\n    const ids = getTextareaIds(id);\n    const ariaProps = getTextareaAriaProps(ids, error, helperText);\n\n    return (\n      <div className={styles.textareaWrapper}>\n        {label && (\n          <label\n            htmlFor={id}\n            className={`${styles.label} ${required ? styles.required : ''}`}\n          >\n            {label}\n          </label>\n        )}\n        <textarea\n          ref={ref}\n          id={id}\n          className={`${styles.textarea} ${error ? styles.error : ''} ${className}`}\n          {...ariaProps}\n          {...props}\n        />\n        {error && (\n          <span id={ids.error} className={styles.errorText}>\n            {error}\n          </span>\n        )}\n        {!error && helperText && (\n          <span id={ids.helper} className={styles.helperText}>\n            {helperText}\n          </span>\n        )}\n      </div>\n    );\n  }\n);\n\nTextarea.displayName = 'Textarea';\n\nexport { Textarea };\nexport default Textarea;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/tile-ui/textarea/textarea.module.scss",
+      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.textareaWrapper {\n  display: flex;\n  flex-direction: column;\n  gap: $spacing-1;\n  width: 100%;\n}\n\n.textarea {\n  display: flex;\n  min-height: 5rem;\n  width: 100%;\n  border-radius: $radius;\n  border: 1px solid $border;\n  background-color: $background;\n  padding: $spacing-3 $spacing-3;\n  font-size: $text-sm;\n  color: $foreground;\n  transition: all $transition-fast;\n  outline: none;\n  resize: vertical;\n  font-family: inherit;\n  line-height: $leading-normal;\n\n  &::placeholder {\n    color: color.mix(white, $foreground, 60%);\n  }\n\n  &:focus {\n    outline: none;\n    border-color: $ring;\n    box-shadow: 0 0 0 1px $ring;\n  }\n\n  &:disabled,\n  &.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n    cursor: not-allowed;\n    background-color: color.mix(white, $background, 50%);\n  }\n\n  &.error {\n    border-color: $destructive;\n\n    &:focus {\n      border-color: $destructive;\n      box-shadow: 0 0 0 1px $destructive;\n    }\n  }\n}\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n\n.helperText {\n  font-size: $text-xs;\n  color: color.mix(white, $foreground, 60%);\n  line-height: $leading-normal;\n}\n\n.errorText {\n  font-size: $text-xs;\n  color: $destructive;\n  line-height: $leading-normal;\n}\n",
+      "type": "registry:file",
+      "target": "components/ui/textarea/textarea.module.scss"
+    }
+  ],
+  "type": "registry:ui"
+}

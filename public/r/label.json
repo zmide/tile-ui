@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "title": "Label",
+  "description": "表单标签组件，基于 Radix Label，支持必填标记",
+  "dependencies": [
+    "@radix-ui/react-label"
+  ],
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/tile-ui/label/label.tsx",
+      "content": "import React from 'react';\nimport * as LabelPrimitive from '@radix-ui/react-label';\nimport styles from './label.module.scss';\n\n// --- Inlined from @tile-ui/core ---\ninterface LabelBaseProps {\n  required?: boolean;\n}\n\nfunction getLabelClassKeys(required?: boolean) {\n  return {\n    base: 'label',\n    required: required ? 'required' : undefined,\n  };\n}\n// --- End inlined ---\n\nexport interface LabelProps\n  extends React.LabelHTMLAttributes<HTMLLabelElement>,\n    LabelBaseProps {}\n\nconst Label = React.forwardRef<HTMLLabelElement, LabelProps>(\n  ({ className = '', required, children, ...props }, ref) => {\n    const classKeys = getLabelClassKeys(required);\n\n    return (\n      <LabelPrimitive.Root\n        ref={ref}\n        className={`${styles[classKeys.base]} ${classKeys.required ? styles[classKeys.required] : ''} ${className}`}\n        {...props}\n      >\n        {children}\n      </LabelPrimitive.Root>\n    );\n  }\n);\n\nLabel.displayName = 'Label';\n\nexport { Label };\nexport default Label;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/tile-ui/label/label.module.scss",
+      "content": "@use 'variables/colors' as *;\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n  cursor: pointer;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n",
+      "type": "registry:file",
+      "target": "components/ui/label/label.module.scss"
+    }
+  ],
+  "type": "registry:ui"
+}

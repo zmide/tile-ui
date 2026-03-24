@@ -1,0 +1,15 @@
+@use 'variables/colors' as *;
+
+.label {
+  display: block;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $foreground;
+  line-height: $leading-normal;
+  cursor: pointer;
+
+  &.required::after {
+    content: ' *';
+    color: $destructive;
+  }
+}

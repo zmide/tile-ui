@@ -8,7 +8,8 @@
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
-    "build:registry": "node scripts/build-registry.js"
+    "registry:sync": "node scripts/build-registry.js",
+    "registry:build": "node scripts/build-registry.js && pnpm dlx shadcn@latest build"
   },
   "devDependencies": {
     "turbo": "^2.4.0",

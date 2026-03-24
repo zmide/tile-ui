@@ -1,103 +1,87 @@
-# Tile UI - 基于 shadcn registry 规范的 React 组件库
+# Tile UI
 
-## 简介
-
-Tile UI 是一套基于 **SCSS + CSS Module + TSX + Hooks API + BaseUI** 机制的 React 组件库，遵循 shadcn registry 规范进行组件分发。
-
-## 核心特性
-
-1. **SCSS + CSS Module**：所有样式使用 SCSS 变量和 CSS Module，避免样式冲突
-2. **移除 TailwindCSS**：精简依赖，仅保留 sass 作为样式预处理器
-3. **Hooks API**：提供可复用的自定义 hooks
-4. **BaseUI**：使用 Radix UI 作为基础组件
-5. **shadcn registry 规范**：支持使用 shadcn CLI 进行组件分发
+基于 SCSS + CSS Module 的轻量级 React + Vue 双架构组件库，遵循 shadcn registry 规范进行组件分发。
 
 ## 项目结构
 
 ```
 tile-ui/
-├── registry/                    # shadcn registry 规范目录
-│   └── new-york/
-│       └── ui/                  # 组件源码
-│           ├── button/          # 按钮组件
-│           ├── input/           # 输入框组件
-│           ├── textarea/        # 文本域组件
-│           ├── label/           # 标签组件
-│           └── card/            # 卡片组件
-├── styles/                      # SCSS 样式系统
-│   ├── variables/_colors.scss   # 颜色、字体、间距等变量
-│   ├── mixins/_utils.scss       # 混入工具
-│   └── globals.scss             # 全局基础样式
-├── hooks/                       # 自定义 Hooks
-│   ├── use-local-storage.ts     # 本地存储
-│   ├── use-media.ts             # 媒体查询
-│   └── use-event.ts             # 事件处理
-├── lib/                         # 工具函数
-│   └── utils.ts                 # cn 类名合并等
-├── public/r/                    # 公开的 registry 索引
-│   └── registry.json            # 组件注册表
+├── packages/
+│   ├── core/                    # @tile-ui/core - 框架无关的类型、逻辑、工具函数
+│   ├── styles/                  # @tile-ui/styles - SCSS 设计系统
+│   ├── react/                   # @tile-ui/react - React 组件 + Hooks
+│   └── vue/                     # @tile-ui/vue - Vue TSX 组件 + Composables
+├── apps/
+│   ├── react-demo/              # Next.js 15 演示站
+│   └── vue-demo/                # Nuxt 3 演示站
+├── registry/
+│   └── tile-ui/                 # shadcn registry 分发目录（自包含组件源码）
+│       ├── button/              # Button 组件
+│       ├── input/               # Input 组件
+│       ├── textarea/            # Textarea 组件
+│       ├── label/               # Label 组件
+│       ├── card/                # Card 组件
+│       ├── hooks/               # React Hooks
+│       ├── lib/                 # 工具函数
+│       └── styles/              # SCSS 全局样式 + 变量
+├── registry.json                # shadcn registry 清单
 ├── components.json              # shadcn CLI 配置
-└── registry.json                # 内部 registry 配置
+└── scripts/
+    └── build-registry.js        # 同步 packages/ -> registry/tile-ui/
 ```
 
 ## 组件
 
-### UI 组件
+| 组件 | 描述 |
+|---|---|
+| **Button** | 多变体按钮，支持 loading、asChild、6 种变体、4 种尺寸 |
+| **Input** | 输入框，支持 label、error 校验、helperText |
+| **Textarea** | 文本域，支持 label、error 校验、helperText |
+| **Label** | 表单标签，基于 Radix Label，支持必填标记 |
+| **Card** | 卡片容器，含 Header/Title/Description/Content/Footer |
 
-- **Button** - 支持多种变体（default、destructive、outline、secondary、ghost、link）和尺寸
-- **Input** - 支持标签、错误提示、辅助文本
-- **Textarea** - 多行文本输入，支持验证状态
-- **Label** - 表单标签，支持必填标记
-- **Card** - 卡片容器，包含 Header、Title、Description、Content、Footer
+## Hooks
 
-### Hooks
+| Hook | 描述 |
+|---|---|
+| `useLocalStorage` / `useSessionStorage` | 存储管理 |
+| `useWindowSize` / `useMediaQuery` / `useIsMobile` | 响应式 |
+| `useOnlineStatus` | 网络状态 |
+| `useScrollPosition` | 滚动位置 |
+| `useCopyToClipboard` | 剪贴板 |
+| `useClickOutside` | 点击外部检测 |
+| `useKeyPress` | 键盘事件 |
+| `useMousePosition` | 鼠标位置 |
 
-- `useLocalStorage` / `useSessionStorage` - 存储管理
-- `useWindowSize` / `useMediaQuery` / `useIsMobile` - 响应式
-- `useOnlineStatus` - 网络状态
-- `useScrollPosition` - 滚动位置
-- `useCopyToClipboard` - 剪贴板操作
-- `useClickOutside` - 点击外部检测
-- `useKeyPress` - 键盘事件
-- `useMousePosition` - 鼠标位置
+## 使用方式
 
-## 使用方法
-
-### 安装依赖
-
-```bash
-npm install
-```
-
-### 启动开发服务器
+### 通过 shadcn CLI 安装组件
 
 ```bash
-npm run dev
+# 从部署的 registry 安装
+pnpm dlx shadcn@latest add https://tile-ui.dev/r/button.json
+pnpm dlx shadcn@latest add https://tile-ui.dev/r/card.json
+pnpm dlx shadcn@latest add https://tile-ui.dev/r/use-local-storage.json
 ```
 
-### 构建
+### 通过 npm 包使用
 
 ```bash
-npm run build
+pnpm add @tile-ui/react @tile-ui/styles @tile-ui/core
 ```
 
-## shadcn Registry 集成
+```tsx
+import { Button, Card, Input } from '@tile-ui/react';
+import '@tile-ui/styles/scss/globals.scss';
+```
 
-本项目遵循 shadcn registry 规范，支持使用 shadcn CLI 添加组件：
+## 开发
 
 ```bash
-# 添加组件到项目
-npx shadcn@latest add button
-```
-
-## 样式定制
-
-所有样式变量定义在 `styles/variables/_colors.scss`，可以通过覆盖这些变量来自定义主题：
-
-```scss
-$primary: #your-color;
-$radius: 0.5rem;
-// 等等...
+pnpm install
+pnpm build              # 构建所有包
+pnpm dev                # 启动所有 dev server
+pnpm registry:build     # 同步 + 生成 registry JSON
 ```
 
 ## 许可证

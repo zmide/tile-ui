@@ -11,8 +11,11 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@tile-ui/react",
-    "utils": "@tile-ui/core"
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "utils": "@/lib/utils",
+    "hooks": "@/hooks",
+    "lib": "@/lib"
   },
   "iconLibrary": "lucide"
 }
