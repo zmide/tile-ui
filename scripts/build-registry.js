@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * 构建脚本：将 registry.json 转换为 public/r/registry.json
+ * 构建脚本：将 registry.json 转换为 apps/react-demo/public/r/registry.json
  * 用于 shadcn CLI 分发组件库
  */
 
@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 
 const REGISTRY_PATH = path.resolve('registry.json');
-const OUTPUT_PATH = path.resolve('public/r/registry.json');
+const OUTPUT_PATH = path.resolve('apps/react-demo/public/r/registry.json');
 
 // 读取 registry.json
 const registryData = JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8'));
@@ -17,12 +17,12 @@ const registryData = JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8'));
 // 转换为对外发布的格式
 const publicRegistry = {
   name: registryData.name,
-  description: registryData.description || '基于 SCSS + CSS Module + Hooks API 的轻量级 React 组件库',
+  description: registryData.description || '基于 SCSS + CSS Module 的轻量级 React + Vue 双架构组件库',
   homepage: registryData.homepage || '/',
   style: registryData.style || 'new-york',
   rsc: registryData.rsc ?? true,
   tsx: registryData.tsx ?? true,
-  tailwind: false,  // 不使用 Tailwind
+  tailwind: false,
   cssVariables: false,
   registryDependencies: registryData.registryDependencies || [],
   registry: registryData.registry.map(item => ({
@@ -31,7 +31,7 @@ const publicRegistry = {
     description: getDescription(item.type),
     dependencies: getDependencies(item),
     devDependencies: ['sass'],
-    files: item.files.map(f => `/${f}`)  // 使用完整路径
+    files: item.files.map(f => `/${f}`)
   }))
 };
 
@@ -68,5 +68,5 @@ if (!fs.existsSync(outputDir)) {
 // 写入文件
 fs.writeFileSync(OUTPUT_PATH, JSON.stringify(publicRegistry, null, 2));
 
-console.log(`✅ 已生成: ${OUTPUT_PATH}`);
-console.log(`   包含 ${publicRegistry.registry.length} 个组件/模块`);
+console.log(`Generated: ${OUTPUT_PATH}`);
+console.log(`  Contains ${publicRegistry.registry.length} components/modules`);

@@ -3,31 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build && node scripts/build-registry.js",
-    "start": "next start",
-    "lint": "next lint",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean",
     "build:registry": "node scripts/build-registry.js"
   },
-  "dependencies": {
-    "@radix-ui/react-label": "^2.1.7",
-    "@radix-ui/react-slot": "^1.2.3",
-    "next": "15.5.9",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
-  },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@types/node": "^20.19.9",
-    "@types/react": "19.1.2",
-    "@types/react-dom": "19.1.2",
-    "eslint": "^9.32.0",
-    "eslint-config-next": "15.3.1",
-    "sass": "^1.86.3",
+    "turbo": "^2.4.0",
     "typescript": "^5.9.2"
   },
-  "overrides": {
-    "@types/react": "19.1.2",
-    "@types/react-dom": "19.1.2"
-  }
+  "packageManager": "pnpm@9.15.0"
 }

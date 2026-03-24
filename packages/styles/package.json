@@ -1,0 +1,20 @@
+{
+  "name": "@tile-ui/styles",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./scss/*": "./scss/*",
+    "./css/*": "./css/*",
+    "./globals.scss": "./scss/globals.scss",
+    "./globals.css": "./css/globals.css"
+  },
+  "files": ["scss", "css"],
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rm -rf css"
+  },
+  "devDependencies": {
+    "sass": "^1.86.3"
+  }
+}

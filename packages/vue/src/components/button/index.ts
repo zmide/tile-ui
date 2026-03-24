@@ -1,0 +1,1 @@
+export { TButton } from './button';

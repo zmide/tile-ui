@@ -5,7 +5,10 @@
       "name": "button",
       "type": "components:ui",
       "registryDependencies": ["slot"],
-      "files": ["registry/new-york/ui/button/button.tsx", "registry/new-york/ui/button/button.module.scss"],
+      "files": [
+        "packages/react/src/components/button/button.tsx",
+        "packages/styles/scss/components/button.module.scss"
+      ],
       "hooks": [],
       "lib": [],
       "components": ["Button"],
@@ -14,7 +17,10 @@
     {
       "name": "input",
       "type": "components:ui",
-      "files": ["registry/new-york/ui/input/input.tsx", "registry/new-york/ui/input/input.module.scss"],
+      "files": [
+        "packages/react/src/components/input/input.tsx",
+        "packages/styles/scss/components/input.module.scss"
+      ],
       "hooks": [],
       "lib": [],
       "components": ["Input"],
@@ -23,7 +29,10 @@
     {
       "name": "textarea",
       "type": "components:ui",
-      "files": ["registry/new-york/ui/textarea/textarea.tsx", "registry/new-york/ui/textarea/textarea.module.scss"],
+      "files": [
+        "packages/react/src/components/textarea/textarea.tsx",
+        "packages/styles/scss/components/textarea.module.scss"
+      ],
       "hooks": [],
       "lib": [],
       "components": ["Textarea"],
@@ -33,7 +42,10 @@
       "name": "label",
       "type": "components:ui",
       "registryDependencies": ["label"],
-      "files": ["registry/new-york/ui/label/label.tsx", "registry/new-york/ui/label/label.module.scss"],
+      "files": [
+        "packages/react/src/components/label/label.tsx",
+        "packages/styles/scss/components/label.module.scss"
+      ],
       "hooks": [],
       "lib": [],
       "components": ["Label"],
@@ -42,7 +54,10 @@
     {
       "name": "card",
       "type": "components:ui",
-      "files": ["registry/new-york/ui/card/card.tsx", "registry/new-york/ui/card/card.module.scss"],
+      "files": [
+        "packages/react/src/components/card/card.tsx",
+        "packages/styles/scss/components/card.module.scss"
+      ],
       "hooks": [],
       "lib": [],
       "components": ["Card", "CardHeader", "CardTitle", "CardDescription", "CardContent", "CardFooter"],
@@ -51,16 +66,21 @@
     {
       "name": "hooks",
       "type": "hooks",
-      "files": ["hooks/use-local-storage.ts", "hooks/use-media.ts", "hooks/use-event.ts", "hooks/index.ts"],
+      "files": [
+        "packages/react/src/hooks/use-local-storage.ts",
+        "packages/react/src/hooks/use-media.ts",
+        "packages/react/src/hooks/use-event.ts",
+        "packages/react/src/hooks/index.ts"
+      ],
       "hooks": ["useLocalStorage", "useSessionStorage", "useWindowSize", "useMediaQuery", "useIsMobile", "useOnlineStatus", "useScrollPosition", "useCopyToClipboard", "useClickOutside", "useKeyPress", "useMousePosition"],
       "lib": [],
       "components": [],
-      "utils": ["cn", "generateId", "deepMerge"]
+      "utils": []
     },
     {
       "name": "utils",
       "type": "lib:utils",
-      "files": ["lib/utils.ts"],
+      "files": ["packages/core/src/utils/cn.ts", "packages/core/src/utils/helpers.ts"],
       "hooks": [],
       "lib": [],
       "components": [],
@@ -69,7 +89,11 @@
     {
       "name": "styles",
       "type": "styles",
-      "files": ["styles/globals.scss", "styles/variables/_colors.scss", "styles/mixins/_utils.scss"],
+      "files": [
+        "packages/styles/scss/globals.scss",
+        "packages/styles/scss/variables/_colors.scss",
+        "packages/styles/scss/mixins/_utils.scss"
+      ],
       "hooks": [],
       "lib": [],
       "components": [],

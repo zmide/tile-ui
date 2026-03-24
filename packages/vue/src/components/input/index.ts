@@ -1,0 +1,1 @@
+export { TInput } from './input';

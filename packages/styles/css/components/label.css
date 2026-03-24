@@ -1,0 +1,1 @@
+.label{display:block;font-size:.875rem;font-weight:500;color:#18181b;line-height:1.5;cursor:pointer}.label.required::after{content:" *";color:#ef4444}

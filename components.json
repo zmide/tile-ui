@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "tile-ui",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -11,8 +11,8 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/registry/new-york/ui",
-    "utils": "@/lib/utils"
+    "components": "@tile-ui/react",
+    "utils": "@tile-ui/core"
   },
   "iconLibrary": "lucide"
 }
