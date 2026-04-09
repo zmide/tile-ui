@@ -1,15 +1,15 @@
 {
-	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
-	"name": "use-local-storage",
-	"type": "registry:hook",
-	"title": "useLocalStorage",
-	"description": "Vue composable for local and session storage state.",
-	"files": [
-		{
-			"path": "packages/vue/src/composables/use-local-storage.ts",
-			"type": "registry:hook",
-			"target": "composables/use-local-storage.ts",
-			"content": "import { ref, watch, onMounted, type Ref } from 'vue';\n\n/**\n * 使用本地存储的 composable\n */\nexport function useLocalStorage<T>(key: string, defaultValue: T): Ref<T> {\n\tconst data = ref(defaultValue) as Ref<T>;\n\n\tfunction read() {\n\t\tif (typeof window === 'undefined') return;\n\t\ttry {\n\t\t\tconst item = window.localStorage.getItem(key);\n\t\t\tif (item !== null) {\n\t\t\t\tdata.value = JSON.parse(item);\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error reading localStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tfunction write(value: T) {\n\t\ttry {\n\t\t\tif (typeof window !== 'undefined') {\n\t\t\t\twindow.localStorage.setItem(key, JSON.stringify(value));\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error setting localStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tonMounted(() => {\n\t\tread();\n\t});\n\n\twatch(\n\t\tdata,\n\t\t(newValue: T) => {\n\t\t\twrite(newValue);\n\t\t},\n\t\t{ deep: true },\n\t);\n\n\treturn data;\n}\n\n/**\n * 使用会话存储的 composable\n */\nexport function useSessionStorage<T>(key: string, defaultValue: T): Ref<T> {\n\tconst data = ref(defaultValue) as Ref<T>;\n\n\tfunction read() {\n\t\tif (typeof window === 'undefined') return;\n\t\ttry {\n\t\t\tconst item = window.sessionStorage.getItem(key);\n\t\t\tif (item !== null) {\n\t\t\t\tdata.value = JSON.parse(item);\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error reading sessionStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tfunction write(value: T) {\n\t\ttry {\n\t\t\tif (typeof window !== 'undefined') {\n\t\t\t\twindow.sessionStorage.setItem(key, JSON.stringify(value));\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error setting sessionStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tonMounted(() => {\n\t\tread();\n\t});\n\n\twatch(\n\t\tdata,\n\t\t(newValue: T) => {\n\t\t\twrite(newValue);\n\t\t},\n\t\t{ deep: true },\n\t);\n\n\treturn data;\n}\n"
-		}
-	]
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-local-storage",
+  "type": "registry:hook",
+  "title": "useLocalStorage",
+  "description": "Vue composable for local and session storage state.",
+  "files": [
+    {
+      "path": "packages/vue/src/composables/use-local-storage.ts",
+      "type": "registry:hook",
+      "target": "composables/use-local-storage.ts",
+      "content": "import { ref, watch, onMounted, type Ref } from 'vue';\n\n/**\n * 使用本地存储的 composable\n */\nexport function useLocalStorage<T>(key: string, defaultValue: T): Ref<T> {\n\tconst data = ref(defaultValue) as Ref<T>;\n\n\tfunction read() {\n\t\tif (typeof window === 'undefined') return;\n\t\ttry {\n\t\t\tconst item = window.localStorage.getItem(key);\n\t\t\tif (item !== null) {\n\t\t\t\tdata.value = JSON.parse(item);\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error reading localStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tfunction write(value: T) {\n\t\ttry {\n\t\t\tif (typeof window !== 'undefined') {\n\t\t\t\twindow.localStorage.setItem(key, JSON.stringify(value));\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error setting localStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tonMounted(() => {\n\t\tread();\n\t});\n\n\twatch(\n\t\tdata,\n\t\t(newValue: T) => {\n\t\t\twrite(newValue);\n\t\t},\n\t\t{ deep: true },\n\t);\n\n\treturn data;\n}\n\n/**\n * 使用会话存储的 composable\n */\nexport function useSessionStorage<T>(key: string, defaultValue: T): Ref<T> {\n\tconst data = ref(defaultValue) as Ref<T>;\n\n\tfunction read() {\n\t\tif (typeof window === 'undefined') return;\n\t\ttry {\n\t\t\tconst item = window.sessionStorage.getItem(key);\n\t\t\tif (item !== null) {\n\t\t\t\tdata.value = JSON.parse(item);\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error reading sessionStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tfunction write(value: T) {\n\t\ttry {\n\t\t\tif (typeof window !== 'undefined') {\n\t\t\t\twindow.sessionStorage.setItem(key, JSON.stringify(value));\n\t\t\t}\n\t\t} catch (error) {\n\t\t\tconsole.warn(`Error setting sessionStorage key \"${key}\":`, error);\n\t\t}\n\t}\n\n\tonMounted(() => {\n\t\tread();\n\t});\n\n\twatch(\n\t\tdata,\n\t\t(newValue: T) => {\n\t\t\twrite(newValue);\n\t\t},\n\t\t{ deep: true },\n\t);\n\n\treturn data;\n}\n"
+    }
+  ]
 }

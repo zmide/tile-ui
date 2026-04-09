@@ -11,8 +11,12 @@
 		"incremental": true,
 		"paths": {
 			"@/*": ["./*"],
+			"@tile-ui/core": ["../../packages/core/src/index.ts"],
+			"@tile-ui/core/*": ["../../packages/core/src/*"],
 			"@tile-ui/react": ["../../packages/react/src/index.ts"],
 			"@tile-ui/react/*": ["../../packages/react/src/*"],
+			"@tile-ui/styles": ["../../packages/styles"],
+			"@tile-ui/styles/*": ["../../packages/styles/*"],
 			"@tile-ui/buildx": ["../../packages/buildx/src/index.ts"],
 			"@tile-ui/buildx/*": ["../../packages/buildx/src/*"]
 		},

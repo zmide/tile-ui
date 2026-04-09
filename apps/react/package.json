@@ -5,11 +5,14 @@
 	"scripts": {
 		"registry:build": "tsx ./scripts/build-registry.mjs",
 		"registry:watch": "tsx ./scripts/watch-registry.mjs",
-		"dev:app": "next dev -p 3001",
+		"dev:app": "next dev --turbopack -p 3001",
 		"dev": "pnpm exec concurrently -k -n registry,app -c cyan,magenta \"pnpm registry:watch\" \"pnpm dev:app\"",
 		"build": "next build",
 		"start": "next start",
 		"lint": "oxlint -c .oxlintrc.json .",
+		"type:check": "tsc --noEmit",
+		"fmt:check": "oxfmt --check .",
+		"check": "pnpm lint && pnpm type:check && pnpm fmt:check",
 		"postinstall": "fumadocs-mdx"
 	},
 	"dependencies": {

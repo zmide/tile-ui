@@ -44,36 +44,16 @@ function useActiveItem(itemIds: string[]) {
 	return activeId;
 }
 
-function TocLinks({
-	toc,
-	activeHeading,
-	onNavigate,
-}: {
-	toc: TocItem[];
-	activeHeading: string | null;
-	onNavigate?: () => void;
-}) {
+function TocLinks({ toc, activeHeading, onNavigate }: { toc: TocItem[]; activeHeading: string | null; onNavigate?: () => void }) {
 	return toc.map((item) => (
 		// Fallback text keeps TOC visible even if source titles are non-string.
-		<a
-			key={item.url}
-			href={item.url}
-			className="docs-toc__link"
-			data-active={item.url === `#${activeHeading}`}
-			data-depth={item.depth}
-			onClick={onNavigate}>
+		<a key={item.url} href={item.url} className="docs-toc__link" data-active={item.url === `#${activeHeading}`} data-depth={item.depth} onClick={onNavigate}>
 			{item.title ?? item.url.replace(/^#/, '').replace(/-/g, ' ')}
 		</a>
 	));
 }
 
-export function DocsTableOfContents({
-	toc,
-	variant = 'list',
-}: {
-	toc: TocItem[];
-	variant?: 'list' | 'dropdown';
-}) {
+export function DocsTableOfContents({ toc, variant = 'list' }: { toc: TocItem[]; variant?: 'list' | 'dropdown' }) {
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const itemIds = useMemo(() => toc.map((item) => item.url.replace('#', '')), [toc]);
@@ -112,12 +92,7 @@ export function DocsTableOfContents({
 	if (variant === 'dropdown') {
 		return (
 			<div ref={containerRef} className="docs-toc-mobile">
-				<button
-					type="button"
-					className="docs-toc-mobile__trigger"
-					aria-expanded={open}
-					aria-haspopup="menu"
-					onClick={() => setOpen((value) => !value)}>
+				<button type="button" className="docs-toc-mobile__trigger" aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen((value) => !value)}>
 					<span className="docs-toc-mobile__icon" aria-hidden="true">
 						<svg viewBox="0 0 16 16" fill="none">
 							<path d="M2.5 4.5H13.5M2.5 8H13.5M2.5 11.5H9.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />

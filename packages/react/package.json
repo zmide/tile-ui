@@ -35,7 +35,7 @@
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"lint": "oxlint -c .oxlintrc.json .",
-		"type-check": "tsc --noEmit",
+		"type:check": "tsc --noEmit",
 		"clean": "rm -rf dist"
 	},
 	"dependencies": {

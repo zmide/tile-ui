@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { reactHomeLinks } from '../../common/lib/docs';
-import { Button, Input, Textarea, Label } from '@tile-ui/react';
+import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Input, Textarea, Label } from '@tile-ui/react';
 
 export default function HomePage() {
 	const [inputValue, setInputValue] = useState('');
@@ -37,42 +37,42 @@ export default function HomePage() {
 				</div>
 
 				<div className="showcase-grid">
-					<div className="card-link">
-						<div className="showcase-section">
-							<h3>Buttons</h3>
-							<p className="showcase-copy">Variants, sizes, and loading state.</p>
-						</div>
-						<div className="showcase-section">
-							<div className="button-group">
+					<Card>
+						<CardHeader>
+							<CardTitle>Buttons</CardTitle>
+							<CardDescription>Variants, sizes, and loading state.</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="button-group showcase-button-group">
 								<Button variant="default">Default</Button>
 								<Button variant="outline">Outline</Button>
 								<Button variant="secondary">Secondary</Button>
 								<Button variant="destructive">Destructive</Button>
 								<Button loading>Loading</Button>
 							</div>
-						</div>
-					</div>
+						</CardContent>
+					</Card>
 
-					<div className="card-link">
-						<div className="showcase-section">
-							<h3>Inputs</h3>
-							<p className="showcase-copy">Shared label, helper text, and error affordances.</p>
-						</div>
-						<div className="showcase-section">
+					<Card>
+						<CardHeader>
+							<CardTitle>Inputs</CardTitle>
+							<CardDescription>Shared label, helper text, and error affordances.</CardDescription>
+						</CardHeader>
+						<CardContent>
 							<div className="form-group">
 								<Input label="Username" placeholder="Enter your username" value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
 								<Input label="Email" type="email" placeholder="you@example.com" helperText="We will never share it." />
 								<Input label="Error state" error="Username already exists" defaultValue="tile" />
 							</div>
-						</div>
-					</div>
+						</CardContent>
+					</Card>
 
-					<div className="card-link">
-						<div className="showcase-section">
-							<h3>Textarea + Label</h3>
-							<p className="showcase-copy">Composable form surfaces for multi-line input.</p>
-						</div>
-						<div className="showcase-section">
+					<Card>
+						<CardHeader>
+							<CardTitle>Textarea + Label</CardTitle>
+							<CardDescription>Composable form surfaces for multi-line input.</CardDescription>
+						</CardHeader>
+						<CardContent>
 							<div className="form-group">
 								<div className="form-group">
 									<Label required>Feedback</Label>
@@ -80,12 +80,12 @@ export default function HomePage() {
 								</div>
 								<Textarea label="Validation" error="Please enter at least 10 characters." defaultValue="Too short" />
 							</div>
-						</div>
-						<div className="button-group">
+						</CardContent>
+						<CardFooter>
 							<Button variant="outline">Cancel</Button>
 							<Button>Save</Button>
-						</div>
-					</div>
+						</CardFooter>
+					</Card>
 				</div>
 
 				<div className="showcase-footer">Tile UI React combines a shared SCSS design system with framework-specific ergonomics and registry-driven distribution.</div>

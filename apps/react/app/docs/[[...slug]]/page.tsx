@@ -28,7 +28,7 @@ function getNodeName(name: unknown) {
 	return typeof name === 'string' ? name : '';
 }
 
-function findTreePath(nodes: PageTreeNode[], targetUrl: string, trail: Array<{ name: string; url?: string }> = []) {
+function findTreePath(nodes: PageTreeNode[], targetUrl: string, trail: Array<{ name: string; url?: string }> = []): Array<{ name: string; url?: string }> | null {
 	for (const node of nodes) {
 		const name = getNodeName(node.name);
 		const nextTrail = name ? [...trail, { name, url: node.url }] : trail;
@@ -50,7 +50,7 @@ function findTreePath(nodes: PageTreeNode[], targetUrl: string, trail: Array<{ n
 
 function buildPageContext(tree: PageTreeNode, currentUrl: string) {
 	const rawPath = findTreePath(tree.children ?? [], currentUrl) ?? [];
-	const path = rawPath.filter((item, index) => item.name !== rawPath[index - 1]?.name);
+	const path = rawPath.filter((item: { name: string; url?: string }, index: number) => item.name !== rawPath[index - 1]?.name);
 	const breadcrumbs: Breadcrumb[] = [{ label: 'Docs', href: currentUrl === '/docs' ? undefined : '/docs' }];
 
 	for (const [index, item] of path.entries()) {
@@ -71,10 +71,7 @@ function buildPageContext(tree: PageTreeNode, currentUrl: string) {
 
 function normalizeToc(toc: Array<{ title?: unknown; url: string; depth: number }> = []): TocItem[] {
 	return toc.map((item) => ({
-		title:
-			typeof item.title === 'string'
-				? item.title
-				: decodeURIComponent(item.url.replace(/^#/, '').replace(/-/g, ' ')),
+		title: typeof item.title === 'string' ? item.title : decodeURIComponent(item.url.replace(/^#/, '').replace(/-/g, ' ')),
 		url: item.url,
 		depth: item.depth,
 	}));

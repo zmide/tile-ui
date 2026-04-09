@@ -20,6 +20,8 @@ export type DocPage = {
 	toc: Array<{ title: string; url: string; depth: number }>;
 };
 
+const SECTION_ORDER = ['installation', 'components', 'composables', 'examples', 'registry'];
+
 function walkDocs(dir: string, base = ''): string[] {
 	const entries = fs.readdirSync(dir, { withFileTypes: true });
 	const files: string[] = [];
@@ -49,6 +51,31 @@ function normalizeSlug(relativeFile: string) {
 	return parts.filter(Boolean);
 }
 
+function getSectionOrder(slug: string[]) {
+	const section = slug[0] ?? '';
+	const index = SECTION_ORDER.indexOf(section);
+	return index === -1 ? SECTION_ORDER.length : index;
+}
+
+function compareDocs(a: DocPage, b: DocPage) {
+	if (a.slug.length === 0) return -1;
+	if (b.slug.length === 0) return 1;
+
+	const sectionDiff = getSectionOrder(a.slug) - getSectionOrder(b.slug);
+	if (sectionDiff !== 0) return sectionDiff;
+
+	const aSection = a.slug[0] ?? '';
+	const bSection = b.slug[0] ?? '';
+	if (aSection !== bSection) return aSection.localeCompare(bSection);
+
+	const aIsSectionIndex = a.slug.length === 1;
+	const bIsSectionIndex = b.slug.length === 1;
+	if (aIsSectionIndex && !bIsSectionIndex) return -1;
+	if (!aIsSectionIndex && bIsSectionIndex) return 1;
+
+	return a.title.localeCompare(b.title);
+}
+
 function extractToc(markdownSource: string) {
 	return markdownSource
 		.split('\n')
@@ -72,24 +99,26 @@ function extractToc(markdownSource: string) {
 }
 
 export function getAllDocs(): DocPage[] {
-	return walkDocs(DOCS_ROOT).map((relativeFile) => {
-		const fullPath = path.join(DOCS_ROOT, relativeFile);
-		const raw = fs.readFileSync(fullPath, 'utf-8');
-		const parsed = matter(raw);
-		const slug = normalizeSlug(relativeFile);
-		const url = `/docs${slug.length ? `/${slug.join('/')}` : ''}`;
-		const toc = extractToc(parsed.content);
+	return walkDocs(DOCS_ROOT)
+		.map((relativeFile) => {
+			const fullPath = path.join(DOCS_ROOT, relativeFile);
+			const raw = fs.readFileSync(fullPath, 'utf-8');
+			const parsed = matter(raw);
+			const slug = normalizeSlug(relativeFile);
+			const url = `/docs${slug.length ? `/${slug.join('/')}` : ''}`;
+			const toc = extractToc(parsed.content);
 
-		return {
-			slug,
-			url,
-			title: String(parsed.data.title ?? 'Untitled'),
-			description: String(parsed.data.description ?? ''),
-			body: parsed.content,
-			html: markdown.render(parsed.content),
-			toc,
-		};
-	});
+			return {
+				slug,
+				url,
+				title: String(parsed.data.title ?? 'Untitled'),
+				description: String(parsed.data.description ?? ''),
+				body: parsed.content,
+				html: markdown.render(parsed.content),
+				toc,
+			};
+		})
+		.sort(compareDocs);
 }
 
 export function getDocBySlug(slug: string[]) {

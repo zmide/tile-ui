@@ -11,7 +11,10 @@
 		"build": "nuxi build",
 		"generate": "nuxi generate",
 		"preview": "nuxi preview",
-		"lint": "oxlint -c .oxlintrc.json ."
+		"lint": "oxlint -c .oxlintrc.json .",
+		"type:check": "vue-tsc --noEmit",
+		"fmt:check": "oxfmt --check .",
+		"check": "pnpm lint && pnpm type:check && pnpm fmt:check"
 	},
 	"dependencies": {
 		"@tile-ui/buildx": "workspace:*",
@@ -29,6 +32,7 @@
 		"concurrently": "^9.2.1",
 		"sass": "^1.86.3",
 		"tsx": "^4.20.3",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.2",
+		"vue-tsc": "^3.1.2"
 	}
 }

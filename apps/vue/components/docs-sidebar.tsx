@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, nextTick, onMounted, PropType, ref, watch } from 'vue';
 
 type PageTreeNode = {
 	type: string;
@@ -7,8 +7,19 @@ type PageTreeNode = {
 	children?: PageTreeNode[];
 };
 
+const SIDEBAR_SCROLL_KEY = 'tile-ui:vue-docs-sidebar-scroll';
+
+function formatLabel(value: string) {
+	return value
+		.split('-')
+		.filter(Boolean)
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join(' ');
+}
+
 function buildGroups(nodes: PageTreeNode[]) {
 	return nodes
+		.filter((node) => node.url !== '/docs')
 		.map((node) => {
 			const pages = (node.children ?? [])
 				.filter((child) => child.url)
@@ -17,12 +28,12 @@ function buildGroups(nodes: PageTreeNode[]) {
 					url: child.url as string,
 				}));
 
-			if (node.url) {
-				pages.unshift({ name: node.name, url: node.url });
+			if (node.url && pages.length === 0) {
+				pages.unshift({ name: formatLabel(node.name), url: node.url });
 			}
 
 			return {
-				name: node.name,
+				name: formatLabel(node.name),
 				pages,
 			};
 		})
@@ -42,18 +53,45 @@ export const VueDocsSidebar = defineComponent({
 		},
 	},
 	setup(props) {
+		const containerRef = ref<HTMLElement | null>(null);
+		const isClient = typeof window !== 'undefined';
+
+		function persistScroll() {
+			if (!isClient || !containerRef.value) return;
+			sessionStorage.setItem(SIDEBAR_SCROLL_KEY, String(containerRef.value.scrollTop));
+		}
+
+		async function restoreScroll() {
+			if (!isClient || !containerRef.value) return;
+			await nextTick();
+			const saved = sessionStorage.getItem(SIDEBAR_SCROLL_KEY);
+			if (!saved) return;
+			containerRef.value.scrollTop = Number(saved) || 0;
+		}
+
+		onMounted(() => {
+			restoreScroll();
+		});
+
+		watch(
+			() => props.pathname,
+			() => {
+				restoreScroll();
+			},
+		);
+
 		return () => {
 			const groups = buildGroups(props.tree.children ?? []);
 
 			return (
 				<aside class="docs-sidebar">
-					<div class="docs-sidebar__inner">
+					<div ref={containerRef} class="docs-sidebar__inner" onScroll={persistScroll}>
 						<div class="docs-sidebar__group docs-sidebar__group--intro">
-							<p class="docs-sidebar__label">Overview</p>
+							<p class="docs-sidebar__label">Sections</p>
 							<nav class="docs-sidebar__nav">
-								<a href="/docs" class="docs-sidebar__link" data-active={props.pathname === '/docs'}>
-									Introduction
-								</a>
+								<NuxtLink href="/docs" class="docs-sidebar__link" data-active={props.pathname === '/docs'} onClick={persistScroll}>
+									Overview
+								</NuxtLink>
 							</nav>
 						</div>
 						{groups.map((group) => (
@@ -61,9 +99,9 @@ export const VueDocsSidebar = defineComponent({
 								<p class="docs-sidebar__label">{group.name}</p>
 								<nav class="docs-sidebar__nav">
 									{group.pages.map((page) => (
-										<a key={page.url} href={page.url} class="docs-sidebar__link" data-active={props.pathname === page.url}>
+										<NuxtLink key={page.url} href={page.url} class="docs-sidebar__link" data-active={props.pathname === page.url} onClick={persistScroll}>
 											{page.name}
-										</a>
+										</NuxtLink>
 									))}
 								</nav>
 							</div>

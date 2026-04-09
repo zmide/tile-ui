@@ -12,7 +12,7 @@
 		"lint": {
 			"outputs": []
 		},
-		"type-check": {
+		"type:check": {
 			"dependsOn": ["^build"]
 		},
 		"clean": {

@@ -16,7 +16,7 @@
 	"scripts": {
 		"build": "node build.js",
 		"lint": "oxlint -c .oxlintrc.json .",
-		"type-check": "node -e \"process.exit(0)\"",
+		"type:check": "node -e \"process.exit(0)\"",
 		"clean": "rm -rf css"
 	},
 	"devDependencies": {

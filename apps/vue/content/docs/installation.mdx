@@ -3,9 +3,12 @@ title: Installation
 description: Install Tile UI Vue from packages or consume the Vue registry.
 ---
 
-# Installation
-
 Tile UI Vue can be consumed as packages or as copy-paste registry items distributed from the Vue site.
+
+## What to choose
+
+- Use the package when you want the quickest setup for a Nuxt or Vue app already aligned to the Tile UI runtime.
+- Use the registry when you want to own the component source inside your app and customize implementation details directly.
 
 ## Package install
 
@@ -13,15 +16,84 @@ Tile UI Vue can be consumed as packages or as copy-paste registry items distribu
 pnpm add @tile-ui/vue @tile-ui/styles @tile-ui/core
 ```
 
+## App styles
+
+Import the shared global styles once in your app entry.
+
+```ts
+import '@tile-ui/styles/scss/globals.scss';
+```
+
+In Nuxt, a common option is to add the stylesheet in `nuxt.config.ts`.
+
+```ts
+export default defineNuxtConfig({
+	css: ['@tile-ui/styles/scss/globals.scss'],
+});
+```
+
+## Package usage
+
+```tsx
+import { TButton, TInput } from '@tile-ui/vue';
+
+export default defineComponent({
+	setup() {
+		return () => (
+			<form class="form-group">
+				<TInput label="Project name" helperText="Shown in the dashboard and generated URLs." />
+				<TButton type="submit">Create project</TButton>
+			</form>
+		);
+	},
+});
+```
+
 ## Registry install
+
+Use the registry when you want to pull source files into your project rather than consume the published package.
 
 ```bash
 pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/button.json
 pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/card.json
 ```
 
-## Global styles
+## Recommended registry baseline
+
+Most Vue registry installs should start with these shared items so component dependencies resolve cleanly.
+
+```bash
+pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/styles.json
+pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/core.json
+pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/utils.json
+```
+
+## Registry output
+
+Registry items currently write files into a structure like this:
+
+```text
+components/ui/*
+composables/*
+styles/*
+```
+
+That keeps Vue components, composables, and shared SCSS assets colocated in a way that works well for Nuxt projects.
+
+## Global styles for registry installs
 
 ```ts
 import '@tile-ui/styles/scss/globals.scss';
 ```
+
+If you are consuming copied registry styles locally, point the import at the generated path instead.
+
+```ts
+import '~/styles/globals.scss';
+```
+
+## Next steps
+
+1. Review [Components](/docs/components) for the core primitives.
+2. Review [Composables](/docs/composables) for app-level helpers.
+3. Review [Registry](/docs/registry) if you plan to copy source into your project.

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ComponentProps, HTMLAttributes, ReactNode } from 'react';
+import type { ComponentProps, HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { Children, createContext, isValidElement, useContext, useMemo, useState } from 'react';
 
 import { Button } from '@tile-ui/react';
@@ -65,17 +65,7 @@ export function MdxImage({ className, src, width, height, alt, ...props }: Compo
 		return null;
 	}
 
-	return (
-		<Image
-			className={cn('mdx-image', className)}
-			src={src}
-			width={Number(width) || 1200}
-			height={Number(height) || 630}
-			alt={alt || ''}
-			unoptimized
-			{...props}
-		/>
-	);
+	return <Image className={cn('mdx-image', className)} src={String(src)} width={Number(width) || 1200} height={Number(height) || 630} alt={alt || ''} unoptimized {...props} />;
 }
 
 export function Callout({
@@ -104,6 +94,8 @@ export function Step({ className, ...props }: ComponentProps<'h3'>) {
 	return <h3 className={cn('mdx-step', className)} {...props} />;
 }
 
+type TabsTriggerElement = ReactElement<{ value?: string }>;
+
 export function Tabs({
 	className,
 	defaultValue,
@@ -119,10 +111,10 @@ export function Tabs({
 	const triggerValues = useMemo(() => {
 		const values: string[] = [];
 		Children.forEach(children, (child) => {
-			if (!isValidElement(child)) return;
+			if (!isValidElement<{ children?: ReactNode }>(child)) return;
 			Children.forEach(child.props.children, (nestedChild) => {
-				if (isValidElement(nestedChild) && typeof nestedChild.props.value === 'string') {
-					values.push(nestedChild.props.value);
+				if (isValidElement<{ value?: string }>(nestedChild) && typeof (nestedChild as TabsTriggerElement).props.value === 'string') {
+					values.push((nestedChild as TabsTriggerElement).props.value as string);
 				}
 			});
 		});

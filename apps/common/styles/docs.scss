@@ -118,7 +118,6 @@
 	font-size: clamp(2rem, 3vw, 2.5rem);
 }
 
-
 .prose-page h2 {
 	margin-top: $spacing-8;
 	padding-top: $spacing-2;
@@ -299,11 +298,6 @@
 	max-width: none;
 	color: var(--docs-text-muted);
 	line-height: 1.68;
-}
-
-.showcase-section {
-	display: grid;
-	gap: $spacing-2;
 }
 
 .prose-page :where(h2, h3, h4) > a {
@@ -612,9 +606,9 @@
 }
 
 .component-preview {
-	margin-top: $spacing-5;
+	margin-top: $spacing-4;
 	display: grid;
-	gap: $spacing-4;
+	gap: $spacing-3;
 	min-width: 0;
 }
 
@@ -635,8 +629,8 @@
 
 .component-preview__surface {
 	display: grid;
-	gap: $spacing-4;
-	padding: $spacing-6;
+	gap: $spacing-3;
+	padding: $spacing-5;
 	border: 1px solid var(--docs-border);
 	border-radius: var(--docs-radius-lg);
 	background: var(--docs-surface-subtle);
@@ -651,7 +645,7 @@
 
 .component-preview__stack {
 	display: grid;
-	gap: $spacing-4;
+	gap: $spacing-3;
 	min-width: 0;
 }
 

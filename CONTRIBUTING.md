@@ -32,8 +32,8 @@ Run from the repository root unless a command explicitly targets a workspace.
 corepack pnpm dev
 corepack pnpm build
 corepack pnpm lint
-corepack pnpm type-check
 corepack pnpm check
+corepack pnpm type:check
 corepack pnpm docs:check
 ```
 
@@ -84,15 +84,15 @@ When adding a new app or package, add:
 Run:
 
 ```bash
-corepack pnpm type-check
+corepack pnpm type:check
 ```
 
 Notes:
 
-- Root `type-check` runs through Turbo
+- Root `type:check` runs through Turbo
 - Library packages use `tsc --noEmit`
-- `packages/styles` includes a no-op `type-check` script so the workspace can participate in the shared pipeline
-- `apps/react` currently sets `typescript.ignoreBuildErrors: true` in `next.config.ts`, so `pnpm type-check` should be treated as a required validation step
+- `packages/styles` includes a no-op `type:check` script so the workspace can participate in the shared pipeline
+- `apps/react` currently sets `typescript.ignoreBuildErrors: true` in `next.config.ts`, so `pnpm type:check` should be treated as a required validation step
 
 ## Turbo Conventions
 
@@ -100,7 +100,7 @@ Turbo tasks are defined in `turbo.json`.
 
 - `build` caches `dist/**`, `css/**`, `.next/**`, `.nuxt/**`, and `.output/**`
 - `lint` has no declared outputs and should not trigger builds
-- `type-check` depends on upstream builds
+- `type:check` depends on upstream builds
 
 If you add a workspace that generates new build output directories, update `turbo.json` so Turbo can cache them correctly.
 
@@ -148,7 +148,7 @@ Run the relevant checks for your change. In most cases, this is enough:
 
 ```bash
 corepack pnpm lint
-corepack pnpm type-check
+corepack pnpm type:check
 ```
 
 For docs or registry changes, also run:
