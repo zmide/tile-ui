@@ -18,24 +18,63 @@ type TocItem = {
 	depth: number;
 };
 
-function buildBreadcrumbs(slug?: string[]) {
-	const parts = slug ?? [];
-	const breadcrumbs: Breadcrumb[] = [{ label: 'Docs', href: '/docs' }];
+type PageTreeNode = {
+	name?: unknown;
+	url?: string;
+	children?: PageTreeNode[];
+};
 
-	parts.forEach((part, index) => {
-		const href = `/docs/${parts.slice(0, index + 1).join('/')}`;
+function getNodeName(name: unknown) {
+	return typeof name === 'string' ? name : '';
+}
+
+function findTreePath(nodes: PageTreeNode[], targetUrl: string, trail: Array<{ name: string; url?: string }> = []) {
+	for (const node of nodes) {
+		const name = getNodeName(node.name);
+		const nextTrail = name ? [...trail, { name, url: node.url }] : trail;
+
+		if (node.url === targetUrl) {
+			return nextTrail;
+		}
+
+		if (node.children?.length) {
+			const match = findTreePath(node.children, targetUrl, nextTrail);
+			if (match) {
+				return match;
+			}
+		}
+	}
+
+	return null;
+}
+
+function buildPageContext(tree: PageTreeNode, currentUrl: string) {
+	const rawPath = findTreePath(tree.children ?? [], currentUrl) ?? [];
+	const path = rawPath.filter((item, index) => item.name !== rawPath[index - 1]?.name);
+	const breadcrumbs: Breadcrumb[] = [{ label: 'Docs', href: currentUrl === '/docs' ? undefined : '/docs' }];
+
+	for (const [index, item] of path.entries()) {
+		const isLast = index === path.length - 1;
 		breadcrumbs.push({
-			label: part.replace(/-/g, ' '),
-			href: index === parts.length - 1 ? undefined : href,
+			label: item.name,
+			href: !isLast && item.url ? item.url : undefined,
 		});
-	});
+	}
 
-	return breadcrumbs;
+	const sectionLabel = path.length > 1 ? path[path.length - 2]?.name : 'Overview';
+
+	return {
+		breadcrumbs,
+		sectionLabel,
+	};
 }
 
 function normalizeToc(toc: Array<{ title?: unknown; url: string; depth: number }> = []): TocItem[] {
 	return toc.map((item) => ({
-		title: typeof item.title === 'string' ? item.title : undefined,
+		title:
+			typeof item.title === 'string'
+				? item.title
+				: decodeURIComponent(item.url.replace(/^#/, '').replace(/-/g, ' ')),
 		url: item.url,
 		depth: item.depth,
 	}));
@@ -69,6 +108,7 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
 
 	const neighbours = getNeighbours(source.pageTree, page.url);
 	const MDX = page.data.body;
+	const pageContext = buildPageContext(source.pageTree as PageTreeNode, page.url);
 
 	return (
 		<DocsPageShell
@@ -78,8 +118,8 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
 			previous={neighbours.previous}
 			next={neighbours.next}
 			Toc={DocsTableOfContents}
-			breadcrumbs={buildBreadcrumbs(params.slug)}
-			sectionLabel={params.slug?.[0] ? params.slug[0].replace(/-/g, ' ') : 'overview'}>
+			breadcrumbs={pageContext.breadcrumbs}
+			sectionLabel={pageContext.sectionLabel}>
 			<MDX components={mdxComponents} />
 		</DocsPageShell>
 	);

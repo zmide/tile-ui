@@ -1,23 +1,28 @@
 {
-	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
-	"name": "input",
-	"type": "registry:ui",
-	"title": "Input",
-	"description": "Accessible React input component for Tile UI.",
-	"devDependencies": ["sass"],
-	"registryDependencies": ["core", "utils"],
-	"files": [
-		{
-			"path": "packages/react/src/components/input/input.tsx",
-			"type": "registry:ui",
-			"target": "components/ui/input/input.tsx",
-			"content": "import React, { useId } from 'react';\nimport { getInputIds, getInputAriaProps } from '../lib/core';\nimport type { InputBaseProps } from '../lib/core';\nimport styles from './input.module.scss';\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>, InputBaseProps {}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(({ className = '', label, error, helperText, required, id: providedId, type = 'text', ...props }, ref) => {\n\tconst generatedId = useId();\n\tconst id = providedId || generatedId;\n\tconst ids = getInputIds(id);\n\tconst ariaProps = getInputAriaProps(ids, error, helperText);\n\n\treturn (\n\t\t<div className={styles.inputWrapper}>\n\t\t\t{label && (\n\t\t\t\t<label htmlFor={id} className={`${styles.label} ${required ? styles.required : ''}`}>\n\t\t\t\t\t{label}\n\t\t\t\t</label>\n\t\t\t)}\n\t\t\t<input ref={ref} id={id} type={type} className={`${styles.input} ${error ? styles.error : ''} ${className}`} {...ariaProps} {...props} />\n\t\t\t{error && (\n\t\t\t\t<span id={ids.error} className={styles.errorText}>\n\t\t\t\t\t{error}\n\t\t\t\t</span>\n\t\t\t)}\n\t\t\t{!error && helperText && (\n\t\t\t\t<span id={ids.helper} className={styles.helperText}>\n\t\t\t\t\t{helperText}\n\t\t\t\t</span>\n\t\t\t)}\n\t\t</div>\n\t);\n});\n\nInput.displayName = 'Input';\n\nexport { Input };\nexport default Input;\n"
-		},
-		{
-			"path": "packages/styles/scss/components/input.module.scss",
-			"type": "registry:file",
-			"target": "components/ui/input/input.module.scss",
-			"content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.inputWrapper {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\twidth: 100%;\n}\n\n.input {\n\tdisplay: flex;\n\theight: 2.25rem;\n\twidth: 100%;\n\tborder-radius: $radius;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tpadding: 0 $spacing-3;\n\tfont-size: $text-sm;\n\tcolor: $foreground;\n\ttransition: all $transition-fast;\n\toutline: none;\n\n\t&::placeholder {\n\t\tcolor: color.mix(white, $foreground, 60%);\n\t}\n\n\t&:focus {\n\t\toutline: none;\n\t\tborder-color: $ring;\n\t\tbox-shadow: 0 0 0 1px $ring;\n\t}\n\n\t&:disabled,\n\t&.disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t\tcursor: not-allowed;\n\t\tbackground-color: color.mix(white, $background, 50%);\n\t}\n\n\t&.error {\n\t\tborder-color: $destructive;\n\n\t\t&:focus {\n\t\t\tborder-color: $destructive;\n\t\t\tbox-shadow: 0 0 0 1px $destructive;\n\t\t}\n\t}\n}\n\n.label {\n\tdisplay: block;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\tcolor: $foreground;\n\tline-height: $leading-normal;\n\n\t&.required::after {\n\t\tcontent: ' *';\n\t\tcolor: $destructive;\n\t}\n}\n\n.helperText {\n\tfont-size: $text-xs;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n}\n\n.errorText {\n\tfont-size: $text-xs;\n\tcolor: $destructive;\n\tline-height: $leading-normal;\n}\n"
-		}
-	]
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Accessible React input component for Tile UI.",
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [
+    "core",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "packages/react/src/components/input/input.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/input/input.tsx",
+      "content": "import React, { useId } from 'react';\nimport { getInputIds, getInputAriaProps } from '../lib/core';\nimport type { InputBaseProps } from '../lib/core';\nimport styles from './input.module.scss';\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>, InputBaseProps {}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(({ className = '', label, error, helperText, required, id: providedId, type = 'text', ...props }, ref) => {\n\tconst generatedId = useId();\n\tconst id = providedId || generatedId;\n\tconst ids = getInputIds(id);\n\tconst ariaProps = getInputAriaProps(ids, error, helperText);\n\n\treturn (\n\t\t<div className={styles.inputWrapper}>\n\t\t\t{label && (\n\t\t\t\t<label htmlFor={id} className={`${styles.label} ${required ? styles.required : ''}`}>\n\t\t\t\t\t{label}\n\t\t\t\t</label>\n\t\t\t)}\n\t\t\t<input ref={ref} id={id} type={type} className={`${styles.input} ${error ? styles.error : ''} ${className}`} {...ariaProps} {...props} />\n\t\t\t{error && (\n\t\t\t\t<span id={ids.error} className={styles.errorText}>\n\t\t\t\t\t{error}\n\t\t\t\t</span>\n\t\t\t)}\n\t\t\t{!error && helperText && (\n\t\t\t\t<span id={ids.helper} className={styles.helperText}>\n\t\t\t\t\t{helperText}\n\t\t\t\t</span>\n\t\t\t)}\n\t\t</div>\n\t);\n});\n\nInput.displayName = 'Input';\n\nexport { Input };\nexport default Input;\n"
+    },
+    {
+      "path": "packages/styles/scss/components/input.module.scss",
+      "type": "registry:file",
+      "target": "components/ui/input/input.module.scss",
+      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.inputWrapper {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\twidth: 100%;\n}\n\n.input {\n\tdisplay: flex;\n\theight: 2.25rem;\n\twidth: 100%;\n\tborder-radius: $radius;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tpadding: 0 $spacing-3;\n\tfont-size: $text-sm;\n\tcolor: $foreground;\n\ttransition: all $transition-fast;\n\toutline: none;\n\n\t&::placeholder {\n\t\tcolor: color.mix(white, $foreground, 60%);\n\t}\n\n\t&:focus {\n\t\toutline: none;\n\t\tborder-color: $ring;\n\t\tbox-shadow: 0 0 0 1px $ring;\n\t}\n\n\t&:disabled,\n\t&.disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t\tcursor: not-allowed;\n\t\tbackground-color: color.mix(white, $background, 50%);\n\t}\n\n\t&.error {\n\t\tborder-color: $destructive;\n\n\t\t&:focus {\n\t\t\tborder-color: $destructive;\n\t\t\tbox-shadow: 0 0 0 1px $destructive;\n\t\t}\n\t}\n}\n\n.label {\n\tdisplay: block;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\tcolor: $foreground;\n\tline-height: $leading-normal;\n\n\t&.required::after {\n\t\tcontent: ' *';\n\t\tcolor: $destructive;\n\t}\n}\n\n.helperText {\n\tfont-size: $text-xs;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n}\n\n.errorText {\n\tfont-size: $text-xs;\n\tcolor: $destructive;\n\tline-height: $leading-normal;\n}\n"
+    }
+  ]
 }

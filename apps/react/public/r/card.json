@@ -1,23 +1,27 @@
 {
-	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
-	"name": "card",
-	"type": "registry:ui",
-	"title": "Card",
-	"description": "Composable React card primitives for Tile UI.",
-	"devDependencies": ["sass"],
-	"registryDependencies": ["core"],
-	"files": [
-		{
-			"path": "packages/react/src/components/card/card.tsx",
-			"type": "registry:ui",
-			"target": "components/ui/card/card.tsx",
-			"content": "import React from 'react';\nimport { cardStyleKeys } from '../lib/core';\nimport type { CardBaseProps, CardHeaderBaseProps, CardTitleBaseProps, CardDescriptionBaseProps, CardContentBaseProps, CardFooterBaseProps } from '../lib/core';\nimport styles from './card.module.scss';\n\nexport interface CardProps extends React.HTMLAttributes<HTMLDivElement>, CardBaseProps {}\n\nconst Card = React.forwardRef<HTMLDivElement, CardProps>(({ className = '', as: Component = 'div', children, ...props }, ref) => {\n\treturn (\n\t\t<Component ref={ref} className={`${styles[cardStyleKeys.card]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</Component>\n\t);\n});\nCard.displayName = 'Card';\n\ninterface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement>, CardHeaderBaseProps {}\n\nconst CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<div ref={ref} className={`${styles[cardStyleKeys.header]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</div>\n\t);\n});\nCardHeader.displayName = 'CardHeader';\n\ninterface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement>, CardTitleBaseProps {}\n\nconst CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<h3 ref={ref} className={`${styles[cardStyleKeys.title]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</h3>\n\t);\n});\nCardTitle.displayName = 'CardTitle';\n\ninterface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement>, CardDescriptionBaseProps {}\n\nconst CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<p ref={ref} className={`${styles[cardStyleKeys.description]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</p>\n\t);\n});\nCardDescription.displayName = 'CardDescription';\n\ninterface CardContentProps extends React.HTMLAttributes<HTMLDivElement>, CardContentBaseProps {}\n\nconst CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<div ref={ref} className={`${styles[cardStyleKeys.content]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</div>\n\t);\n});\nCardContent.displayName = 'CardContent';\n\ninterface CardFooterProps extends React.HTMLAttributes<HTMLDivElement>, CardFooterBaseProps {}\n\nconst CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<div ref={ref} className={`${styles[cardStyleKeys.footer]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</div>\n\t);\n});\nCardFooter.displayName = 'CardFooter';\n\nexport { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };\nexport type { CardHeaderProps, CardTitleProps, CardDescriptionProps, CardContentProps, CardFooterProps };\nexport default Card;\n"
-		},
-		{
-			"path": "packages/styles/scss/components/card.module.scss",
-			"type": "registry:file",
-			"target": "components/ui/card/card.module.scss",
-			"content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.card {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-4;\n\tborder-radius: $radius-lg;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tcolor: $foreground;\n\tbox-shadow: $shadow;\n\toverflow: hidden;\n\ttransition: box-shadow $transition-normal;\n\n\t&:hover {\n\t\tbox-shadow: $shadow-md;\n\t}\n}\n\n.cardHeader {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\tpadding: $spacing-6 $spacing-6 0;\n}\n\n.cardTitle {\n\tfont-size: $text-xl;\n\tfont-weight: $font-semibold;\n\tline-height: $leading-tight;\n\tcolor: $foreground;\n\tmargin: 0;\n}\n\n.cardDescription {\n\tfont-size: $text-sm;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n\tmargin: 0;\n}\n\n.cardContent {\n\tpadding: 0 $spacing-6;\n}\n\n.cardFooter {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: $spacing-4;\n\tpadding: 0 $spacing-6 $spacing-6;\n}\n"
-		}
-	]
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "Composable React card primitives for Tile UI.",
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [
+    "core"
+  ],
+  "files": [
+    {
+      "path": "packages/react/src/components/card/card.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/card/card.tsx",
+      "content": "import React from 'react';\nimport { cardStyleKeys } from '../lib/core';\nimport type { CardBaseProps, CardHeaderBaseProps, CardTitleBaseProps, CardDescriptionBaseProps, CardContentBaseProps, CardFooterBaseProps } from '../lib/core';\nimport styles from './card.module.scss';\n\nexport interface CardProps extends React.HTMLAttributes<HTMLDivElement>, CardBaseProps {}\n\nconst Card = React.forwardRef<HTMLDivElement, CardProps>(({ className = '', as: Component = 'div', children, ...props }, ref) => {\n\treturn (\n\t\t<Component ref={ref} className={`${styles[cardStyleKeys.card]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</Component>\n\t);\n});\nCard.displayName = 'Card';\n\ninterface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement>, CardHeaderBaseProps {}\n\nconst CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<div ref={ref} className={`${styles[cardStyleKeys.header]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</div>\n\t);\n});\nCardHeader.displayName = 'CardHeader';\n\ninterface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement>, CardTitleBaseProps {}\n\nconst CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<h3 ref={ref} className={`${styles[cardStyleKeys.title]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</h3>\n\t);\n});\nCardTitle.displayName = 'CardTitle';\n\ninterface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement>, CardDescriptionBaseProps {}\n\nconst CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<p ref={ref} className={`${styles[cardStyleKeys.description]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</p>\n\t);\n});\nCardDescription.displayName = 'CardDescription';\n\ninterface CardContentProps extends React.HTMLAttributes<HTMLDivElement>, CardContentBaseProps {}\n\nconst CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<div ref={ref} className={`${styles[cardStyleKeys.content]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</div>\n\t);\n});\nCardContent.displayName = 'CardContent';\n\ninterface CardFooterProps extends React.HTMLAttributes<HTMLDivElement>, CardFooterBaseProps {}\n\nconst CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(({ className = '', children, ...props }, ref) => {\n\treturn (\n\t\t<div ref={ref} className={`${styles[cardStyleKeys.footer]} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</div>\n\t);\n});\nCardFooter.displayName = 'CardFooter';\n\nexport { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };\nexport type { CardHeaderProps, CardTitleProps, CardDescriptionProps, CardContentProps, CardFooterProps };\nexport default Card;\n"
+    },
+    {
+      "path": "packages/styles/scss/components/card.module.scss",
+      "type": "registry:file",
+      "target": "components/ui/card/card.module.scss",
+      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.card {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-4;\n\tborder-radius: $radius-lg;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tcolor: $foreground;\n\tbox-shadow: $shadow;\n\toverflow: hidden;\n\ttransition: box-shadow $transition-normal;\n\n\t&:hover {\n\t\tbox-shadow: $shadow-md;\n\t}\n}\n\n.cardHeader {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\tpadding: $spacing-6 $spacing-6 0;\n}\n\n.cardTitle {\n\tfont-size: $text-xl;\n\tfont-weight: $font-semibold;\n\tline-height: $leading-tight;\n\tcolor: $foreground;\n\tmargin: 0;\n}\n\n.cardDescription {\n\tfont-size: $text-sm;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n\tmargin: 0;\n}\n\n.cardContent {\n\tpadding: 0 $spacing-6;\n}\n\n.cardFooter {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: $spacing-4;\n\tpadding: 0 $spacing-6 $spacing-6;\n}\n"
+    }
+  ]
 }

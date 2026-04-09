@@ -13,6 +13,7 @@ function getNodeName(name: unknown) {
 
 function buildGroups(nodes: PageTreeNode[]) {
 	return nodes
+		.filter((node) => node.url !== '/docs')
 		.map((node) => {
 			const pages = (node.children ?? [])
 				.filter((child) => child.url)
@@ -40,10 +41,12 @@ export function DocsSidebar({ tree, pathname }: { tree: PageTreeNode; pathname: 
 		<aside className="docs-sidebar">
 			<div className="docs-sidebar__inner">
 				<div className="docs-sidebar__group docs-sidebar__group--intro">
-					<p className="docs-sidebar__label">Overview</p>
+					<p className="docs-sidebar__label" style={{ marginTop: 0 }}>
+						Sections
+					</p>
 					<nav className="docs-sidebar__nav">
 						<Link href="/docs" className="docs-sidebar__link" data-active={pathname === '/docs'}>
-							Introduction
+							Overview
 						</Link>
 					</nav>
 				</div>

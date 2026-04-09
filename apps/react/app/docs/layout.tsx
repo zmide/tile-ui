@@ -5,7 +5,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<div className="docs-layout">
 			<ReactDocsSidebar tree={source.pageTree} />
-			<div>{children}</div>
+			<div className="docs-layout__content">{children}</div>
 		</div>
 	);
 }
