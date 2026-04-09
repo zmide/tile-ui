@@ -1,0 +1,55 @@
+---
+title: Button
+description: A multi-variant action component with loading state and size variants.
+---
+
+# Button
+
+> Use Button for primary actions, inline confirmations, and lightweight toolbar interactions.
+
+<ButtonPreview />
+
+## Registry install
+
+```bash
+pnpm dlx shadcn@latest add https://react.tile-ui.dev/r/button.json
+```
+
+## Package usage
+
+```tsx
+import { Button } from "@tile-ui/react"
+
+export function SaveChanges() {
+  return <Button>Save changes</Button>
+}
+```
+
+## Highlights
+
+- Six visual variants
+- Loading state support
+- Small, default, large, and icon sizes
+- `asChild` support for router links and custom wrappers
+
+## Registry dependencies
+
+| Item | Purpose |
+| --- | --- |
+| `button` | Component source |
+| `styles` | Shared SCSS tokens and globals |
+
+## API reference
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `variant` | `default \| destructive \| outline \| secondary \| ghost \| link` | `default` | Chooses the button visual treatment. |
+| `size` | `default \| sm \| lg \| icon` | `default` | Controls height and padding. |
+| `loading` | `boolean` | `false` | Disables interaction and shows the inline spinner. |
+| `asChild` | `boolean` | `false` | Renders via Radix Slot for composition. |
+
+## Related docs
+
+- [Card](/docs/components/card)
+- [Input](/docs/components/input)
+- [Examples](/docs/examples)

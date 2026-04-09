@@ -1,0 +1,21 @@
+---
+title: Getting Started
+description: Understand the source manifests, sync script, and Vue registry build flow.
+---
+
+# Getting Started
+
+The Vue registry is generated from `registry/vue/registry.json` and published under `apps/vue/public/r`.
+
+## Build flow
+
+```bash
+corepack pnpm registry:sync
+corepack pnpm registry:build:vue
+```
+
+## What is synced
+
+- Vue TSX component sources
+- SCSS files from the shared design system
+- Composables and framework-agnostic helpers

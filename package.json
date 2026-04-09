@@ -9,7 +9,10 @@
     "type-check": "turbo type-check",
     "clean": "turbo clean",
     "registry:sync": "node scripts/build-registry.js",
-    "registry:build": "node scripts/build-registry.js && pnpm dlx shadcn@latest build"
+    "registry:build:react": "node scripts/build-registry.js && pnpm dlx shadcn@latest build registry/react/registry.json --output apps/react/public/r",
+    "registry:build:vue": "node scripts/build-registry.js && pnpm dlx shadcn@latest build registry/vue/registry.json --output apps/vue/public/r",
+    "registry:build": "pnpm registry:build:react && pnpm registry:build:vue",
+    "docs:check": "node scripts/check-docs.mjs"
   },
   "devDependencies": {
     "turbo": "^2.4.0",

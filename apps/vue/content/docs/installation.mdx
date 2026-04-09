@@ -1,0 +1,27 @@
+---
+title: Installation
+description: Install Tile UI Vue from packages or consume the Vue registry.
+---
+
+# Installation
+
+Tile UI Vue can be consumed as packages or as copy-paste registry items distributed from the Vue site.
+
+## Package install
+
+```bash
+pnpm add @tile-ui/vue @tile-ui/styles @tile-ui/core
+```
+
+## Registry install
+
+```bash
+pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/button.json
+pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/card.json
+```
+
+## Global styles
+
+```ts
+import "@tile-ui/styles/scss/globals.scss"
+```

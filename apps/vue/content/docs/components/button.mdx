@@ -1,0 +1,49 @@
+---
+title: Button
+description: A multi-variant action component with loading state and size variants.
+---
+
+# Button
+
+> Use Button for primary actions, inline confirmations, and lightweight toolbar interactions.
+
+## Registry install
+
+```bash
+pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/button.json
+```
+
+## Package usage
+
+```ts
+import { TButton } from "@tile-ui/vue"
+```
+
+## Highlights
+
+- Six visual variants
+- Loading state support
+- Small, default, and large sizes
+- Fits naturally into slot-based Vue composition
+
+## Registry dependencies
+
+| Item | Purpose |
+| --- | --- |
+| `button` | Component source |
+| `core` | Framework-agnostic behavior helpers |
+| `styles` | Shared SCSS tokens and globals |
+
+## API reference
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `variant` | `default \| destructive \| outline \| secondary \| ghost \| link` | `default` | Chooses the button visual treatment. |
+| `size` | `default \| sm \| lg \| icon` | `default` | Controls height and padding. |
+| `loading` | `boolean` | `false` | Disables interaction and shows the inline spinner. |
+
+## Related docs
+
+- [Card](/docs/components/card)
+- [Input](/docs/components/input)
+- [Examples](/docs/examples)

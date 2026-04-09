@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "title": "Input",
+  "description": "Vue input component with label, error and helper text.",
+  "dependencies": [
+    "vue"
+  ],
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [
+    "core"
+  ],
+  "files": [
+    {
+      "path": "registry/vue/tile-ui/input/input.tsx",
+      "content": "import { defineComponent, computed, h } from 'vue';\nimport { getInputIds, getInputAriaProps } from '../lib/core';\nimport styles from './input.module.scss';\n\nlet inputCounter = 0;\n\nexport const TInput = defineComponent({\n  name: 'TInput',\n  props: {\n    label: String,\n    error: String,\n    helperText: String,\n    required: { type: Boolean, default: false },\n    id: String,\n    type: { type: String, default: 'text' },\n    placeholder: String,\n    modelValue: String,\n    disabled: { type: Boolean, default: false },\n  },\n  emits: ['update:modelValue'],\n  setup(props, { emit }) {\n    const inputId = computed(() => props.id || `tile-input-${++inputCounter}`);\n    const ids = computed(() => getInputIds(inputId.value));\n    const ariaProps = computed(() => getInputAriaProps(ids.value, props.error, props.helperText));\n\n    function onInput(event: Event) {\n      emit('update:modelValue', (event.target as HTMLInputElement).value);\n    }\n\n    return () => {\n      const children: any[] = [];\n\n      if (props.label) {\n        children.push(\n          h('label', {\n            for: inputId.value,\n            class: [styles.label, props.required ? styles.required : ''],\n          }, props.label)\n        );\n      }\n\n      children.push(\n        h('input', {\n          id: inputId.value,\n          type: props.type,\n          class: [styles.input, props.error ? styles.error : ''],\n          value: props.modelValue,\n          placeholder: props.placeholder,\n          disabled: props.disabled,\n          'aria-invalid': ariaProps.value['aria-invalid'],\n          'aria-describedby': ariaProps.value['aria-describedby'],\n          onInput,\n        })\n      );\n\n      if (props.error) {\n        children.push(\n          h('span', { id: ids.value.error, class: styles.errorText }, props.error)\n        );\n      } else if (props.helperText) {\n        children.push(\n          h('span', { id: ids.value.helper, class: styles.helperText }, props.helperText)\n        );\n      }\n\n      return h('div', { class: styles.inputWrapper }, children);\n    };\n  },\n});\n\nexport default TInput;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/vue/tile-ui/input/input.module.scss",
+      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.inputWrapper {\n  display: flex;\n  flex-direction: column;\n  gap: $spacing-1;\n  width: 100%;\n}\n\n.input {\n  display: flex;\n  height: 2.25rem;\n  width: 100%;\n  border-radius: $radius;\n  border: 1px solid $border;\n  background-color: $background;\n  padding: 0 $spacing-3;\n  font-size: $text-sm;\n  color: $foreground;\n  transition: all $transition-fast;\n  outline: none;\n\n  &::placeholder {\n    color: color.mix(white, $foreground, 60%);\n  }\n\n  &:focus {\n    outline: none;\n    border-color: $ring;\n    box-shadow: 0 0 0 1px $ring;\n  }\n\n  &:disabled,\n  &.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n    cursor: not-allowed;\n    background-color: color.mix(white, $background, 50%);\n  }\n\n  &.error {\n    border-color: $destructive;\n\n    &:focus {\n      border-color: $destructive;\n      box-shadow: 0 0 0 1px $destructive;\n    }\n  }\n}\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n\n.helperText {\n  font-size: $text-xs;\n  color: color.mix(white, $foreground, 60%);\n  line-height: $leading-normal;\n}\n\n.errorText {\n  font-size: $text-xs;\n  color: $destructive;\n  line-height: $leading-normal;\n}\n",
+      "type": "registry:file",
+      "target": "components/ui/input/input.module.scss"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,37 @@
+@use 'sass:color';
+@use '../../../packages/styles/scss/variables/colors' as *;
+
+.showcase-stack {
+  display: grid;
+  gap: $spacing-8;
+}
+
+.showcase-section {
+  display: grid;
+  gap: $spacing-4;
+}
+
+.showcase-title {
+  font-size: $text-xl;
+  font-weight: $font-semibold;
+  color: $foreground;
+  padding-bottom: $spacing-2;
+  border-bottom: 1px solid $border;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-3;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.showcase-copy {
+  color: color.mix(white, $foreground, 48%);
+}

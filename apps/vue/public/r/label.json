@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "title": "Label",
+  "description": "Vue label component with required state support.",
+  "dependencies": [
+    "vue"
+  ],
+  "devDependencies": [
+    "sass"
+  ],
+  "registryDependencies": [
+    "core"
+  ],
+  "files": [
+    {
+      "path": "registry/vue/tile-ui/label/label.tsx",
+      "content": "import { defineComponent, computed, h } from 'vue';\nimport { getLabelClassKeys } from '../lib/core';\nimport styles from './label.module.scss';\n\nexport const TLabel = defineComponent({\n  name: 'TLabel',\n  props: {\n    required: { type: Boolean, default: false },\n    htmlFor: String,\n  },\n  setup(props, { slots }) {\n    const classKeys = computed(() => getLabelClassKeys(props.required));\n    const classes = computed(() => [\n      styles[classKeys.value.base],\n      classKeys.value.required ? styles[classKeys.value.required] : '',\n    ]);\n\n    return () => h('label', { class: classes.value, for: props.htmlFor }, slots.default?.());\n  },\n});\n\nexport default TLabel;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/vue/tile-ui/label/label.module.scss",
+      "content": "@use 'variables/colors' as *;\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n  cursor: pointer;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n",
+      "type": "registry:file",
+      "target": "components/ui/label/label.module.scss"
+    }
+  ],
+  "type": "registry:ui"
+}

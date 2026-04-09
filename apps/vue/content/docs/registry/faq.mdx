@@ -1,0 +1,18 @@
+---
+title: FAQ
+description: Clarify how the Vue registry relates to packages, styles, and the React site.
+---
+
+# FAQ
+
+## Is the Vue registry separate from React?
+
+Yes. React and Vue each publish their own registry root and item JSON files.
+
+## Do I need the package to use the registry?
+
+No. Registry items are copy-paste distributions. The package is optional.
+
+## Why is there a `core` item?
+
+The Vue registry packages framework-agnostic logic into a dedicated item that other Vue items can depend on.

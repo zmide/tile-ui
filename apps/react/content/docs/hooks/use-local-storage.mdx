@@ -1,0 +1,39 @@
+---
+title: useLocalStorage
+description: Persist client state into local or session storage for simple settings and drafts.
+---
+
+# useLocalStorage
+
+<LocalStoragePreview />
+
+> Use this hook when a local preference or draft should survive page refreshes without introducing a larger state layer.
+
+## Registry install
+
+```bash
+pnpm dlx shadcn@latest add https://react.tile-ui.dev/r/use-local-storage.json
+```
+
+## Usage
+
+```tsx
+const [value, setValue] = useLocalStorage("theme", "light")
+```
+
+## What it covers
+
+- Local storage reads and writes
+- Safe initialization in browser-only contexts
+- A simple setter API that mirrors React state
+
+## Common use cases
+
+- Theme preferences
+- Persisted filters
+- Draft values in admin tools
+
+## Related docs
+
+- [useMediaQuery](/docs/hooks/use-media-query)
+- [Examples](/docs/examples)

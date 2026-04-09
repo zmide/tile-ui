@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-local-storage",
+  "title": "useLocalStorage",
+  "description": "Vue composables for local and session storage.",
+  "dependencies": [
+    "vue"
+  ],
+  "files": [
+    {
+      "path": "registry/vue/tile-ui/composables/use-local-storage.ts",
+      "content": "import { ref, watch, onMounted, type Ref } from 'vue';\n\n/**\n * 使用本地存储的 composable\n */\nexport function useLocalStorage<T>(key: string, defaultValue: T): Ref<T> {\n  const data = ref(defaultValue) as Ref<T>;\n\n  function read() {\n    if (typeof window === 'undefined') return;\n    try {\n      const item = window.localStorage.getItem(key);\n      if (item !== null) {\n        data.value = JSON.parse(item);\n      }\n    } catch (error) {\n      console.warn(`Error reading localStorage key \"${key}\":`, error);\n    }\n  }\n\n  function write(value: T) {\n    try {\n      if (typeof window !== 'undefined') {\n        window.localStorage.setItem(key, JSON.stringify(value));\n      }\n    } catch (error) {\n      console.warn(`Error setting localStorage key \"${key}\":`, error);\n    }\n  }\n\n  onMounted(() => {\n    read();\n  });\n\n  watch(data, (newValue: T) => {\n    write(newValue);\n  }, { deep: true });\n\n  return data;\n}\n\n/**\n * 使用会话存储的 composable\n */\nexport function useSessionStorage<T>(key: string, defaultValue: T): Ref<T> {\n  const data = ref(defaultValue) as Ref<T>;\n\n  function read() {\n    if (typeof window === 'undefined') return;\n    try {\n      const item = window.sessionStorage.getItem(key);\n      if (item !== null) {\n        data.value = JSON.parse(item);\n      }\n    } catch (error) {\n      console.warn(`Error reading sessionStorage key \"${key}\":`, error);\n    }\n  }\n\n  function write(value: T) {\n    try {\n      if (typeof window !== 'undefined') {\n        window.sessionStorage.setItem(key, JSON.stringify(value));\n      }\n    } catch (error) {\n      console.warn(`Error setting sessionStorage key \"${key}\":`, error);\n    }\n  }\n\n  onMounted(() => {\n    read();\n  });\n\n  watch(data, (newValue: T) => {\n    write(newValue);\n  }, { deep: true });\n\n  return data;\n}\n",
+      "type": "registry:hook",
+      "target": "composables/use-local-storage.ts"
+    }
+  ],
+  "type": "registry:hook"
+}

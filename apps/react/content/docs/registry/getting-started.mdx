@@ -1,0 +1,21 @@
+---
+title: Getting Started
+description: Understand the source manifests, sync script, and React registry build flow.
+---
+
+# Getting Started
+
+The React registry is generated from `registry/react/registry.json` and published under `apps/react/public/r`.
+
+## Build flow
+
+```bash
+corepack pnpm registry:sync
+corepack pnpm registry:build:react
+```
+
+## What is synced
+
+- React component sources
+- SCSS files from the shared design system
+- Hooks and utility helpers
