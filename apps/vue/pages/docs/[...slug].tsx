@@ -14,28 +14,7 @@ import {
 	VueProfileSettingsPreview,
 	VueTextareaPreview,
 } from '../../components/docs-previews';
-
-type DocsTreeNode = {
-	type: string;
-	name: string;
-	url?: string;
-	children?: DocsTreeNode[];
-};
-
-type DocPayload = {
-	doc: {
-		url: string;
-		title: string;
-		description: string;
-		html: string;
-		toc: Array<{ title: string; url: string; depth: number }>;
-	};
-	neighbours: {
-		previous: { url: string; title: string } | null;
-		next: { url: string; title: string } | null;
-	};
-	tree: DocsTreeNode;
-};
+import { loadDocsPayload, type DocPayload } from '../../lib/docs';
 
 function getPreviewForSlug(slug: string[]) {
 	const key = slug.join('/');
@@ -74,15 +53,10 @@ export default defineComponent({
 		const route = useRoute();
 		const slugParam = route.params.slug;
 		const slug = Array.isArray(slugParam) ? slugParam : slugParam ? [String(slugParam)] : [];
-		const path = slug.join('/');
 
-		const { data, error } = await useAsyncData<DocPayload | null>(
-			`docs:${path || 'index'}`,
-			() => $fetch<DocPayload>(path ? `/api/docs/${path}` : '/api/docs').catch(() => null),
-			{
-				watch: [() => route.fullPath],
-			},
-		);
+		const { data, error } = await useAsyncData<DocPayload | null>(`docs:${slug.join('/') || 'index'}`, () => loadDocsPayload(slug).catch(() => null), {
+			watch: [() => route.fullPath],
+		});
 
 		if (error.value || !data.value) {
 			throw createError({ statusCode: 404, statusMessage: 'Doc not found' });
@@ -136,7 +110,7 @@ export default defineComponent({
 						{doc.toc.length ? (
 							<div class="docs-toc">
 								<p class="docs-toc__title">On This Page</p>
-								{doc.toc.map((item: { title: string; url: string; depth: number }) => (
+								{doc.toc.map((item) => (
 									<a key={item.url} href={item.url} class="docs-toc__link" data-depth={item.depth}>
 										{item.title}
 									</a>

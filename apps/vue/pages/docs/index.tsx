@@ -1,33 +1,12 @@
 import { defineComponent } from 'vue';
 import { VueDocsBreadcrumb } from '../../components/docs-breadcrumb';
 import { VueDocsSidebar } from '../../components/docs-sidebar';
-
-type DocsTreeNode = {
-	type: string;
-	name: string;
-	url?: string;
-	children?: DocsTreeNode[];
-};
-
-type DocPayload = {
-	doc: {
-		url: string;
-		title: string;
-		description: string;
-		html: string;
-		toc: Array<{ title: string; url: string; depth: number }>;
-	};
-	neighbours: {
-		previous: { url: string; title: string } | null;
-		next: { url: string; title: string } | null;
-	};
-	tree: DocsTreeNode;
-};
+import { loadDocsPayload, type DocPayload } from '../../lib/docs';
 
 export default defineComponent({
 	name: 'VueDocsIndexPage',
 	async setup() {
-		const { data, error } = await useAsyncData<DocPayload>('docs:index', () => fetch('/api/docs').then((response) => response.json() as Promise<DocPayload>));
+		const { data, error } = await useAsyncData<DocPayload>('docs:index', () => loadDocsPayload([]));
 
 		if (error.value || !data.value) {
 			throw createError({ statusCode: 404, statusMessage: 'Doc not found' });
@@ -70,7 +49,7 @@ export default defineComponent({
 						{doc.toc.length ? (
 							<div class="docs-toc">
 								<p class="docs-toc__title">On This Page</p>
-								{doc.toc.map((item: { title: string; url: string; depth: number }) => (
+								{doc.toc.map((item) => (
 									<a key={item.url} href={item.url} class="docs-toc__link" data-depth={item.depth}>
 										{item.title}
 									</a>
