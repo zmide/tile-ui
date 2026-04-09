@@ -50,13 +50,13 @@ tile-ui/
 
 ## Packages
 
-| Package | Purpose |
-|---|---|
-| `@tile-ui/core` | Shared design logic and utility helpers |
-| `@tile-ui/styles` | Global SCSS, variables, and mixins |
+| Package           | Purpose                                  |
+| ----------------- | ---------------------------------------- |
+| `@tile-ui/core`   | Shared design logic and utility helpers  |
+| `@tile-ui/styles` | Global SCSS, variables, and mixins       |
 | `@tile-ui/buildx` | Shared registry build pipeline and tests |
-| `@tile-ui/react` | React components and hooks |
-| `@tile-ui/vue` | Vue components and composables |
+| `@tile-ui/react`  | React components and hooks               |
+| `@tile-ui/vue`    | Vue components and composables           |
 
 ## Applications
 

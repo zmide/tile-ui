@@ -1,19 +1,13 @@
 {
-  "$schema": "../../node_modules/oxlint/configuration_schema.json",
-  "plugins": ["oxc", "unicorn", "node"],
-  "categories": {
-    "correctness": "error"
-  },
-  "ignorePatterns": [
-    "css/**",
-    "node_modules/**",
-    "scss/**"
-  ],
-  "overrides": [
-    {
-      "files": [
-        "build.js"
-      ]
-    }
-  ]
+	"$schema": "../../node_modules/oxlint/configuration_schema.json",
+	"plugins": ["oxc", "unicorn", "node"],
+	"categories": {
+		"correctness": "error"
+	},
+	"ignorePatterns": ["css/**", "node_modules/**", "scss/**"],
+	"overrides": [
+		{
+			"files": ["build.js"]
+		}
+	]
 }

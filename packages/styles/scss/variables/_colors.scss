@@ -41,9 +41,15 @@ $ring: #18181b;
 
 // 阴影
 $shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-$shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow:
+	0 1px 3px 0 rgb(0 0 0 / 0.1),
+	0 1px 2px -1px rgb(0 0 0 / 0.1);
+$shadow-md:
+	0 4px 6px -1px rgb(0 0 0 / 0.1),
+	0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg:
+	0 10px 15px -3px rgb(0 0 0 / 0.1),
+	0 4px 6px -4px rgb(0 0 0 / 0.1);
 
 // 圆角
 $radius-sm: 0.25rem;
@@ -53,7 +59,15 @@ $radius-lg: 1rem;
 $radius-full: 9999px;
 
 // 字体
-$font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-sans:
+	system-ui,
+	-apple-system,
+	BlinkMacSystemFont,
+	'Segoe UI',
+	Roboto,
+	'Helvetica Neue',
+	Arial,
+	sans-serif;
 $font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
 // 字号

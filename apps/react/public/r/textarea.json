@@ -1,28 +1,23 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "textarea",
-  "type": "registry:ui",
-  "title": "Textarea",
-  "description": "Accessible React textarea component for Tile UI.",
-  "devDependencies": [
-    "sass"
-  ],
-  "registryDependencies": [
-    "core",
-    "utils"
-  ],
-  "files": [
-    {
-      "path": "packages/react/src/components/textarea/textarea.tsx",
-      "type": "registry:ui",
-      "target": "components/ui/textarea/textarea.tsx",
-      "content": "import React, { useId } from 'react';\nimport { getTextareaIds, getTextareaAriaProps } from '../lib/core';\nimport type { TextareaBaseProps } from '../lib/core';\nimport styles from './textarea.module.scss';\n\nexport interface TextareaProps\n  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,\n    TextareaBaseProps {}\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(\n  (\n    {\n      className = '',\n      label,\n      error,\n      helperText,\n      required,\n      id: providedId,\n      ...props\n    },\n    ref\n  ) => {\n    const generatedId = useId();\n    const id = providedId || generatedId;\n    const ids = getTextareaIds(id);\n    const ariaProps = getTextareaAriaProps(ids, error, helperText);\n\n    return (\n      <div className={styles.textareaWrapper}>\n        {label && (\n          <label\n            htmlFor={id}\n            className={`${styles.label} ${required ? styles.required : ''}`}\n          >\n            {label}\n          </label>\n        )}\n        <textarea\n          ref={ref}\n          id={id}\n          className={`${styles.textarea} ${error ? styles.error : ''} ${className}`}\n          {...ariaProps}\n          {...props}\n        />\n        {error && (\n          <span id={ids.error} className={styles.errorText}>\n            {error}\n          </span>\n        )}\n        {!error && helperText && (\n          <span id={ids.helper} className={styles.helperText}>\n            {helperText}\n          </span>\n        )}\n      </div>\n    );\n  }\n);\n\nTextarea.displayName = 'Textarea';\n\nexport { Textarea };\nexport default Textarea;\n"
-    },
-    {
-      "path": "packages/styles/scss/components/textarea.module.scss",
-      "type": "registry:file",
-      "target": "components/ui/textarea/textarea.module.scss",
-      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.textareaWrapper {\n  display: flex;\n  flex-direction: column;\n  gap: $spacing-1;\n  width: 100%;\n}\n\n.textarea {\n  display: flex;\n  min-height: 5rem;\n  width: 100%;\n  border-radius: $radius;\n  border: 1px solid $border;\n  background-color: $background;\n  padding: $spacing-3 $spacing-3;\n  font-size: $text-sm;\n  color: $foreground;\n  transition: all $transition-fast;\n  outline: none;\n  resize: vertical;\n  font-family: inherit;\n  line-height: $leading-normal;\n\n  &::placeholder {\n    color: color.mix(white, $foreground, 60%);\n  }\n\n  &:focus {\n    outline: none;\n    border-color: $ring;\n    box-shadow: 0 0 0 1px $ring;\n  }\n\n  &:disabled,\n  &.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n    cursor: not-allowed;\n    background-color: color.mix(white, $background, 50%);\n  }\n\n  &.error {\n    border-color: $destructive;\n\n    &:focus {\n      border-color: $destructive;\n      box-shadow: 0 0 0 1px $destructive;\n    }\n  }\n}\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n\n.helperText {\n  font-size: $text-xs;\n  color: color.mix(white, $foreground, 60%);\n  line-height: $leading-normal;\n}\n\n.errorText {\n  font-size: $text-xs;\n  color: $destructive;\n  line-height: $leading-normal;\n}\n"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "textarea",
+	"type": "registry:ui",
+	"title": "Textarea",
+	"description": "Accessible React textarea component for Tile UI.",
+	"devDependencies": ["sass"],
+	"registryDependencies": ["core", "utils"],
+	"files": [
+		{
+			"path": "packages/react/src/components/textarea/textarea.tsx",
+			"type": "registry:ui",
+			"target": "components/ui/textarea/textarea.tsx",
+			"content": "import React, { useId } from 'react';\nimport { getTextareaIds, getTextareaAriaProps } from '../lib/core';\nimport type { TextareaBaseProps } from '../lib/core';\nimport styles from './textarea.module.scss';\n\nexport interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, TextareaBaseProps {}\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({ className = '', label, error, helperText, required, id: providedId, ...props }, ref) => {\n\tconst generatedId = useId();\n\tconst id = providedId || generatedId;\n\tconst ids = getTextareaIds(id);\n\tconst ariaProps = getTextareaAriaProps(ids, error, helperText);\n\n\treturn (\n\t\t<div className={styles.textareaWrapper}>\n\t\t\t{label && (\n\t\t\t\t<label htmlFor={id} className={`${styles.label} ${required ? styles.required : ''}`}>\n\t\t\t\t\t{label}\n\t\t\t\t</label>\n\t\t\t)}\n\t\t\t<textarea ref={ref} id={id} className={`${styles.textarea} ${error ? styles.error : ''} ${className}`} {...ariaProps} {...props} />\n\t\t\t{error && (\n\t\t\t\t<span id={ids.error} className={styles.errorText}>\n\t\t\t\t\t{error}\n\t\t\t\t</span>\n\t\t\t)}\n\t\t\t{!error && helperText && (\n\t\t\t\t<span id={ids.helper} className={styles.helperText}>\n\t\t\t\t\t{helperText}\n\t\t\t\t</span>\n\t\t\t)}\n\t\t</div>\n\t);\n});\n\nTextarea.displayName = 'Textarea';\n\nexport { Textarea };\nexport default Textarea;\n"
+		},
+		{
+			"path": "packages/styles/scss/components/textarea.module.scss",
+			"type": "registry:file",
+			"target": "components/ui/textarea/textarea.module.scss",
+			"content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.textareaWrapper {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\twidth: 100%;\n}\n\n.textarea {\n\tdisplay: flex;\n\tmin-height: 5rem;\n\twidth: 100%;\n\tborder-radius: $radius;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tpadding: $spacing-3 $spacing-3;\n\tfont-size: $text-sm;\n\tcolor: $foreground;\n\ttransition: all $transition-fast;\n\toutline: none;\n\tresize: vertical;\n\tfont-family: inherit;\n\tline-height: $leading-normal;\n\n\t&::placeholder {\n\t\tcolor: color.mix(white, $foreground, 60%);\n\t}\n\n\t&:focus {\n\t\toutline: none;\n\t\tborder-color: $ring;\n\t\tbox-shadow: 0 0 0 1px $ring;\n\t}\n\n\t&:disabled,\n\t&.disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t\tcursor: not-allowed;\n\t\tbackground-color: color.mix(white, $background, 50%);\n\t}\n\n\t&.error {\n\t\tborder-color: $destructive;\n\n\t\t&:focus {\n\t\t\tborder-color: $destructive;\n\t\t\tbox-shadow: 0 0 0 1px $destructive;\n\t\t}\n\t}\n}\n\n.label {\n\tdisplay: block;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\tcolor: $foreground;\n\tline-height: $leading-normal;\n\n\t&.required::after {\n\t\tcontent: ' *';\n\t\tcolor: $destructive;\n\t}\n}\n\n.helperText {\n\tfont-size: $text-xs;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n}\n\n.errorText {\n\tfont-size: $text-xs;\n\tcolor: $destructive;\n\tline-height: $leading-normal;\n}\n"
+		}
+	]
 }

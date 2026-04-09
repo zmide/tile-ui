@@ -2,96 +2,84 @@
  * 生成唯一的 ID
  */
 export function generateId(prefix: string = 'tile'): string {
-  return `${prefix}-${Math.random().toString(36).substring(2, 9)}`;
+	return `${prefix}-${Math.random().toString(36).substring(2, 9)}`;
 }
 
 /**
  * 深度合并对象
  */
-export function deepMerge<T extends Record<string, unknown>>(
-  target: T,
-  source: Partial<T>
-): T {
-  const result = { ...target };
+export function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial<T>): T {
+	const result = { ...target };
 
-  for (const key in source) {
-    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-      result[key] = deepMerge(
-        target[key] as Record<string, unknown>,
-        source[key] as Record<string, unknown>
-      ) as T[Extract<keyof T, string>];
-    } else {
-      result[key] = source[key] as T[Extract<keyof T, string>];
-    }
-  }
+	for (const key in source) {
+		if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+			result[key] = deepMerge(target[key] as Record<string, unknown>, source[key] as Record<string, unknown>) as T[Extract<keyof T, string>];
+		} else {
+			result[key] = source[key] as T[Extract<keyof T, string>];
+		}
+	}
 
-  return result;
+	return result;
 }
 
 /**
  * 格式化字节大小
  */
 export function formatBytes(bytes: number, decimals: number = 2): string {
-  if (bytes === 0) return '0 Bytes';
+	if (bytes === 0) return '0 Bytes';
 
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
+	const k = 1024;
+	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
 }
 
 /**
  * 延迟执行
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
  * 检查是否是对象
  */
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+	return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 /**
  * 从对象中提取指定键
  */
-export function pick<T extends Record<string, unknown>, K extends keyof T>(
-  obj: T,
-  keys: K[]
-): Pick<T, K> {
-  const result = {} as Pick<T, K>;
+export function pick<T extends Record<string, unknown>, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
+	const result = {} as Pick<T, K>;
 
-  for (const key of keys) {
-    if (key in obj) {
-      result[key] = obj[key];
-    }
-  }
+	for (const key of keys) {
+		if (key in obj) {
+			result[key] = obj[key];
+		}
+	}
 
-  return result;
+	return result;
 }
 
 /**
  * 从对象中排除指定键
  */
-export function omit<T extends Record<string, unknown>, K extends keyof T>(
-  obj: T,
-  keys: K[]
-): Omit<T, K> {
-  const result = { ...obj };
+export function omit<T extends Record<string, unknown>, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> {
+	const result = { ...obj };
 
-  for (const key of keys) {
-    delete result[key];
-  }
+	for (const key of keys) {
+		delete result[key];
+	}
 
-  return result;
+	return result;
 }
 
 /**
  * 首字母大写
  */
 export function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+	return str.charAt(0).toUpperCase() + str.slice(1);
 }

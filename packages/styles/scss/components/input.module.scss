@@ -2,74 +2,74 @@
 @use 'variables/colors' as *;
 
 .inputWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-1;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: $spacing-1;
+	width: 100%;
 }
 
 .input {
-  display: flex;
-  height: 2.25rem;
-  width: 100%;
-  border-radius: $radius;
-  border: 1px solid $border;
-  background-color: $background;
-  padding: 0 $spacing-3;
-  font-size: $text-sm;
-  color: $foreground;
-  transition: all $transition-fast;
-  outline: none;
+	display: flex;
+	height: 2.25rem;
+	width: 100%;
+	border-radius: $radius;
+	border: 1px solid $border;
+	background-color: $background;
+	padding: 0 $spacing-3;
+	font-size: $text-sm;
+	color: $foreground;
+	transition: all $transition-fast;
+	outline: none;
 
-  &::placeholder {
-    color: color.mix(white, $foreground, 60%);
-  }
+	&::placeholder {
+		color: color.mix(white, $foreground, 60%);
+	}
 
-  &:focus {
-    outline: none;
-    border-color: $ring;
-    box-shadow: 0 0 0 1px $ring;
-  }
+	&:focus {
+		outline: none;
+		border-color: $ring;
+		box-shadow: 0 0 0 1px $ring;
+	}
 
-  &:disabled,
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-    cursor: not-allowed;
-    background-color: color.mix(white, $background, 50%);
-  }
+	&:disabled,
+	&.disabled {
+		pointer-events: none;
+		opacity: 0.5;
+		cursor: not-allowed;
+		background-color: color.mix(white, $background, 50%);
+	}
 
-  &.error {
-    border-color: $destructive;
+	&.error {
+		border-color: $destructive;
 
-    &:focus {
-      border-color: $destructive;
-      box-shadow: 0 0 0 1px $destructive;
-    }
-  }
+		&:focus {
+			border-color: $destructive;
+			box-shadow: 0 0 0 1px $destructive;
+		}
+	}
 }
 
 .label {
-  display: block;
-  font-size: $text-sm;
-  font-weight: $font-medium;
-  color: $foreground;
-  line-height: $leading-normal;
+	display: block;
+	font-size: $text-sm;
+	font-weight: $font-medium;
+	color: $foreground;
+	line-height: $leading-normal;
 
-  &.required::after {
-    content: ' *';
-    color: $destructive;
-  }
+	&.required::after {
+		content: ' *';
+		color: $destructive;
+	}
 }
 
 .helperText {
-  font-size: $text-xs;
-  color: color.mix(white, $foreground, 60%);
-  line-height: $leading-normal;
+	font-size: $text-xs;
+	color: color.mix(white, $foreground, 60%);
+	line-height: $leading-normal;
 }
 
 .errorText {
-  font-size: $text-xs;
-  color: $destructive;
-  line-height: $leading-normal;
+	font-size: $text-xs;
+	color: $destructive;
+	line-height: $leading-normal;
 }

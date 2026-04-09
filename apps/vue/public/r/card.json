@@ -1,30 +1,24 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "card",
-  "type": "registry:ui",
-  "title": "Card",
-  "description": "Composable Vue card primitives for Tile UI.",
-  "dependencies": [
-    "vue"
-  ],
-  "devDependencies": [
-    "sass"
-  ],
-  "registryDependencies": [
-    "core"
-  ],
-  "files": [
-    {
-      "path": "packages/vue/src/components/card/card.tsx",
-      "type": "registry:ui",
-      "target": "components/ui/card/card.tsx",
-      "content": "import { defineComponent, h, type PropType } from 'vue';\nimport { cardStyleKeys } from '../lib/core';\nimport type { CardElement } from '../lib/core';\nimport styles from './card.module.scss';\n\nexport const TCard = defineComponent({\n  name: 'TCard',\n  props: {\n    as: {\n      type: String as PropType<CardElement>,\n      default: 'div',\n    },\n  },\n  setup(props, { slots }) {\n    return () => h(props.as!, { class: styles[cardStyleKeys.card] }, slots.default?.());\n  },\n});\n\nexport const TCardHeader = defineComponent({\n  name: 'TCardHeader',\n  setup(_, { slots }) {\n    return () => h('div', { class: styles[cardStyleKeys.header] }, slots.default?.());\n  },\n});\n\nexport const TCardTitle = defineComponent({\n  name: 'TCardTitle',\n  setup(_, { slots }) {\n    return () => h('h3', { class: styles[cardStyleKeys.title] }, slots.default?.());\n  },\n});\n\nexport const TCardDescription = defineComponent({\n  name: 'TCardDescription',\n  setup(_, { slots }) {\n    return () => h('p', { class: styles[cardStyleKeys.description] }, slots.default?.());\n  },\n});\n\nexport const TCardContent = defineComponent({\n  name: 'TCardContent',\n  setup(_, { slots }) {\n    return () => h('div', { class: styles[cardStyleKeys.content] }, slots.default?.());\n  },\n});\n\nexport const TCardFooter = defineComponent({\n  name: 'TCardFooter',\n  setup(_, { slots }) {\n    return () => h('div', { class: styles[cardStyleKeys.footer] }, slots.default?.());\n  },\n});\n\nexport default TCard;\n"
-    },
-    {
-      "path": "packages/styles/scss/components/card.module.scss",
-      "type": "registry:file",
-      "target": "components/ui/card/card.module.scss",
-      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.card {\n  display: flex;\n  flex-direction: column;\n  gap: $spacing-4;\n  border-radius: $radius-lg;\n  border: 1px solid $border;\n  background-color: $background;\n  color: $foreground;\n  box-shadow: $shadow;\n  overflow: hidden;\n  transition: box-shadow $transition-normal;\n\n  &:hover {\n    box-shadow: $shadow-md;\n  }\n}\n\n.cardHeader {\n  display: flex;\n  flex-direction: column;\n  gap: $spacing-1;\n  padding: $spacing-6 $spacing-6 0;\n}\n\n.cardTitle {\n  font-size: $text-xl;\n  font-weight: $font-semibold;\n  line-height: $leading-tight;\n  color: $foreground;\n  margin: 0;\n}\n\n.cardDescription {\n  font-size: $text-sm;\n  color: color.mix(white, $foreground, 60%);\n  line-height: $leading-normal;\n  margin: 0;\n}\n\n.cardContent {\n  padding: 0 $spacing-6;\n}\n\n.cardFooter {\n  display: flex;\n  align-items: center;\n  gap: $spacing-4;\n  padding: 0 $spacing-6 $spacing-6;\n}\n"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "card",
+	"type": "registry:ui",
+	"title": "Card",
+	"description": "Composable Vue card primitives for Tile UI.",
+	"dependencies": ["vue"],
+	"devDependencies": ["sass"],
+	"registryDependencies": ["core"],
+	"files": [
+		{
+			"path": "packages/vue/src/components/card/card.tsx",
+			"type": "registry:ui",
+			"target": "components/ui/card/card.tsx",
+			"content": "import { defineComponent, h, type PropType } from 'vue';\nimport { cardStyleKeys } from '../lib/core';\nimport type { CardElement } from '../lib/core';\nimport styles from './card.module.scss';\n\nexport const TCard = defineComponent({\n\tname: 'TCard',\n\tprops: {\n\t\tas: {\n\t\t\ttype: String as PropType<CardElement>,\n\t\t\tdefault: 'div',\n\t\t},\n\t},\n\tsetup(props, { slots }) {\n\t\treturn () => h(props.as!, { class: styles[cardStyleKeys.card] }, slots.default?.());\n\t},\n});\n\nexport const TCardHeader = defineComponent({\n\tname: 'TCardHeader',\n\tsetup(_, { slots }) {\n\t\treturn () => h('div', { class: styles[cardStyleKeys.header] }, slots.default?.());\n\t},\n});\n\nexport const TCardTitle = defineComponent({\n\tname: 'TCardTitle',\n\tsetup(_, { slots }) {\n\t\treturn () => h('h3', { class: styles[cardStyleKeys.title] }, slots.default?.());\n\t},\n});\n\nexport const TCardDescription = defineComponent({\n\tname: 'TCardDescription',\n\tsetup(_, { slots }) {\n\t\treturn () => h('p', { class: styles[cardStyleKeys.description] }, slots.default?.());\n\t},\n});\n\nexport const TCardContent = defineComponent({\n\tname: 'TCardContent',\n\tsetup(_, { slots }) {\n\t\treturn () => h('div', { class: styles[cardStyleKeys.content] }, slots.default?.());\n\t},\n});\n\nexport const TCardFooter = defineComponent({\n\tname: 'TCardFooter',\n\tsetup(_, { slots }) {\n\t\treturn () => h('div', { class: styles[cardStyleKeys.footer] }, slots.default?.());\n\t},\n});\n\nexport default TCard;\n"
+		},
+		{
+			"path": "packages/styles/scss/components/card.module.scss",
+			"type": "registry:file",
+			"target": "components/ui/card/card.module.scss",
+			"content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.card {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-4;\n\tborder-radius: $radius-lg;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tcolor: $foreground;\n\tbox-shadow: $shadow;\n\toverflow: hidden;\n\ttransition: box-shadow $transition-normal;\n\n\t&:hover {\n\t\tbox-shadow: $shadow-md;\n\t}\n}\n\n.cardHeader {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\tpadding: $spacing-6 $spacing-6 0;\n}\n\n.cardTitle {\n\tfont-size: $text-xl;\n\tfont-weight: $font-semibold;\n\tline-height: $leading-tight;\n\tcolor: $foreground;\n\tmargin: 0;\n}\n\n.cardDescription {\n\tfont-size: $text-sm;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n\tmargin: 0;\n}\n\n.cardContent {\n\tpadding: 0 $spacing-6;\n}\n\n.cardFooter {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: $spacing-4;\n\tpadding: 0 $spacing-6 $spacing-6;\n}\n"
+		}
+	]
 }

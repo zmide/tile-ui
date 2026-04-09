@@ -1,22 +1,25 @@
 {
-  "name": "@tile-ui/styles",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    "./scss/*": "./scss/*",
-    "./css/*": "./css/*",
-    "./globals.scss": "./scss/globals.scss",
-    "./globals.css": "./css/globals.css"
-  },
-  "files": ["scss", "css"],
-  "scripts": {
-    "build": "node build.js",
-    "lint": "oxlint -c .oxlintrc.json .",
-    "type-check": "node -e \"process.exit(0)\"",
-    "clean": "rm -rf css"
-  },
-  "devDependencies": {
-    "sass": "^1.86.3"
-  }
+	"name": "@tile-ui/styles",
+	"version": "1.0.0",
+	"private": true,
+	"files": [
+		"scss",
+		"css"
+	],
+	"type": "module",
+	"exports": {
+		"./scss/*": "./scss/*",
+		"./css/*": "./css/*",
+		"./globals.scss": "./scss/globals.scss",
+		"./globals.css": "./css/globals.css"
+	},
+	"scripts": {
+		"build": "node build.js",
+		"lint": "oxlint -c .oxlintrc.json .",
+		"type-check": "node -e \"process.exit(0)\"",
+		"clean": "rm -rf css"
+	},
+	"devDependencies": {
+		"sass": "^1.86.3"
+	}
 }

@@ -1,34 +1,34 @@
 {
-  "name": "@tile-ui/vue-docs",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "registry:build": "tsx ./scripts/build-registry.mjs",
-    "registry:watch": "tsx ./scripts/watch-registry.mjs",
-    "dev:app": "nuxi dev -p 3002",
-    "dev": "pnpm exec concurrently -k -n registry,app -c cyan,magenta \"pnpm registry:watch\" \"pnpm dev:app\"",
-    "build": "nuxi build",
-    "generate": "nuxi generate",
-    "preview": "nuxi preview",
-    "lint": "oxlint -c .oxlintrc.json ."
-  },
-  "dependencies": {
-    "@tile-ui/buildx": "workspace:*",
-    "@tile-ui/core": "workspace:*",
-    "@tile-ui/styles": "workspace:*",
-    "@tile-ui/vue": "workspace:*",
-    "gray-matter": "^4.0.3",
-    "markdown-it": "^14.1.1",
-    "markdown-it-anchor": "^9.2.0",
-    "nuxt": "^3.16.0",
-    "vue": "^3.5.0"
-  },
-  "devDependencies": {
-    "@types/node": "^25.5.2",
-    "concurrently": "^9.2.1",
-    "sass": "^1.86.3",
-    "tsx": "^4.20.3",
-    "typescript": "^5.9.2"
-  }
+	"name": "@tile-ui/vue-docs",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"registry:build": "tsx ./scripts/build-registry.mjs",
+		"registry:watch": "tsx ./scripts/watch-registry.mjs",
+		"dev:app": "nuxi dev -p 3002",
+		"dev": "pnpm exec concurrently -k -n registry,app -c cyan,magenta \"pnpm registry:watch\" \"pnpm dev:app\"",
+		"build": "nuxi build",
+		"generate": "nuxi generate",
+		"preview": "nuxi preview",
+		"lint": "oxlint -c .oxlintrc.json ."
+	},
+	"dependencies": {
+		"@tile-ui/buildx": "workspace:*",
+		"@tile-ui/core": "workspace:*",
+		"@tile-ui/styles": "workspace:*",
+		"@tile-ui/vue": "workspace:*",
+		"gray-matter": "^4.0.3",
+		"markdown-it": "^14.1.1",
+		"markdown-it-anchor": "^9.2.0",
+		"nuxt": "^3.16.0",
+		"vue": "^3.5.0"
+	},
+	"devDependencies": {
+		"@types/node": "^25.5.2",
+		"concurrently": "^9.2.1",
+		"sass": "^1.86.3",
+		"tsx": "^4.20.3",
+		"typescript": "^5.9.2"
+	}
 }

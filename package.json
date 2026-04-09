@@ -1,25 +1,28 @@
 {
-  "name": "tile-ui",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "lint": "turbo lint",
-    "check": "pnpm lint && pnpm type-check",
-    "type-check": "turbo type-check",
-    "clean": "turbo clean",
-    "registry:build:react": "pnpm --filter @tile-ui/react-docs registry:build",
-    "registry:build:vue": "pnpm --filter @tile-ui/vue-docs registry:build",
-    "registry:build": "pnpm registry:build:react && pnpm registry:build:vue",
-    "docs:check": "node scripts/check-docs.mjs",
-    "test:buildx": "pnpm --filter @tile-ui/buildx test"
-  },
-  "devDependencies": {
-    "oxlint": "^1.18.0",
-    "turbo": "^2.4.0",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
-  },
-  "packageManager": "pnpm@9.15.0"
+	"name": "tile-ui",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "TURBO_TELEMETRY_DISABLED=1 turbo dev",
+		"build": "TURBO_TELEMETRY_DISABLED=1 turbo build",
+		"lint": "TURBO_TELEMETRY_DISABLED=1 turbo lint && oxfmt --check .",
+		"fmt": "oxfmt .",
+		"fmt:check": "oxfmt --check .",
+		"check": "pnpm lint && pnpm type-check",
+		"type-check": "TURBO_TELEMETRY_DISABLED=1 turbo type-check",
+		"clean": "TURBO_TELEMETRY_DISABLED=1 turbo clean",
+		"registry:build:react": "pnpm --filter @tile-ui/react-docs registry:build",
+		"registry:build:vue": "pnpm --filter @tile-ui/vue-docs registry:build",
+		"registry:build": "pnpm registry:build:react && pnpm registry:build:vue",
+		"docs:check": "node scripts/check-docs.mjs",
+		"test:buildx": "pnpm --filter @tile-ui/buildx test"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.44.0",
+		"oxlint": "^1.18.0",
+		"turbo": "^2.4.0",
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
+	},
+	"packageManager": "pnpm@9.15.0"
 }

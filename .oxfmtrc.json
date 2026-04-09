@@ -1,0 +1,30 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"semi": true,
+	"useTabs": true,
+	"tabWidth": 4,
+	"bracketSpacing": true,
+	"singleQuote": true,
+	"printWidth": 180,
+	"proseWrap": "never",
+	"trailingComma": "all",
+	"arrowParens": "always",
+	"vueIndentScriptAndStyle": false,
+	"bracketSameLine": true,
+	"ignorePatterns": [
+		"apps/**/public/r/*.json",
+		"packages/styles/css/**",
+		"**/.source/**",
+		"node_modules/**",
+		".agents/**",
+		".turbo/**",
+		"coverage/**",
+		"dist/**",
+		"build/**",
+		"out/**",
+		"**/.next/**",
+		"**/.nuxt/**",
+		"**/.output/**",
+		"**/*.tsbuildinfo"
+	]
+}

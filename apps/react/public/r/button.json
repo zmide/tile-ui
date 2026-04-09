@@ -1,31 +1,24 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "button",
-  "type": "registry:ui",
-  "title": "Button",
-  "description": "Multi-variant React button component for Tile UI.",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "devDependencies": [
-    "sass"
-  ],
-  "registryDependencies": [
-    "core",
-    "utils"
-  ],
-  "files": [
-    {
-      "path": "packages/react/src/components/button/button.tsx",
-      "type": "registry:ui",
-      "target": "components/ui/button/button.tsx",
-      "content": "import React from 'react';\nimport { Slot } from '@radix-ui/react-slot';\nimport { getButtonStyleKeys, isButtonDisabled } from '../lib/core';\nimport type { ButtonBaseProps } from '../lib/core';\nimport styles from './button.module.scss';\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    ButtonBaseProps {}\n\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  (\n    {\n      className = '',\n      variant = 'default',\n      size = 'default',\n      asChild = false,\n      loading = false,\n      disabled,\n      children,\n      ...props\n    },\n    ref\n  ) => {\n    const Comp = asChild ? Slot : 'button';\n    const styleKeys = getButtonStyleKeys(variant, size);\n\n    const classes = [\n      styles[styleKeys.base],\n      styles[styleKeys.variant],\n      styles[styleKeys.size],\n      className,\n    ]\n      .filter(Boolean)\n      .join(' ');\n\n    return (\n      <Comp\n        ref={ref}\n        className={classes}\n        disabled={isButtonDisabled(disabled, loading)}\n        {...props}\n      >\n        {loading && (\n          <svg\n            className={styles.spinner}\n            xmlns=\"http://www.w3.org/2000/svg\"\n            width=\"16\"\n            height=\"16\"\n            viewBox=\"0 0 24 24\"\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"2\"\n            strokeLinecap=\"round\"\n            strokeLinejoin=\"round\"\n          >\n            <circle cx=\"12\" cy=\"12\" r=\"10\" />\n          </svg>\n        )}\n        {children}\n      </Comp>\n    );\n  }\n);\n\nButton.displayName = 'Button';\n\nexport { Button };\nexport default Button;\n"
-    },
-    {
-      "path": "packages/styles/scss/components/button.module.scss",
-      "type": "registry:file",
-      "target": "components/ui/button/button.module.scss",
-      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: $spacing-2;\n  white-space: nowrap;\n  border-radius: $radius;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  transition: all $transition-fast;\n  cursor: pointer;\n  outline: none;\n\n  &:focus-visible {\n    outline: none;\n    box-shadow: 0 0 0 2px $background, 0 0 0 4px $ring;\n  }\n\n  &:disabled,\n  &.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n    cursor: not-allowed;\n  }\n\n  svg {\n    pointer-events: none;\n    width: 1em;\n    height: 1em;\n  }\n\n  // 尺寸变体\n  &.sizeDefault {\n    height: 2.25rem;\n    padding: 0 $spacing-4;\n\n    &.hasIcon {\n      padding-inline: $spacing-3;\n    }\n  }\n\n  &.sizeSm {\n    height: 2rem;\n    border-radius: $radius-sm;\n    padding: 0 $spacing-3;\n    font-size: $text-xs;\n\n    &.hasIcon {\n      padding-inline: $spacing-2;\n      gap: $spacing-1;\n    }\n  }\n\n  &.sizeLg {\n    height: 2.5rem;\n    border-radius: $radius-md;\n    padding: 0 $spacing-6;\n    font-size: $text-base;\n\n    &.hasIcon {\n      padding-inline: $spacing-4;\n    }\n  }\n\n  &.sizeIcon {\n    height: 2.25rem;\n    width: 2.25rem;\n    padding: 0;\n  }\n\n  // 样式变体\n  &.variantDefault {\n    background-color: $primary;\n    color: $primary-foreground;\n    border: none;\n    box-shadow: $shadow-sm;\n\n    &:hover:not(:disabled) {\n      background-color: color.mix(black, $primary, 10%);\n    }\n\n    &:active:not(:disabled) {\n      background-color: color.mix(black, $primary, 20%);\n    }\n  }\n\n  &.variantDestructive {\n    background-color: $destructive;\n    color: $destructive-foreground;\n    border: none;\n    box-shadow: $shadow-sm;\n\n    &:hover:not(:disabled) {\n      background-color: color.mix(black, $destructive, 10%);\n    }\n  }\n\n  &.variantOutline {\n    background-color: transparent;\n    color: $foreground;\n    border: 1px solid $border;\n    box-shadow: $shadow-sm;\n\n    &:hover:not(:disabled) {\n      background-color: $accent;\n      color: $accent-foreground;\n    }\n  }\n\n  &.variantSecondary {\n    background-color: $secondary;\n    color: $secondary-foreground;\n    border: none;\n    box-shadow: $shadow-sm;\n\n    &:hover:not(:disabled) {\n      background-color: color.mix(black, $secondary, 10%);\n    }\n  }\n\n  &.variantGhost {\n    background-color: transparent;\n    color: $foreground;\n\n    &:hover:not(:disabled) {\n      background-color: $accent;\n      color: $accent-foreground;\n    }\n  }\n\n  &.variantLink {\n    background-color: transparent;\n    color: $primary;\n    text-decoration: underline;\n    text-underline-offset: 4px;\n\n    &:hover:not(:disabled) {\n      text-decoration: none;\n    }\n  }\n}\n"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "button",
+	"type": "registry:ui",
+	"title": "Button",
+	"description": "Multi-variant React button component for Tile UI.",
+	"dependencies": ["@radix-ui/react-slot"],
+	"devDependencies": ["sass"],
+	"registryDependencies": ["core", "utils"],
+	"files": [
+		{
+			"path": "packages/react/src/components/button/button.tsx",
+			"type": "registry:ui",
+			"target": "components/ui/button/button.tsx",
+			"content": "import React from 'react';\nimport { Slot } from '@radix-ui/react-slot';\nimport { getButtonStyleKeys, isButtonDisabled } from '../lib/core';\nimport type { ButtonBaseProps } from '../lib/core';\nimport styles from './button.module.scss';\n\nexport interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, ButtonBaseProps {}\n\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n\t({ className = '', variant = 'default', size = 'default', asChild = false, loading = false, disabled, children, ...props }, ref) => {\n\t\tconst Comp = asChild ? Slot : 'button';\n\t\tconst styleKeys = getButtonStyleKeys(variant, size);\n\n\t\tconst classes = [styles[styleKeys.base], styles[styleKeys.variant], styles[styleKeys.size], className].filter(Boolean).join(' ');\n\n\t\treturn (\n\t\t\t<Comp ref={ref} className={classes} disabled={isButtonDisabled(disabled, loading)} {...props}>\n\t\t\t\t{loading && (\n\t\t\t\t\t<svg\n\t\t\t\t\t\tclassName={styles.spinner}\n\t\t\t\t\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\t\t\t\t\twidth=\"16\"\n\t\t\t\t\t\theight=\"16\"\n\t\t\t\t\t\tviewBox=\"0 0 24 24\"\n\t\t\t\t\t\tfill=\"none\"\n\t\t\t\t\t\tstroke=\"currentColor\"\n\t\t\t\t\t\tstrokeWidth=\"2\"\n\t\t\t\t\t\tstrokeLinecap=\"round\"\n\t\t\t\t\t\tstrokeLinejoin=\"round\">\n\t\t\t\t\t\t<circle cx=\"12\" cy=\"12\" r=\"10\" />\n\t\t\t\t\t</svg>\n\t\t\t\t)}\n\t\t\t\t{children}\n\t\t\t</Comp>\n\t\t);\n\t},\n);\n\nButton.displayName = 'Button';\n\nexport { Button };\nexport default Button;\n"
+		},
+		{
+			"path": "packages/styles/scss/components/button.module.scss",
+			"type": "registry:file",
+			"target": "components/ui/button/button.module.scss",
+			"content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.button {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tgap: $spacing-2;\n\twhite-space: nowrap;\n\tborder-radius: $radius;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\ttransition: all $transition-fast;\n\tcursor: pointer;\n\toutline: none;\n\n\t&:focus-visible {\n\t\toutline: none;\n\t\tbox-shadow:\n\t\t\t0 0 0 2px $background,\n\t\t\t0 0 0 4px $ring;\n\t}\n\n\t&:disabled,\n\t&.disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t\tcursor: not-allowed;\n\t}\n\n\tsvg {\n\t\tpointer-events: none;\n\t\twidth: 1em;\n\t\theight: 1em;\n\t}\n\n\t// 尺寸变体\n\t&.sizeDefault {\n\t\theight: 2.25rem;\n\t\tpadding: 0 $spacing-4;\n\n\t\t&.hasIcon {\n\t\t\tpadding-inline: $spacing-3;\n\t\t}\n\t}\n\n\t&.sizeSm {\n\t\theight: 2rem;\n\t\tborder-radius: $radius-sm;\n\t\tpadding: 0 $spacing-3;\n\t\tfont-size: $text-xs;\n\n\t\t&.hasIcon {\n\t\t\tpadding-inline: $spacing-2;\n\t\t\tgap: $spacing-1;\n\t\t}\n\t}\n\n\t&.sizeLg {\n\t\theight: 2.5rem;\n\t\tborder-radius: $radius-md;\n\t\tpadding: 0 $spacing-6;\n\t\tfont-size: $text-base;\n\n\t\t&.hasIcon {\n\t\t\tpadding-inline: $spacing-4;\n\t\t}\n\t}\n\n\t&.sizeIcon {\n\t\theight: 2.25rem;\n\t\twidth: 2.25rem;\n\t\tpadding: 0;\n\t}\n\n\t// 样式变体\n\t&.variantDefault {\n\t\tbackground-color: $primary;\n\t\tcolor: $primary-foreground;\n\t\tborder: none;\n\t\tbox-shadow: $shadow-sm;\n\n\t\t&:hover:not(:disabled) {\n\t\t\tbackground-color: color.mix(black, $primary, 10%);\n\t\t}\n\n\t\t&:active:not(:disabled) {\n\t\t\tbackground-color: color.mix(black, $primary, 20%);\n\t\t}\n\t}\n\n\t&.variantDestructive {\n\t\tbackground-color: $destructive;\n\t\tcolor: $destructive-foreground;\n\t\tborder: none;\n\t\tbox-shadow: $shadow-sm;\n\n\t\t&:hover:not(:disabled) {\n\t\t\tbackground-color: color.mix(black, $destructive, 10%);\n\t\t}\n\t}\n\n\t&.variantOutline {\n\t\tbackground-color: transparent;\n\t\tcolor: $foreground;\n\t\tborder: 1px solid $border;\n\t\tbox-shadow: $shadow-sm;\n\n\t\t&:hover:not(:disabled) {\n\t\t\tbackground-color: $accent;\n\t\t\tcolor: $accent-foreground;\n\t\t}\n\t}\n\n\t&.variantSecondary {\n\t\tbackground-color: $secondary;\n\t\tcolor: $secondary-foreground;\n\t\tborder: none;\n\t\tbox-shadow: $shadow-sm;\n\n\t\t&:hover:not(:disabled) {\n\t\t\tbackground-color: color.mix(black, $secondary, 10%);\n\t\t}\n\t}\n\n\t&.variantGhost {\n\t\tbackground-color: transparent;\n\t\tcolor: $foreground;\n\n\t\t&:hover:not(:disabled) {\n\t\t\tbackground-color: $accent;\n\t\t\tcolor: $accent-foreground;\n\t\t}\n\t}\n\n\t&.variantLink {\n\t\tbackground-color: transparent;\n\t\tcolor: $primary;\n\t\ttext-decoration: underline;\n\t\ttext-underline-offset: 4px;\n\n\t\t&:hover:not(:disabled) {\n\t\t\ttext-decoration: none;\n\t\t}\n\t}\n}\n"
+		}
+	]
 }

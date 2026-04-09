@@ -1,18 +1,14 @@
-"use client"
+'use client';
 
-import { usePathname } from "next/navigation"
+import type { ComponentProps } from 'react';
+import { usePathname } from 'next/navigation';
 
-import { DocsSidebar } from "../../common/components/docs-sidebar"
+import { DocsSidebar } from './docs-sidebar';
 
-type PageTreeNode = {
-  type: string
-  name: string
-  url?: string
-  children?: PageTreeNode[]
-}
+type DocsSidebarTree = ComponentProps<typeof DocsSidebar>['tree'];
 
-export function ReactDocsSidebar({ tree }: { tree: PageTreeNode }) {
-  const pathname = usePathname()
+export function ReactDocsSidebar({ tree }: { tree: DocsSidebarTree }) {
+	const pathname = usePathname();
 
-  return <DocsSidebar tree={tree} pathname={pathname} />
+	return <DocsSidebar tree={tree} pathname={pathname} />;
 }

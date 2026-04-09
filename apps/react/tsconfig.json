@@ -1,48 +1,27 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowJs": true,
-    "noEmit": true,
-    "incremental": true,
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "react": [
-        "../../node_modules/@types/react"
-      ],
-      "react-dom": [
-        "../../node_modules/@types/react-dom"
-      ],
-      "@tile-ui/react": [
-        "../../packages/react/src/index.ts"
-      ],
-      "@tile-ui/react/*": [
-        "../../packages/react/src/*"
-      ],
-      "@tile-ui/buildx": [
-        "../../packages/buildx/src/index.ts"
-      ],
-      "@tile-ui/buildx/*": [
-        "../../packages/buildx/src/*"
-      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"jsx": "preserve",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"allowJs": true,
+		"noEmit": true,
+		"declaration": false,
+		"declarationMap": false,
+		"incremental": true,
+		"paths": {
+			"@/*": ["./*"],
+			"@tile-ui/react": ["../../packages/react/src/index.ts"],
+			"@tile-ui/react/*": ["../../packages/react/src/*"],
+			"@tile-ui/buildx": ["../../packages/buildx/src/index.ts"],
+			"@tile-ui/buildx/*": ["../../packages/buildx/src/*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "next-env.d.ts", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }

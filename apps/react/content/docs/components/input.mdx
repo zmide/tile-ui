@@ -18,10 +18,10 @@ pnpm dlx shadcn@latest add https://react.tile-ui.dev/r/input.json
 ## Package usage
 
 ```tsx
-import { Input } from "@tile-ui/react"
+import { Input } from '@tile-ui/react';
 
 export function ProfileNameField() {
-  return <Input label="Display name" helperText="Shown on your public profile." />
+	return <Input label="Display name" helperText="Shown on your public profile." />;
 }
 ```
 
@@ -34,19 +34,19 @@ export function ProfileNameField() {
 
 ## Registry dependencies
 
-| Item | Purpose |
-| --- | --- |
-| `input` | Component source |
+| Item     | Purpose                        |
+| -------- | ------------------------------ |
+| `input`  | Component source               |
 | `styles` | Shared SCSS tokens and globals |
 
 ## API reference
 
-| Prop | Type | Notes |
-| --- | --- | --- |
-| `label` | `string` | Optional field label rendered above the input. |
-| `helperText` | `string` | Displayed below the field when there is no error. |
-| `error` | `string` | Displays invalid state and error messaging. |
-| `required` | `boolean` | Adds required styling to the label. |
+| Prop         | Type      | Notes                                             |
+| ------------ | --------- | ------------------------------------------------- |
+| `label`      | `string`  | Optional field label rendered above the input.    |
+| `helperText` | `string`  | Displayed below the field when there is no error. |
+| `error`      | `string`  | Displays invalid state and error messaging.       |
+| `required`   | `boolean` | Adds required styling to the label.               |
 
 ## Related docs
 

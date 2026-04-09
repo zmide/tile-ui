@@ -18,10 +18,10 @@ pnpm dlx shadcn@latest add https://react.tile-ui.dev/r/button.json
 ## Package usage
 
 ```tsx
-import { Button } from "@tile-ui/react"
+import { Button } from '@tile-ui/react';
 
 export function SaveChanges() {
-  return <Button>Save changes</Button>
+	return <Button>Save changes</Button>;
 }
 ```
 
@@ -34,19 +34,19 @@ export function SaveChanges() {
 
 ## Registry dependencies
 
-| Item | Purpose |
-| --- | --- |
-| `button` | Component source |
+| Item     | Purpose                        |
+| -------- | ------------------------------ |
+| `button` | Component source               |
 | `styles` | Shared SCSS tokens and globals |
 
 ## API reference
 
-| Prop | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `variant` | `default \| destructive \| outline \| secondary \| ghost \| link` | `default` | Chooses the button visual treatment. |
-| `size` | `default \| sm \| lg \| icon` | `default` | Controls height and padding. |
-| `loading` | `boolean` | `false` | Disables interaction and shows the inline spinner. |
-| `asChild` | `boolean` | `false` | Renders via Radix Slot for composition. |
+| Prop      | Type                                                              | Default   | Notes                                              |
+| --------- | ----------------------------------------------------------------- | --------- | -------------------------------------------------- |
+| `variant` | `default \| destructive \| outline \| secondary \| ghost \| link` | `default` | Chooses the button visual treatment.               |
+| `size`    | `default \| sm \| lg \| icon`                                     | `default` | Controls height and padding.                       |
+| `loading` | `boolean`                                                         | `false`   | Disables interaction and shows the inline spinner. |
+| `asChild` | `boolean`                                                         | `false`   | Renders via Radix Slot for composition.            |
 
 ## Related docs
 

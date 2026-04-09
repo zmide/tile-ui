@@ -1,30 +1,24 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "label",
-  "type": "registry:ui",
-  "title": "Label",
-  "description": "React label primitive for Tile UI forms.",
-  "dependencies": [
-    "@radix-ui/react-label"
-  ],
-  "devDependencies": [
-    "sass"
-  ],
-  "registryDependencies": [
-    "core"
-  ],
-  "files": [
-    {
-      "path": "packages/react/src/components/label/label.tsx",
-      "type": "registry:ui",
-      "target": "components/ui/label/label.tsx",
-      "content": "import React from 'react';\nimport * as LabelPrimitive from '@radix-ui/react-label';\nimport { getLabelClassKeys } from '../lib/core';\nimport type { LabelBaseProps } from '../lib/core';\nimport styles from './label.module.scss';\n\nexport interface LabelProps\n  extends React.LabelHTMLAttributes<HTMLLabelElement>,\n    LabelBaseProps {}\n\nconst Label = React.forwardRef<HTMLLabelElement, LabelProps>(\n  ({ className = '', required, children, ...props }, ref) => {\n    const classKeys = getLabelClassKeys(required);\n\n    return (\n      <LabelPrimitive.Root\n        ref={ref}\n        className={`${styles[classKeys.base]} ${classKeys.required ? styles[classKeys.required] : ''} ${className}`}\n        {...props}\n      >\n        {children}\n      </LabelPrimitive.Root>\n    );\n  }\n);\n\nLabel.displayName = 'Label';\n\nexport { Label };\nexport default Label;\n"
-    },
-    {
-      "path": "packages/styles/scss/components/label.module.scss",
-      "type": "registry:file",
-      "target": "components/ui/label/label.module.scss",
-      "content": "@use 'variables/colors' as *;\n\n.label {\n  display: block;\n  font-size: $text-sm;\n  font-weight: $font-medium;\n  color: $foreground;\n  line-height: $leading-normal;\n  cursor: pointer;\n\n  &.required::after {\n    content: ' *';\n    color: $destructive;\n  }\n}\n"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "label",
+	"type": "registry:ui",
+	"title": "Label",
+	"description": "React label primitive for Tile UI forms.",
+	"dependencies": ["@radix-ui/react-label"],
+	"devDependencies": ["sass"],
+	"registryDependencies": ["core"],
+	"files": [
+		{
+			"path": "packages/react/src/components/label/label.tsx",
+			"type": "registry:ui",
+			"target": "components/ui/label/label.tsx",
+			"content": "import React from 'react';\nimport * as LabelPrimitive from '@radix-ui/react-label';\nimport { getLabelClassKeys } from '../lib/core';\nimport type { LabelBaseProps } from '../lib/core';\nimport styles from './label.module.scss';\n\nexport interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement>, LabelBaseProps {}\n\nconst Label = React.forwardRef<HTMLLabelElement, LabelProps>(({ className = '', required, children, ...props }, ref) => {\n\tconst classKeys = getLabelClassKeys(required);\n\n\treturn (\n\t\t<LabelPrimitive.Root ref={ref} className={`${styles[classKeys.base]} ${classKeys.required ? styles[classKeys.required] : ''} ${className}`} {...props}>\n\t\t\t{children}\n\t\t</LabelPrimitive.Root>\n\t);\n});\n\nLabel.displayName = 'Label';\n\nexport { Label };\nexport default Label;\n"
+		},
+		{
+			"path": "packages/styles/scss/components/label.module.scss",
+			"type": "registry:file",
+			"target": "components/ui/label/label.module.scss",
+			"content": "@use 'variables/colors' as *;\n\n.label {\n\tdisplay: block;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\tcolor: $foreground;\n\tline-height: $leading-normal;\n\tcursor: pointer;\n\n\t&.required::after {\n\t\tcontent: ' *';\n\t\tcolor: $destructive;\n\t}\n}\n"
+		}
+	]
 }

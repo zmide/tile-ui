@@ -23,37 +23,31 @@ if (!fs.existsSync(COMPONENTS_DIR)) fs.mkdirSync(COMPONENTS_DIR, { recursive: tr
 
 // 编译全局样式
 function compileFile(inputPath, outputPath) {
-  try {
-    const result = sass.compile(inputPath, {
-      loadPaths: [path.resolve(SCSS_DIR)],
-      style: 'compressed',
-    });
-    fs.writeFileSync(outputPath, result.css);
-    console.log(`  ${path.relative(__dirname, outputPath)}`);
-  } catch (err) {
-    console.error(`  Failed: ${path.relative(__dirname, inputPath)} - ${err.message}`);
-  }
+	try {
+		const result = sass.compile(inputPath, {
+			loadPaths: [path.resolve(SCSS_DIR)],
+			style: 'compressed',
+		});
+		fs.writeFileSync(outputPath, result.css);
+		console.log(`  ${path.relative(__dirname, outputPath)}`);
+	} catch (err) {
+		console.error(`  Failed: ${path.relative(__dirname, inputPath)} - ${err.message}`);
+	}
 }
 
 console.log('Compiling SCSS -> CSS...');
 
 // 编译 globals.scss
-compileFile(
-  path.resolve(SCSS_DIR, 'globals.scss'),
-  path.resolve(CSS_DIR, 'globals.css')
-);
+compileFile(path.resolve(SCSS_DIR, 'globals.scss'), path.resolve(CSS_DIR, 'globals.css'));
 
 // 编译组件样式 (CSS Modules 仅用于参考，实际 module 化需框架支持)
 const componentsDir = path.resolve(SCSS_DIR, 'components');
 if (fs.existsSync(componentsDir)) {
-  const files = fs.readdirSync(componentsDir).filter(f => f.endsWith('.scss'));
-  for (const file of files) {
-    const name = file.replace('.module.scss', '.css').replace('.scss', '.css');
-    compileFile(
-      path.resolve(componentsDir, file),
-      path.resolve(COMPONENTS_DIR, name)
-    );
-  }
+	const files = fs.readdirSync(componentsDir).filter((f) => f.endsWith('.scss'));
+	for (const file of files) {
+		const name = file.replace('.module.scss', '.css').replace('.scss', '.css');
+		compileFile(path.resolve(componentsDir, file), path.resolve(COMPONENTS_DIR, name));
+	}
 }
 
 console.log('Done!');

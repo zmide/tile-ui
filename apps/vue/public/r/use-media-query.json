@@ -1,15 +1,15 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "use-media-query",
-  "type": "registry:hook",
-  "title": "useMediaQuery",
-  "description": "Vue composable for viewport and media query state.",
-  "files": [
-    {
-      "path": "packages/vue/src/composables/use-media.ts",
-      "type": "registry:hook",
-      "target": "composables/use-media-query.ts",
-      "content": "import { ref, onMounted, onUnmounted } from 'vue';\n\n/**\n * 窗口大小响应式 composable\n */\nexport function useWindowSize() {\n  const width = ref(typeof window !== 'undefined' ? window.innerWidth : 0);\n  const height = ref(typeof window !== 'undefined' ? window.innerHeight : 0);\n\n  function handleResize() {\n    width.value = window.innerWidth;\n    height.value = window.innerHeight;\n  }\n\n  onMounted(() => {\n    window.addEventListener('resize', handleResize);\n    handleResize();\n  });\n\n  onUnmounted(() => {\n    window.removeEventListener('resize', handleResize);\n  });\n\n  return { width, height };\n}\n\n/**\n * 媒体查询 composable\n */\nexport function useMediaQuery(query: string) {\n  const matches = ref(false);\n\n  onMounted(() => {\n    const media = window.matchMedia(query);\n    matches.value = media.matches;\n\n    const listener = (event: MediaQueryListEvent) => {\n      matches.value = event.matches;\n    };\n\n    media.addEventListener('change', listener);\n\n    onUnmounted(() => {\n      media.removeEventListener('change', listener);\n    });\n  });\n\n  return matches;\n}\n\n/**\n * 是否是移动设备\n */\nexport function useIsMobile() {\n  return useMediaQuery('(max-width: 768px)');\n}\n\n/**\n * 在线状态 composable\n */\nexport function useOnlineStatus() {\n  const isOnline = ref(typeof navigator !== 'undefined' ? navigator.onLine : true);\n\n  onMounted(() => {\n    const handleOnline = () => { isOnline.value = true; };\n    const handleOffline = () => { isOnline.value = false; };\n\n    window.addEventListener('online', handleOnline);\n    window.addEventListener('offline', handleOffline);\n\n    onUnmounted(() => {\n      window.removeEventListener('online', handleOnline);\n      window.removeEventListener('offline', handleOffline);\n    });\n  });\n\n  return isOnline;\n}\n\n/**\n * 滚动位置 composable\n */\nexport function useScrollPosition() {\n  const x = ref(0);\n  const y = ref(0);\n\n  onMounted(() => {\n    function handleScroll() {\n      x.value = window.scrollX;\n      y.value = window.scrollY;\n    }\n\n    window.addEventListener('scroll', handleScroll, { passive: true });\n    handleScroll();\n\n    onUnmounted(() => {\n      window.removeEventListener('scroll', handleScroll);\n    });\n  });\n\n  return { x, y };\n}\n"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "use-media-query",
+	"type": "registry:hook",
+	"title": "useMediaQuery",
+	"description": "Vue composable for viewport and media query state.",
+	"files": [
+		{
+			"path": "packages/vue/src/composables/use-media.ts",
+			"type": "registry:hook",
+			"target": "composables/use-media-query.ts",
+			"content": "import { ref, onMounted, onUnmounted } from 'vue';\n\n/**\n * 窗口大小响应式 composable\n */\nexport function useWindowSize() {\n\tconst width = ref(typeof window !== 'undefined' ? window.innerWidth : 0);\n\tconst height = ref(typeof window !== 'undefined' ? window.innerHeight : 0);\n\n\tfunction handleResize() {\n\t\twidth.value = window.innerWidth;\n\t\theight.value = window.innerHeight;\n\t}\n\n\tonMounted(() => {\n\t\twindow.addEventListener('resize', handleResize);\n\t\thandleResize();\n\t});\n\n\tonUnmounted(() => {\n\t\twindow.removeEventListener('resize', handleResize);\n\t});\n\n\treturn { width, height };\n}\n\n/**\n * 媒体查询 composable\n */\nexport function useMediaQuery(query: string) {\n\tconst matches = ref(false);\n\n\tonMounted(() => {\n\t\tconst media = window.matchMedia(query);\n\t\tmatches.value = media.matches;\n\n\t\tconst listener = (event: MediaQueryListEvent) => {\n\t\t\tmatches.value = event.matches;\n\t\t};\n\n\t\tmedia.addEventListener('change', listener);\n\n\t\tonUnmounted(() => {\n\t\t\tmedia.removeEventListener('change', listener);\n\t\t});\n\t});\n\n\treturn matches;\n}\n\n/**\n * 是否是移动设备\n */\nexport function useIsMobile() {\n\treturn useMediaQuery('(max-width: 768px)');\n}\n\n/**\n * 在线状态 composable\n */\nexport function useOnlineStatus() {\n\tconst isOnline = ref(typeof navigator !== 'undefined' ? navigator.onLine : true);\n\n\tonMounted(() => {\n\t\tconst handleOnline = () => {\n\t\t\tisOnline.value = true;\n\t\t};\n\t\tconst handleOffline = () => {\n\t\t\tisOnline.value = false;\n\t\t};\n\n\t\twindow.addEventListener('online', handleOnline);\n\t\twindow.addEventListener('offline', handleOffline);\n\n\t\tonUnmounted(() => {\n\t\t\twindow.removeEventListener('online', handleOnline);\n\t\t\twindow.removeEventListener('offline', handleOffline);\n\t\t});\n\t});\n\n\treturn isOnline;\n}\n\n/**\n * 滚动位置 composable\n */\nexport function useScrollPosition() {\n\tconst x = ref(0);\n\tconst y = ref(0);\n\n\tonMounted(() => {\n\t\tfunction handleScroll() {\n\t\t\tx.value = window.scrollX;\n\t\t\ty.value = window.scrollY;\n\t\t}\n\n\t\twindow.addEventListener('scroll', handleScroll, { passive: true });\n\t\thandleScroll();\n\n\t\tonUnmounted(() => {\n\t\t\twindow.removeEventListener('scroll', handleScroll);\n\t\t});\n\t});\n\n\treturn { x, y };\n}\n"
+		}
+	]
 }
