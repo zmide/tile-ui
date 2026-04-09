@@ -1,0 +1,38 @@
+{
+  "name": "@tile-ui/buildx",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./registry": {
+      "types": "./src/registry/index.ts",
+      "default": "./src/registry/index.ts"
+    },
+    "./registry/presets/react": {
+      "types": "./src/registry/presets/react.ts",
+      "default": "./src/registry/presets/react.ts"
+    },
+    "./registry/presets/vue": {
+      "types": "./src/registry/presets/vue.ts",
+      "default": "./src/registry/presets/vue.ts"
+    },
+    "./registry/types": {
+      "types": "./src/registry/types.ts",
+      "default": "./src/registry/types.ts"
+    }
+  },
+  "scripts": {
+    "lint": "oxlint -c .oxlintrc.json .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "oxlint": "^1.18.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

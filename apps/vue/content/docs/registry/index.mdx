@@ -3,6 +3,8 @@ title: Registry
 description: Overview of the Vue registry, item inventory, and supporting guides.
 ---
 
+import { vueRegistryItemNames } from "../../server/utils/registry-meta"
+
 # Registry
 
 The Vue registry mirrors the React registry structure, but each item contains Vue TSX components or composables tailored for Nuxt and Vue applications.
@@ -16,17 +18,11 @@ https://vue.tile-ui.dev/r/{name}.json
 
 ## Available items
 
-- core
-- button
-- input
-- textarea
-- label
-- card
-- styles
-- utils
-- use-copy-to-clipboard
-- use-media-query
-- use-local-storage
+<ul>
+  {vueRegistryItemNames.map((name) => (
+    <li key={name}>{name}</li>
+  ))}
+</ul>
 
 ## Continue reading
 

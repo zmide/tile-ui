@@ -1,5 +1,4 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "tile-ui-vue",
   "homepage": "https://vue.tile-ui.dev",
   "items": [
@@ -7,112 +6,12 @@
       "name": "core",
       "type": "registry:lib",
       "title": "Core",
-      "description": "Framework-agnostic helpers required by Vue registry components.",
+      "description": "Registry runtime helpers for Vue Tile UI items.",
       "files": [
         {
-          "path": "registry/vue/tile-ui/lib/core.ts",
+          "path": "__virtual__/button/core.ts",
           "type": "registry:lib",
           "target": "components/ui/lib/core.ts"
-        }
-      ]
-    },
-    {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "Multi-variant Vue button component for Tile UI.",
-      "dependencies": ["vue"],
-      "devDependencies": ["sass"],
-      "registryDependencies": ["core"],
-      "files": [
-        {
-          "path": "registry/vue/tile-ui/button/button.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/vue/tile-ui/button/button.module.scss",
-          "type": "registry:file",
-          "target": "components/ui/button/button.module.scss"
-        }
-      ]
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "title": "Input",
-      "description": "Vue input component with label, error and helper text.",
-      "dependencies": ["vue"],
-      "devDependencies": ["sass"],
-      "registryDependencies": ["core"],
-      "files": [
-        {
-          "path": "registry/vue/tile-ui/input/input.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/vue/tile-ui/input/input.module.scss",
-          "type": "registry:file",
-          "target": "components/ui/input/input.module.scss"
-        }
-      ]
-    },
-    {
-      "name": "textarea",
-      "type": "registry:ui",
-      "title": "Textarea",
-      "description": "Vue textarea component with label, error and helper text.",
-      "dependencies": ["vue"],
-      "devDependencies": ["sass"],
-      "registryDependencies": ["core"],
-      "files": [
-        {
-          "path": "registry/vue/tile-ui/textarea/textarea.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/vue/tile-ui/textarea/textarea.module.scss",
-          "type": "registry:file",
-          "target": "components/ui/textarea/textarea.module.scss"
-        }
-      ]
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "title": "Label",
-      "description": "Vue label component with required state support.",
-      "dependencies": ["vue"],
-      "devDependencies": ["sass"],
-      "registryDependencies": ["core"],
-      "files": [
-        {
-          "path": "registry/vue/tile-ui/label/label.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/vue/tile-ui/label/label.module.scss",
-          "type": "registry:file",
-          "target": "components/ui/label/label.module.scss"
-        }
-      ]
-    },
-    {
-      "name": "card",
-      "type": "registry:ui",
-      "title": "Card",
-      "description": "Composable Vue card container for Tile UI.",
-      "dependencies": ["vue"],
-      "devDependencies": ["sass"],
-      "registryDependencies": ["core"],
-      "files": [
-        {
-          "path": "registry/vue/tile-ui/card/card.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/vue/tile-ui/card/card.module.scss",
-          "type": "registry:file",
-          "target": "components/ui/card/card.module.scss"
         }
       ]
     },
@@ -120,12 +19,38 @@
       "name": "utils",
       "type": "registry:lib",
       "title": "Utils",
-      "description": "Shared utility helpers for the Vue registry.",
+      "description": "Shared utility helpers for Tile UI registries.",
       "files": [
         {
-          "path": "registry/vue/tile-ui/lib/utils.ts",
+          "path": "__virtual__/shared/utils.ts",
           "type": "registry:lib",
           "target": "components/ui/lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "styles",
+      "type": "registry:file",
+      "title": "Styles",
+      "description": "Shared SCSS assets required by Tile UI registry items.",
+      "devDependencies": [
+        "sass"
+      ],
+      "files": [
+        {
+          "path": "packages/styles/scss/globals.scss",
+          "type": "registry:file",
+          "target": "styles/globals.scss"
+        },
+        {
+          "path": "packages/styles/scss/variables/_colors.scss",
+          "type": "registry:file",
+          "target": "styles/variables/_colors.scss"
+        },
+        {
+          "path": "packages/styles/scss/mixins/_utils.scss",
+          "type": "registry:file",
+          "target": "styles/mixins/_utils.scss"
         }
       ]
     },
@@ -133,11 +58,10 @@
       "name": "use-copy-to-clipboard",
       "type": "registry:hook",
       "title": "useCopyToClipboard",
-      "description": "Vue composables for clipboard and DOM event helpers.",
-      "dependencies": ["vue"],
+      "description": "Vue composable for clipboard copy interactions.",
       "files": [
         {
-          "path": "registry/vue/tile-ui/composables/use-copy-to-clipboard.ts",
+          "path": "packages/vue/src/composables/use-event.ts",
           "type": "registry:hook",
           "target": "composables/use-copy-to-clipboard.ts"
         }
@@ -147,11 +71,10 @@
       "name": "use-media-query",
       "type": "registry:hook",
       "title": "useMediaQuery",
-      "description": "Vue composables for viewport and media query state.",
-      "dependencies": ["vue"],
+      "description": "Vue composable for viewport and media query state.",
       "files": [
         {
-          "path": "registry/vue/tile-ui/composables/use-media-query.ts",
+          "path": "packages/vue/src/composables/use-media.ts",
           "type": "registry:hook",
           "target": "composables/use-media-query.ts"
         }
@@ -161,37 +84,145 @@
       "name": "use-local-storage",
       "type": "registry:hook",
       "title": "useLocalStorage",
-      "description": "Vue composables for local and session storage.",
-      "dependencies": ["vue"],
+      "description": "Vue composable for local and session storage state.",
       "files": [
         {
-          "path": "registry/vue/tile-ui/composables/use-local-storage.ts",
+          "path": "packages/vue/src/composables/use-local-storage.ts",
           "type": "registry:hook",
           "target": "composables/use-local-storage.ts"
         }
       ]
     },
     {
-      "name": "styles",
-      "type": "registry:file",
-      "title": "Global Styles",
-      "description": "SCSS globals and design tokens for the Vue registry.",
-      "devDependencies": ["sass"],
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Multi-variant Vue button component for Tile UI.",
+      "dependencies": [
+        "vue"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core",
+        "utils"
+      ],
       "files": [
         {
-          "path": "registry/vue/tile-ui/styles/globals.scss",
-          "type": "registry:file",
-          "target": "styles/globals.scss"
+          "path": "packages/vue/src/components/button/button.tsx",
+          "type": "registry:ui"
         },
         {
-          "path": "registry/vue/tile-ui/styles/variables/_colors.scss",
+          "path": "packages/styles/scss/components/button.module.scss",
           "type": "registry:file",
-          "target": "styles/variables/_colors.scss"
+          "target": "components/ui/button/button.module.scss"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Accessible Vue input component for Tile UI.",
+      "dependencies": [
+        "vue"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "packages/vue/src/components/input/input.tsx",
+          "type": "registry:ui"
         },
         {
-          "path": "registry/vue/tile-ui/styles/mixins/_utils.scss",
+          "path": "packages/styles/scss/components/input.module.scss",
           "type": "registry:file",
-          "target": "styles/mixins/_utils.scss"
+          "target": "components/ui/input/input.module.scss"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Accessible Vue textarea component for Tile UI.",
+      "dependencies": [
+        "vue"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "packages/vue/src/components/textarea/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/styles/scss/components/textarea.module.scss",
+          "type": "registry:file",
+          "target": "components/ui/textarea/textarea.module.scss"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Vue label primitive for Tile UI forms.",
+      "dependencies": [
+        "vue"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core"
+      ],
+      "files": [
+        {
+          "path": "packages/vue/src/components/label/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/styles/scss/components/label.module.scss",
+          "type": "registry:file",
+          "target": "components/ui/label/label.module.scss"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Composable Vue card primitives for Tile UI.",
+      "dependencies": [
+        "vue"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core"
+      ],
+      "files": [
+        {
+          "path": "packages/vue/src/components/card/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/styles/scss/components/card.module.scss",
+          "type": "registry:file",
+          "target": "components/ui/card/card.module.scss"
         }
       ]
     }

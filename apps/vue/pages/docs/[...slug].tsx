@@ -56,7 +56,8 @@ export default defineComponent({
 
     const { data, error } = await useAsyncData(
       `docs:${path || 'index'}`,
-      () => fetch(`/api/docs/${path}`).then((response) => response.json()),
+      () =>
+        $fetch(path ? `/api/docs/${path}` : '/api/docs').catch(() => null),
       {
         watch: [() => route.fullPath],
       }

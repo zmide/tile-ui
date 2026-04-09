@@ -47,6 +47,7 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
+    "@tile-ui/buildx": "workspace:*",
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
     "react": "19.1.0",

@@ -15,6 +15,7 @@
         "app/**/*.{ts,tsx}",
         "components/**/*.{ts,tsx}",
         "lib/**/*.{ts,tsx}",
+        "scripts/**/*.{js,mjs,ts,tsx}",
         ".source/**/*.{ts,tsx}",
         "mdx-components.tsx",
         "next.config.ts",

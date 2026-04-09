@@ -16,6 +16,7 @@
         "app.tsx",
         "components/**/*.{ts,tsx,vue}",
         "pages/**/*.{ts,tsx,vue}",
+        "scripts/**/*.{js,mjs,ts,tsx}",
         "server/**/*.{ts,tsx}",
         "nuxt.config.ts"
       ]

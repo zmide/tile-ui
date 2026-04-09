@@ -1,23 +1,120 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "tile-ui-react",
   "homepage": "https://react.tile-ui.dev",
   "items": [
+    {
+      "name": "core",
+      "type": "registry:lib",
+      "title": "Core",
+      "description": "Registry runtime helpers for React Tile UI items.",
+      "files": [
+        {
+          "path": "__virtual__/button/core.ts",
+          "type": "registry:lib",
+          "target": "components/ui/lib/core.ts"
+        }
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "Shared utility helpers for Tile UI registries.",
+      "files": [
+        {
+          "path": "__virtual__/shared/utils.ts",
+          "type": "registry:lib",
+          "target": "components/ui/lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "styles",
+      "type": "registry:file",
+      "title": "Styles",
+      "description": "Shared SCSS assets required by Tile UI registry items.",
+      "devDependencies": [
+        "sass"
+      ],
+      "files": [
+        {
+          "path": "packages/styles/scss/globals.scss",
+          "type": "registry:file",
+          "target": "styles/globals.scss"
+        },
+        {
+          "path": "packages/styles/scss/variables/_colors.scss",
+          "type": "registry:file",
+          "target": "styles/variables/_colors.scss"
+        },
+        {
+          "path": "packages/styles/scss/mixins/_utils.scss",
+          "type": "registry:file",
+          "target": "styles/mixins/_utils.scss"
+        }
+      ]
+    },
+    {
+      "name": "use-copy-to-clipboard",
+      "type": "registry:hook",
+      "title": "useCopyToClipboard",
+      "description": "React hook for clipboard copy interactions.",
+      "files": [
+        {
+          "path": "packages/react/src/hooks/use-event.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-copy-to-clipboard.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "title": "useMediaQuery",
+      "description": "React hook for viewport and media query state.",
+      "files": [
+        {
+          "path": "packages/react/src/hooks/use-media.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-local-storage",
+      "type": "registry:hook",
+      "title": "useLocalStorage",
+      "description": "React hook for local and session storage state.",
+      "files": [
+        {
+          "path": "packages/react/src/hooks/use-local-storage.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-local-storage.ts"
+        }
+      ]
+    },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
       "description": "Multi-variant React button component for Tile UI.",
-      "dependencies": ["@radix-ui/react-slot"],
-      "devDependencies": ["sass"],
-      "registryDependencies": [],
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core",
+        "utils"
+      ],
       "files": [
         {
-          "path": "registry/react/tile-ui/button/button.tsx",
+          "path": "packages/react/src/components/button/button.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/react/tile-ui/button/button.module.scss",
+          "path": "packages/styles/scss/components/button.module.scss",
           "type": "registry:file",
           "target": "components/ui/button/button.module.scss"
         }
@@ -27,16 +124,21 @@
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "React input component with label, error and helper text.",
-      "devDependencies": ["sass"],
-      "registryDependencies": [],
+      "description": "Accessible React input component for Tile UI.",
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core",
+        "utils"
+      ],
       "files": [
         {
-          "path": "registry/react/tile-ui/input/input.tsx",
+          "path": "packages/react/src/components/input/input.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/react/tile-ui/input/input.module.scss",
+          "path": "packages/styles/scss/components/input.module.scss",
           "type": "registry:file",
           "target": "components/ui/input/input.module.scss"
         }
@@ -46,16 +148,21 @@
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
-      "description": "React textarea component with label, error and helper text.",
-      "devDependencies": ["sass"],
-      "registryDependencies": [],
+      "description": "Accessible React textarea component for Tile UI.",
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core",
+        "utils"
+      ],
       "files": [
         {
-          "path": "registry/react/tile-ui/textarea/textarea.tsx",
+          "path": "packages/react/src/components/textarea/textarea.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/react/tile-ui/textarea/textarea.module.scss",
+          "path": "packages/styles/scss/components/textarea.module.scss",
           "type": "registry:file",
           "target": "components/ui/textarea/textarea.module.scss"
         }
@@ -65,17 +172,23 @@
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "React label component with required state support.",
-      "dependencies": ["@radix-ui/react-label"],
-      "devDependencies": ["sass"],
-      "registryDependencies": [],
+      "description": "React label primitive for Tile UI forms.",
+      "dependencies": [
+        "@radix-ui/react-label"
+      ],
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core"
+      ],
       "files": [
         {
-          "path": "registry/react/tile-ui/label/label.tsx",
+          "path": "packages/react/src/components/label/label.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/react/tile-ui/label/label.module.scss",
+          "path": "packages/styles/scss/components/label.module.scss",
           "type": "registry:file",
           "target": "components/ui/label/label.module.scss"
         }
@@ -85,90 +198,22 @@
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "Composable React card container for Tile UI.",
-      "devDependencies": ["sass"],
-      "registryDependencies": [],
+      "description": "Composable React card primitives for Tile UI.",
+      "devDependencies": [
+        "sass"
+      ],
+      "registryDependencies": [
+        "core"
+      ],
       "files": [
         {
-          "path": "registry/react/tile-ui/card/card.tsx",
+          "path": "packages/react/src/components/card/card.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/react/tile-ui/card/card.module.scss",
+          "path": "packages/styles/scss/components/card.module.scss",
           "type": "registry:file",
           "target": "components/ui/card/card.module.scss"
-        }
-      ]
-    },
-    {
-      "name": "utils",
-      "type": "registry:lib",
-      "title": "Utils",
-      "description": "Shared utility helpers for the React registry.",
-      "files": [
-        {
-          "path": "registry/react/tile-ui/lib/utils.ts",
-          "type": "registry:lib"
-        }
-      ]
-    },
-    {
-      "name": "use-copy-to-clipboard",
-      "type": "registry:hook",
-      "title": "useCopyToClipboard",
-      "description": "React clipboard hook for Tile UI.",
-      "files": [
-        {
-          "path": "registry/react/tile-ui/hooks/use-copy-to-clipboard.ts",
-          "type": "registry:hook"
-        }
-      ]
-    },
-    {
-      "name": "use-media-query",
-      "type": "registry:hook",
-      "title": "useMediaQuery",
-      "description": "React responsive hooks for Tile UI.",
-      "files": [
-        {
-          "path": "registry/react/tile-ui/hooks/use-media-query.ts",
-          "type": "registry:hook"
-        }
-      ]
-    },
-    {
-      "name": "use-local-storage",
-      "type": "registry:hook",
-      "title": "useLocalStorage",
-      "description": "React storage hooks for Tile UI.",
-      "files": [
-        {
-          "path": "registry/react/tile-ui/hooks/use-local-storage.ts",
-          "type": "registry:hook"
-        }
-      ]
-    },
-    {
-      "name": "styles",
-      "type": "registry:file",
-      "title": "Global Styles",
-      "description": "SCSS globals and design tokens for the React registry.",
-      "devDependencies": ["sass"],
-      "files": [
-        {
-          "path": "registry/react/tile-ui/styles/globals.scss",
-          "type": "registry:file",
-          "target": "styles/globals.scss"
-        },
-        {
-          "path": "registry/react/tile-ui/styles/variables/_colors.scss",
-          "type": "registry:file",
-          "target": "styles/variables/_colors.scss"
-        },
-        {
-          "path": "registry/react/tile-ui/styles/mixins/_utils.scss",
-          "type": "registry:file",
-          "target": "styles/mixins/_utils.scss"
         }
       ]
     }

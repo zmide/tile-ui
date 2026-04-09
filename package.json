@@ -9,16 +9,17 @@
     "check": "pnpm lint && pnpm type-check",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
-    "registry:sync": "node scripts/build-registry.js",
-    "registry:build:react": "node scripts/build-registry.js && pnpm dlx shadcn@latest build registry/react/registry.json --output apps/react/public/r",
-    "registry:build:vue": "node scripts/build-registry.js && pnpm dlx shadcn@latest build registry/vue/registry.json --output apps/vue/public/r",
+    "registry:build:react": "pnpm --filter @tile-ui/react-docs registry:build",
+    "registry:build:vue": "pnpm --filter @tile-ui/vue-docs registry:build",
     "registry:build": "pnpm registry:build:react && pnpm registry:build:vue",
-    "docs:check": "node scripts/check-docs.mjs"
+    "docs:check": "node scripts/check-docs.mjs",
+    "test:buildx": "pnpm --filter @tile-ui/buildx test"
   },
   "devDependencies": {
     "oxlint": "^1.18.0",
     "turbo": "^2.4.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "packageManager": "pnpm@9.15.0"
 }

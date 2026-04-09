@@ -19,6 +19,15 @@
       ],
       "@tile-ui/react": [
         "../../packages/react/src/index.ts"
+      ],
+      "@tile-ui/react/*": [
+        "../../packages/react/src/*"
+      ],
+      "@tile-ui/buildx": [
+        "../../packages/buildx/src/index.ts"
+      ],
+      "@tile-ui/buildx/*": [
+        "../../packages/buildx/src/*"
       ]
     },
     "plugins": [

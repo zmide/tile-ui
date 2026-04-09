@@ -3,6 +3,8 @@ title: Registry
 description: Overview of the React registry, item inventory, and supporting guides.
 ---
 
+import { reactRegistryItemNames } from "@/lib/registry-meta"
+
 # Registry
 
 The React registry is a flat shadcn-compatible registry published from the React site. Each item is available at a root-level JSON URL.
@@ -16,16 +18,11 @@ https://react.tile-ui.dev/r/{name}.json
 
 ## Available items
 
-- button
-- input
-- textarea
-- label
-- card
-- styles
-- utils
-- use-copy-to-clipboard
-- use-media-query
-- use-local-storage
+<ul>
+  {reactRegistryItemNames.map((name) => (
+    <li key={name}>{name}</li>
+  ))}
+</ul>
 
 ## Continue reading
 

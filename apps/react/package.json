@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 3001",
+    "registry:build": "tsx ./scripts/build-registry.mjs",
+    "registry:watch": "tsx ./scripts/watch-registry.mjs",
+    "dev:app": "next dev --turbopack -p 3001",
+    "dev": "pnpm exec concurrently -k -n registry,app -c cyan,magenta \"pnpm registry:watch\" \"pnpm dev:app\"",
     "build": "next build",
     "start": "next start",
     "lint": "oxlint -c .oxlintrc.json .",
@@ -12,6 +15,7 @@
   "dependencies": {
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "@tile-ui/buildx": "workspace:*",
     "@tile-ui/core": "workspace:*",
     "@tile-ui/react": "workspace:*",
     "@tile-ui/styles": "workspace:*",
@@ -28,8 +32,10 @@
     "@types/node": "^20.19.9",
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
+    "concurrently": "^9.2.1",
     "fumadocs-mdx": "13.0.2",
     "sass": "^1.86.3",
+    "tsx": "^4.20.3",
     "typescript": "^5.9.2"
   },
   "overrides": {

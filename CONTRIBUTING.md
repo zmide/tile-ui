@@ -49,10 +49,10 @@ corepack pnpm --filter @tile-ui/vue build
 Registry-related commands:
 
 ```bash
-corepack pnpm registry:sync
 corepack pnpm registry:build:react
 corepack pnpm registry:build:vue
 corepack pnpm registry:build
+corepack pnpm test:buildx
 ```
 
 ## Linting
@@ -70,6 +70,7 @@ Current workspaces with Oxlint configuration:
 - `packages/core/.oxlintrc.json`
 - `packages/react/.oxlintrc.json`
 - `packages/vue/.oxlintrc.json`
+- `packages/buildx/.oxlintrc.json`
 - `packages/styles/.oxlintrc.json`
 
 When adding a new app or package, add:
@@ -125,10 +126,10 @@ corepack pnpm docs:check
 
 Registry sources live in:
 
-- `registry/react`
-- `registry/vue`
+- `packages/react/src/registry`
+- `packages/vue/src/registry`
 
-If package source changes should be reflected in registry output, rebuild the registry artifacts:
+If package source changes should be reflected in registry output, rebuild the app-owned artifacts:
 
 ```bash
 corepack pnpm registry:build

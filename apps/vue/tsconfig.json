@@ -2,6 +2,20 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxImportSource": "vue"
+    "jsxImportSource": "vue",
+    "paths": {
+      "@tile-ui/vue": [
+        "../../packages/vue/src/index.ts"
+      ],
+      "@tile-ui/vue/*": [
+        "../../packages/vue/src/*"
+      ],
+      "@tile-ui/buildx": [
+        "../../packages/buildx/src/index.ts"
+      ],
+      "@tile-ui/buildx/*": [
+        "../../packages/buildx/src/*"
+      ]
+    }
   }
 }

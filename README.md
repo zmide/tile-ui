@@ -2,7 +2,7 @@
 
 Tile UI is a lightweight component library built around a shared SCSS design system and framework-specific React and Vue packages.
 
-This repository exposes two framework-specific applications and two independent registries:
+This repository exposes two framework-specific applications and two package-local registries.
 
 - `apps/react` for the React documentation site and React registry.
 - `apps/vue` for the Vue documentation site and Vue registry.
@@ -41,17 +41,11 @@ tile-ui/
 ├── packages/
 │   ├── core/                       # Shared framework-agnostic logic
 │   ├── styles/                     # Shared SCSS design system
-│   ├── react/                      # React package
-│   └── vue/                        # Vue package
-├── registry/
-│   ├── react/
-│   │   ├── registry.json           # React registry source manifest
-│   │   └── tile-ui/                # React registry source files
-│   └── vue/
-│       ├── registry.json           # Vue registry source manifest
-│       └── tile-ui/                # Vue registry source files
-└── scripts/
-    └── build-registry.js          # Sync package sources into both registries
+│   ├── react/                      # React package, the only React component source
+│   └── vue/                        # Vue package, the only Vue component source
+│   ├── buildx/                     # Shared registry build core and tests
+│   ├── react/                      # React package and registry source
+│   └── vue/                        # Vue package and registry source
 ```
 
 ## Packages
@@ -60,6 +54,7 @@ tile-ui/
 |---|---|
 | `@tile-ui/core` | Shared design logic and utility helpers |
 | `@tile-ui/styles` | Global SCSS, variables, and mixins |
+| `@tile-ui/buildx` | Shared registry build pipeline and tests |
 | `@tile-ui/react` | React components and hooks |
 | `@tile-ui/vue` | Vue components and composables |
 
@@ -83,8 +78,10 @@ tile-ui/
 
 ### React Registry
 
-- Source manifest: `registry/react/registry.json`
-- Source files: `registry/react/tile-ui/*`
+- Source manifest: `packages/react/src/registry/manifest.ts`
+- Source items: `packages/react/src/registry/items/*`
+- Published output: `apps/react/public/r/*`
+- Docs metadata source: `apps/react/public/r/registry.json`
 
 Example items:
 
@@ -93,6 +90,7 @@ Example items:
 - `textarea`
 - `label`
 - `card`
+- `core`
 - `styles`
 - `utils`
 - `use-copy-to-clipboard`
@@ -101,8 +99,10 @@ Example items:
 
 ### Vue Registry
 
-- Source manifest: `registry/vue/registry.json`
-- Source files: `registry/vue/tile-ui/*`
+- Source manifest: `packages/vue/src/registry/manifest.ts`
+- Source items: `packages/vue/src/registry/items/*`
+- Published output: `apps/vue/public/r/*`
+- Docs metadata source: `apps/vue/public/r/registry.json`
 
 Example items:
 
@@ -154,10 +154,10 @@ corepack pnpm dev
 Useful commands:
 
 ```bash
-corepack pnpm registry:sync
 corepack pnpm registry:build:react
 corepack pnpm registry:build:vue
 corepack pnpm registry:build
+corepack pnpm test:buildx
 corepack pnpm docs:check
 corepack pnpm --filter react build
 corepack pnpm --filter vue build
