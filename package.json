@@ -6,6 +6,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
+    "check": "pnpm lint && pnpm type-check",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
     "registry:sync": "node scripts/build-registry.js",
@@ -15,6 +16,7 @@
     "docs:check": "node scripts/check-docs.mjs"
   },
   "devDependencies": {
+    "oxlint": "^1.18.0",
     "turbo": "^2.4.0",
     "typescript": "^5.9.2"
   },

@@ -1,12 +1,12 @@
 {
-  "name": "react",
+  "name": "@tile-ui/react-docs",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "oxlint -c .oxlintrc.json .",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
@@ -24,13 +24,10 @@
     "shiki": "^1.10.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
     "@types/mdx": "2.0.13",
     "@types/node": "^20.19.9",
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
-    "eslint": "^9.32.0",
-    "eslint-config-next": "15.3.1",
     "fumadocs-mdx": "13.0.2",
     "sass": "^1.86.3",
     "typescript": "^5.9.2"

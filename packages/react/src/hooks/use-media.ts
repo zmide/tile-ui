@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * 窗口大小响应式 hook

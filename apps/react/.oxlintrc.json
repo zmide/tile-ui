@@ -1,0 +1,25 @@
+{
+  "$schema": "../../node_modules/oxlint/configuration_schema.json",
+  "plugins": ["oxc", "typescript", "unicorn", "react", "nextjs"],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    ".next/**",
+    "node_modules/**",
+    "public/**"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "app/**/*.{ts,tsx}",
+        "components/**/*.{ts,tsx}",
+        "lib/**/*.{ts,tsx}",
+        ".source/**/*.{ts,tsx}",
+        "mdx-components.tsx",
+        "next.config.ts",
+        "source.config.ts"
+      ]
+    }
+  ]
+}

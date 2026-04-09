@@ -1,0 +1,19 @@
+{
+  "$schema": "../../node_modules/oxlint/configuration_schema.json",
+  "plugins": ["oxc", "typescript", "unicorn"],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "src/**/*.{ts,tsx}",
+        "tsup.config.ts"
+      ]
+    }
+  ]
+}

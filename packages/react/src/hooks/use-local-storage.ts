@@ -1,26 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
  * 存储键的类型
  */
 type StorageKey = string;
-
-/**
- * 从本地存储获取值
- */
-function getStorageValue<T>(key: StorageKey, defaultValue: T): T {
-  if (typeof window === 'undefined') {
-    return defaultValue;
-  }
-
-  try {
-    const item = window.localStorage.getItem(key);
-    return item ? JSON.parse(item) : defaultValue;
-  } catch (error) {
-    console.warn(`Error reading localStorage key "${key}":`, error);
-    return defaultValue;
-  }
-}
 
 /**
  * 使用本地存储的 hook

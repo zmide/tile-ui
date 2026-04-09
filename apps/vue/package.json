@@ -1,5 +1,5 @@
 {
-  "name": "vue",
+  "name": "@tile-ui/vue-docs",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,8 @@
     "dev": "nuxi dev -p 3002",
     "build": "nuxi build",
     "generate": "nuxi generate",
-    "preview": "nuxi preview"
+    "preview": "nuxi preview",
+    "lint": "oxlint -c .oxlintrc.json ."
   },
   "dependencies": {
     "@tile-ui/core": "workspace:*",
