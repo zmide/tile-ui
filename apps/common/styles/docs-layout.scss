@@ -54,6 +54,21 @@
 	flex-wrap: wrap;
 }
 
+.docs-app-header__actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 14px;
+	min-width: 0;
+}
+
+.docs-app-header__divider {
+	width: 1px;
+	height: 1.25rem;
+	flex: 0 0 auto;
+	background: var(--docs-border);
+}
+
 .docs-app-nav a {
 	color: var(--docs-text-muted);
 	text-decoration: none;
@@ -63,6 +78,30 @@
 
 .docs-app-nav a:hover {
 	color: var(--docs-text);
+}
+
+.docs-app-github {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex: 0 0 auto;
+	color: var(--docs-text-muted);
+	font-size: 0.875rem;
+	font-weight: 500;
+	transition: color 0.2s ease;
+}
+
+.docs-app-github:hover {
+	color: var(--docs-text);
+}
+
+.docs-app-github svg {
+	width: 1rem;
+	height: 1rem;
+}
+
+.docs-app-github span {
+	white-space: nowrap;
 }
 
 .docs-layout {
@@ -454,6 +493,16 @@
 		justify-content: center;
 		padding-top: 14px;
 		padding-bottom: 14px;
+	}
+
+	.docs-app-header__actions {
+		width: 100%;
+		justify-content: space-between;
+		gap: 10px;
+	}
+
+	.docs-app-header__divider {
+		display: none;
 	}
 
 	.docs-app-shell {

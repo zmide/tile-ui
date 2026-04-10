@@ -168,41 +168,47 @@ function createPayloads(docs, tree) {
 	);
 }
 
-const docs = walkDocs(docsRoot)
-	.map((relativeFile) => {
-		const fullPath = path.join(docsRoot, relativeFile);
-		const raw = fs.readFileSync(fullPath, 'utf-8');
-		const parsed = matter(raw);
-		const slug = normalizeSlug(relativeFile);
-		const url = `/docs${slug.length ? `/${slug.join('/')}` : ''}`;
+export function buildDocs() {
+	const docs = walkDocs(docsRoot)
+		.map((relativeFile) => {
+			const fullPath = path.join(docsRoot, relativeFile);
+			const raw = fs.readFileSync(fullPath, 'utf-8');
+			const parsed = matter(raw);
+			const slug = normalizeSlug(relativeFile);
+			const url = `/docs${slug.length ? `/${slug.join('/')}` : ''}`;
 
-		return {
-			slug,
-			url,
-			title: String(parsed.data.title ?? 'Untitled'),
-			description: String(parsed.data.description ?? ''),
-			html: markdown.render(parsed.content),
-			toc: extractToc(parsed.content),
-		};
-	})
-	.sort(compareDocs);
+			return {
+				slug,
+				url,
+				title: String(parsed.data.title ?? 'Untitled'),
+				description: String(parsed.data.description ?? ''),
+				html: markdown.render(parsed.content),
+				toc: extractToc(parsed.content),
+			};
+		})
+		.sort(compareDocs);
 
-const tree = createTree(docs);
-const payloads = createPayloads(docs, tree);
-const routes = docs.map((doc) => doc.url);
+	const tree = createTree(docs);
+	const payloads = createPayloads(docs, tree);
+	const routes = docs.map((doc) => doc.url);
 
-fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(
-	outFile,
-	JSON.stringify(
-		{
-			routes,
-			payloads,
-		},
-		null,
-		2,
-	),
-	'utf-8',
-);
+	fs.mkdirSync(outDir, { recursive: true });
+	fs.writeFileSync(
+		outFile,
+		JSON.stringify(
+			{
+				routes,
+				payloads,
+			},
+			null,
+			2,
+		),
+		'utf-8',
+	);
 
-console.log(`Generated ${path.relative(appRoot, outFile)} with ${docs.length} docs`);
+	console.log(`Generated ${path.relative(appRoot, outFile)} with ${docs.length} docs`);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+	buildDocs();
+}

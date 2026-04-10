@@ -84,6 +84,53 @@
 	color: var(--docs-text-muted);
 }
 
+.multi-framework-support {
+	margin-top: $spacing-8;
+}
+
+.prose-page .multi-framework-support__title {
+	margin-top: 0;
+	padding-top: 0;
+	padding-bottom: $spacing-3;
+	border-top: 0;
+	border-bottom: 1px solid color.mix(white, $border, 20%);
+	font-size: clamp(1.35rem, 2vw, 1.75rem);
+}
+
+.multi-framework-support__grid {
+	margin-top: $spacing-5;
+}
+
+.multi-framework-support__card {
+	gap: $spacing-2;
+}
+
+.multi-framework-support__card-heading {
+	display: flex;
+	align-items: center;
+	gap: $spacing-2;
+}
+
+.card-link .multi-framework-support__card-heading h3 {
+	margin: 0;
+	font-size: 1rem;
+	line-height: 1.2;
+}
+
+.multi-framework-support__icon {
+	width: 1.125rem;
+	height: 1.125rem;
+	flex: 0 0 auto;
+}
+
+.multi-framework-support__icon--react {
+	color: #61dafb;
+}
+
+.multi-framework-support__icon--vue {
+	color: #42b883;
+}
+
 .prose-page pre {
 	overflow-x: auto;
 	padding: $spacing-4;

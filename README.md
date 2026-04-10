@@ -64,6 +64,7 @@ tile-ui/
 
 - App path: `apps/react`
 - Local dev port: `3001`
+- Docs site: `https://react.tileui.zmorg.cn`
 - Registry output: `apps/react/public/r/*`
 - Public registry URL shape: `https://react.tileui.zmorg.cn/r/{name}.json`
 
@@ -71,6 +72,7 @@ tile-ui/
 
 - App path: `apps/vue`
 - Local dev port: `3002`
+- Docs site: `https://vue.tileui.zmorg.cn`
 - Registry output: `apps/vue/public/r/*`
 - Public registry URL shape: `https://vue.tileui.zmorg.cn/r/{name}.json`
 
