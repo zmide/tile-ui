@@ -18,6 +18,15 @@
 		"access": "public",
 		"provenance": true
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zmide/tile-ui.git",
+		"directory": "packages/styles"
+	},
+	"homepage": "https://github.com/zmide/tile-ui/tree/main/packages/styles",
+	"bugs": {
+		"url": "https://github.com/zmide/tile-ui/issues"
+	},
 	"scripts": {
 		"build": "node build.js",
 		"lint": "oxlint -c .oxlintrc.json .",
