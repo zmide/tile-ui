@@ -1,7 +1,7 @@
 {
 	"name": "@tile-ui/react",
 	"version": "1.0.0",
-	"private": true,
+	"private": false,
 	"files": [
 		"dist"
 	],
@@ -37,6 +37,10 @@
 		"lint": "oxlint -c .oxlintrc.json .",
 		"type:check": "tsc --noEmit",
 		"clean": "rm -rf dist"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
 	},
 	"dependencies": {
 		"@radix-ui/react-label": "^2.1.7",

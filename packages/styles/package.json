@@ -1,7 +1,7 @@
 {
 	"name": "@tile-ui/styles",
 	"version": "1.0.0",
-	"private": true,
+	"private": false,
 	"files": [
 		"scss",
 		"css"
@@ -18,6 +18,10 @@
 		"lint": "oxlint -c .oxlintrc.json .",
 		"type:check": "node -e \"process.exit(0)\"",
 		"clean": "rm -rf css"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
 	},
 	"devDependencies": {
 		"sass": "^1.86.3"
