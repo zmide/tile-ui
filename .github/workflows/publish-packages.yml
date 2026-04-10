@@ -3,7 +3,10 @@ name: Publish Packages
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'core/v*.*.*'
+      - 'styles/v*.*.*'
+      - 'react/v*.*.*'
+      - 'vue/v*.*.*'
 
 permissions:
   contents: read
@@ -12,6 +15,8 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      PACKAGE_TAG: ${{ github.ref_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,35 +36,42 @@ jobs:
       - name: Install dependencies
         run: corepack enable && pnpm install --frozen-lockfile
 
-      - name: Verify tag matches package versions
+      - name: Resolve package from tag
         run: |
-          TAG_VERSION="${GITHUB_REF_NAME#v}"
-          export TAG_VERSION
+          PACKAGE_NAME="${PACKAGE_TAG%%/*}"
+          TAG_VERSION="${PACKAGE_TAG#*/}"
+          TAG_VERSION="${TAG_VERSION#v}"
+
+          case "$PACKAGE_NAME" in
+            core|styles|react|vue)
+              ;;
+            *)
+              echo "Unsupported package tag: $PACKAGE_TAG" >&2
+              exit 1
+              ;;
+          esac
+
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> "$GITHUB_ENV"
+          echo "PACKAGE_DIR=packages/$PACKAGE_NAME" >> "$GITHUB_ENV"
+          echo "PACKAGE_FULL_NAME=@tile-ui/$PACKAGE_NAME" >> "$GITHUB_ENV"
+          echo "TAG_VERSION=$TAG_VERSION" >> "$GITHUB_ENV"
+
+      - name: Verify tag matches package version
+        run: |
           node -e '
           const fs = require("node:fs");
           const path = require("node:path");
+          const pkgName = process.env.PACKAGE_NAME;
           const expected = process.env.TAG_VERSION;
-          const packages = ["core", "styles", "react", "vue"];
-          for (const pkg of packages) {
-            const file = path.join(process.cwd(), "packages", pkg, "package.json");
-            const json = JSON.parse(fs.readFileSync(file, "utf8"));
-            if (json.version !== expected) {
-              throw new Error(`${json.name} version ${json.version} does not match tag ${expected}`);
-            }
+          const file = path.join(process.cwd(), "packages", pkgName, "package.json");
+          const json = JSON.parse(fs.readFileSync(file, "utf8"));
+          if (json.version !== expected) {
+            throw new Error(`${json.name} version ${json.version} does not match tag ${expected}`);
           }
           '
 
-      - name: Build publishable packages
-        run: pnpm --filter @tile-ui/core build && pnpm --filter @tile-ui/styles build && pnpm --filter @tile-ui/react build && pnpm --filter @tile-ui/vue build
+      - name: Build target package
+        run: pnpm --filter "$PACKAGE_FULL_NAME" build
 
-      - name: Publish @tile-ui/core
-        run: pnpm --filter @tile-ui/core publish --access public --provenance --no-git-checks
-
-      - name: Publish @tile-ui/styles
-        run: pnpm --filter @tile-ui/styles publish --access public --provenance --no-git-checks
-
-      - name: Publish @tile-ui/react
-        run: pnpm --filter @tile-ui/react publish --access public --provenance --no-git-checks
-
-      - name: Publish @tile-ui/vue
-        run: pnpm --filter @tile-ui/vue publish --access public --provenance --no-git-checks
+      - name: Publish target package
+        run: pnpm --filter "$PACKAGE_FULL_NAME" publish --access public --provenance --no-git-checks

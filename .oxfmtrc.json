@@ -18,6 +18,7 @@
 		"node_modules/**",
 		".agents/**",
 		".turbo/**",
+		".github/**",
 		"coverage/**",
 		"dist/**",
 		"build/**",

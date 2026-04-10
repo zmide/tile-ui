@@ -1,8 +1,9 @@
 {
 	"name": "@tile-ui/styles",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"private": false,
 	"files": [
+		"README.md",
 		"scss",
 		"css"
 	],
@@ -13,15 +14,15 @@
 		"./globals.scss": "./scss/globals.scss",
 		"./globals.css": "./css/globals.css"
 	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
 	"scripts": {
 		"build": "node build.js",
 		"lint": "oxlint -c .oxlintrc.json .",
 		"type:check": "node -e \"process.exit(0)\"",
 		"clean": "rm -rf css"
-	},
-	"publishConfig": {
-		"access": "public",
-		"provenance": true
 	},
 	"devDependencies": {
 		"sass": "^1.86.3"

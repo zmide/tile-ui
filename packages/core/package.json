@@ -1,8 +1,9 @@
 {
 	"name": "@tile-ui/core",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"private": false,
 	"files": [
+		"README.md",
 		"dist"
 	],
 	"type": "module",
@@ -41,16 +42,16 @@
 			}
 		}
 	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"lint": "oxlint -c .oxlintrc.json .",
 		"type:check": "tsc --noEmit",
 		"clean": "rm -rf dist"
-	},
-	"publishConfig": {
-		"access": "public",
-		"provenance": true
 	},
 	"devDependencies": {
 		"tsup": "^8.4.0",

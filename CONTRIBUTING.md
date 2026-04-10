@@ -135,6 +135,69 @@ If package source changes should be reflected in registry output, rebuild the ap
 corepack pnpm registry:build
 ```
 
+## Releasing Packages
+
+Publishable packages currently live under `packages/`:
+
+- `@tile-ui/core`
+- `@tile-ui/styles`
+- `@tile-ui/react`
+- `@tile-ui/vue`
+
+GitHub Actions publishes packages through npm Trusted Publishing with OIDC. The workflow is defined in `.github/workflows/publish-packages.yml` and requires `id-token: write`.
+
+### Release Tag Format
+
+Releases are package-specific. Use a tag in this format:
+
+```bash
+<package>/v<version>
+```
+
+Examples:
+
+```bash
+git tag core/v1.0.1
+git push origin core/v1.0.1
+
+git tag react/v1.0.1
+git push origin react/v1.0.1
+```
+
+Supported package tag prefixes:
+
+- `core`
+- `styles`
+- `react`
+- `vue`
+
+### Release Requirements
+
+Before pushing a release tag:
+
+1. Update the target package version in `packages/<name>/package.json`
+2. Make sure the version matches the tag version exactly
+3. Run the target package build locally when possible
+
+The workflow will:
+
+1. Parse the package name and version from the tag
+2. Verify the package version matches the tag version
+3. Build only the targeted package
+4. Publish only the targeted package with `--provenance`
+
+### npm Trusted Publishing Setup
+
+The npm package must be configured to trust this GitHub repository and workflow.
+
+For each published package, configure a Trusted Publisher entry in npm that matches:
+
+- The current GitHub repository
+- The workflow file `.github/workflows/publish-packages.yml`
+- The package name being published
+
+Without that npm-side setup, the OIDC publish step will fail even if the GitHub workflow is correct.
+
 ## Change Guidelines
 
 - Prefer the smallest correct change
