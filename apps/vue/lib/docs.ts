@@ -30,12 +30,3 @@ export type DocPayload = {
 	};
 	tree: DocsTreeNode;
 };
-
-export function getDocsRequestPath(slug: string[]) {
-	const path = slug.join('/');
-	return path ? `/api/docs/${path}` : '/api/docs';
-}
-
-export function loadDocsPayload(slug: string[]) {
-	return $fetch<DocPayload>(getDocsRequestPath(slug));
-}

@@ -18,6 +18,7 @@ dist
 .output
 out
 build
+apps/vue/.generated
 
 # turbo
 .turbo

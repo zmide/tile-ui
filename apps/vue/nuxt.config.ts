@@ -1,6 +1,8 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import docsData from './.generated/docs.json';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const stylesScssDir = path.join(__dirname, '../../packages/styles/scss');
 const workspaceRoot = path.join(__dirname, '../..');
@@ -29,5 +31,10 @@ export default defineNuxtConfig({
 	css: ['@tile-ui/styles/scss/globals.scss', '~/assets/docs.scss'],
 	build: {
 		transpile: ['@tile-ui/vue', '@tile-ui/core'],
+	},
+	nitro: {
+		prerender: {
+			routes: docsData.routes,
+		},
 	},
 });

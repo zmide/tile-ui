@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import { VueDocsBreadcrumb } from '../../components/docs-breadcrumb';
 import { VueDocsSidebar } from '../../components/docs-sidebar';
 import { VueDocsToc } from '../../components/docs-toc';
-import { loadDocsPayload, type DocPayload } from '../../lib/docs';
+import { getDocPayload } from '../../lib/docs-data';
 
 function PagerIcon({ direction }: { direction: 'previous' | 'next' }) {
 	return direction === 'previous' ? (
@@ -19,14 +19,14 @@ function PagerIcon({ direction }: { direction: 'previous' | 'next' }) {
 
 export default defineComponent({
 	name: 'VueDocsIndexPage',
-	async setup() {
-		const { data, error } = await useAsyncData<DocPayload>('docs:index', () => loadDocsPayload([]));
+	setup() {
+		const payload = getDocPayload([]);
 
-		if (error.value || !data.value) {
+		if (!payload) {
 			throw createError({ statusCode: 404, statusMessage: 'Doc not found' });
 		}
 
-		const { doc, neighbours, tree } = data.value;
+		const { doc, neighbours, tree } = payload;
 
 		return () => (
 			<div class="docs-layout">
