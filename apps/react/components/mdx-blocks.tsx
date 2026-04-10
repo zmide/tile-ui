@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ComponentProps, HTMLAttributes, ReactElement, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { Children, createContext, isValidElement, useContext, useMemo, useState } from 'react';
 
 import { Button } from '@tile-ui/react';
@@ -50,7 +50,7 @@ function useAccordionItemValue() {
 	return value;
 }
 
-export function MdxLink({ href = '', className, ...props }: ComponentProps<'a'>) {
+export function MdxLink({ href = '', className, ...props }: ComponentPropsWithoutRef<'a'>) {
 	const classes = cn('mdx-link', className);
 
 	if (href.startsWith('/')) {
@@ -60,7 +60,7 @@ export function MdxLink({ href = '', className, ...props }: ComponentProps<'a'>)
 	return <a href={href} className={classes} {...props} />;
 }
 
-export function MdxImage({ className, src, width, height, alt, ...props }: ComponentProps<'img'>) {
+export function MdxImage({ className, src, width, height, alt, ...props }: ComponentPropsWithoutRef<'img'>) {
 	if (!src) {
 		return null;
 	}
@@ -86,11 +86,11 @@ export function Callout({
 	);
 }
 
-export function Steps({ className, ...props }: ComponentProps<'div'>) {
+export function Steps({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
 	return <div className={cn('mdx-steps', className)} {...props} />;
 }
 
-export function Step({ className, ...props }: ComponentProps<'h3'>) {
+export function Step({ className, ...props }: ComponentPropsWithoutRef<'h3'>) {
 	return <h3 className={cn('mdx-step', className)} {...props} />;
 }
 
@@ -103,7 +103,7 @@ export function Tabs({
 	onValueChange,
 	children,
 	...props
-}: ComponentProps<'div'> & {
+}: ComponentPropsWithoutRef<'div'> & {
 	defaultValue?: string;
 	value?: string;
 	onValueChange?: (value: string) => void;
@@ -140,11 +140,11 @@ export function Tabs({
 	);
 }
 
-export function TabsList({ className, ...props }: ComponentProps<'div'>) {
+export function TabsList({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
 	return <div className={cn('mdx-tabs__list', className)} role="tablist" {...props} />;
 }
 
-export function TabsTrigger({ className, value, children, ...props }: ComponentProps<'button'> & { value: string }) {
+export function TabsTrigger({ className, value, children, ...props }: ComponentPropsWithoutRef<'button'> & { value: string }) {
 	const { value: activeValue, setValue } = useTabsContext();
 	const active = activeValue === value;
 
@@ -162,7 +162,7 @@ export function TabsTrigger({ className, value, children, ...props }: ComponentP
 	);
 }
 
-export function TabsContent({ className, value, children, ...props }: ComponentProps<'div'> & { value: string }) {
+export function TabsContent({ className, value, children, ...props }: ComponentPropsWithoutRef<'div'> & { value: string }) {
 	const { value: activeValue } = useTabsContext();
 	if (activeValue !== value) return null;
 
@@ -173,11 +173,11 @@ export function TabsContent({ className, value, children, ...props }: ComponentP
 	);
 }
 
-export function Tab({ className, ...props }: ComponentProps<'div'>) {
+export function Tab({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
 	return <div className={className} {...props} />;
 }
 
-export function Accordion({ className, children, ...props }: ComponentProps<'div'>) {
+export function Accordion({ className, children, ...props }: ComponentPropsWithoutRef<'div'>) {
 	const [openItems, setOpenItems] = useState<string[]>([]);
 
 	return (
@@ -195,7 +195,7 @@ export function Accordion({ className, children, ...props }: ComponentProps<'div
 	);
 }
 
-export function AccordionItem({ className, value, children, ...props }: ComponentProps<'div'> & { value: string }) {
+export function AccordionItem({ className, value, children, ...props }: ComponentPropsWithoutRef<'div'> & { value: string }) {
 	return (
 		<AccordionItemContext.Provider value={value}>
 			<div className={cn('mdx-accordion__item', className)} {...props}>
@@ -205,7 +205,7 @@ export function AccordionItem({ className, value, children, ...props }: Componen
 	);
 }
 
-export function AccordionTrigger({ className, children, ...props }: ComponentProps<'button'>) {
+export function AccordionTrigger({ className, children, ...props }: ComponentPropsWithoutRef<'button'>) {
 	const itemValue = useAccordionItemValue();
 	const { openItems, toggleItem } = useAccordionContext();
 	const open = openItems.includes(itemValue);
@@ -224,7 +224,7 @@ export function AccordionTrigger({ className, children, ...props }: ComponentPro
 	);
 }
 
-export function AccordionContent({ className, children, ...props }: ComponentProps<'div'>) {
+export function AccordionContent({ className, children, ...props }: ComponentPropsWithoutRef<'div'>) {
 	const itemValue = useAccordionItemValue();
 	const { openItems } = useAccordionContext();
 	if (!openItems.includes(itemValue)) return null;
@@ -236,7 +236,7 @@ export function AccordionContent({ className, children, ...props }: ComponentPro
 	);
 }
 
-export function Kbd({ className, ...props }: ComponentProps<'kbd'>) {
+export function Kbd({ className, ...props }: ComponentPropsWithoutRef<'kbd'>) {
 	return <kbd className={cn('mdx-kbd', className)} {...props} />;
 }
 

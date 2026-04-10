@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import type { MDXComponents } from 'mdx/types';
 
 import {
@@ -45,29 +45,29 @@ export const mdxComponents: MDXComponents = {
 	NewsletterCardPreview,
 	ProfileSettingsPreview,
 	TextareaPreview,
-	a: (props: ComponentProps<'a'>) => <MdxLink {...props} />,
-	p: (props: ComponentProps<'p'>) => <p className="mdx-p" {...props} />,
-	strong: (props: ComponentProps<'strong'>) => <strong className="mdx-strong" {...props} />,
-	ul: (props: ComponentProps<'ul'>) => <ul className="mdx-ul" {...props} />,
-	ol: (props: ComponentProps<'ol'>) => <ol className="mdx-ol" {...props} />,
-	li: (props: ComponentProps<'li'>) => <li className="mdx-li" {...props} />,
-	blockquote: (props: ComponentProps<'blockquote'>) => <blockquote className="mdx-blockquote" {...props} />,
-	hr: (props: ComponentProps<'hr'>) => <hr className="mdx-hr" {...props} />,
-	img: (props: ComponentProps<'img'>) => <MdxImage {...props} />,
-	Image: (props: ComponentProps<'img'>) => <MdxImage {...props} />,
-	table: (props: ComponentProps<'table'>) => <table {...props} />,
-	tr: (props: ComponentProps<'tr'>) => <tr className="mdx-tr" {...props} />,
-	th: (props: ComponentProps<'th'>) => <th className="mdx-th" {...props} />,
-	td: (props: ComponentProps<'td'>) => <td className="mdx-td" {...props} />,
-	pre: (props: ComponentProps<'pre'>) => <pre className="mdx-pre" {...props} />,
-	code: (props: ComponentProps<'code'>) => {
+	a: (props: ComponentPropsWithoutRef<'a'>) => <MdxLink {...props} />,
+	p: (props: ComponentPropsWithoutRef<'p'>) => <p className="mdx-p" {...props} />,
+	strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="mdx-strong" {...props} />,
+	ul: (props: ComponentPropsWithoutRef<'ul'>) => <ul className="mdx-ul" {...props} />,
+	ol: (props: ComponentPropsWithoutRef<'ol'>) => <ol className="mdx-ol" {...props} />,
+	li: (props: ComponentPropsWithoutRef<'li'>) => <li className="mdx-li" {...props} />,
+	blockquote: (props: ComponentPropsWithoutRef<'blockquote'>) => <blockquote className="mdx-blockquote" {...props} />,
+	hr: (props: ComponentPropsWithoutRef<'hr'>) => <hr className="mdx-hr" {...props} />,
+	img: (props: ComponentPropsWithoutRef<'img'>) => <MdxImage {...props} />,
+	Image: (props: ComponentPropsWithoutRef<'img'>) => <MdxImage {...props} />,
+	table: (props: ComponentPropsWithoutRef<'table'>) => <table {...props} />,
+	tr: (props: ComponentPropsWithoutRef<'tr'>) => <tr className="mdx-tr" {...props} />,
+	th: (props: ComponentPropsWithoutRef<'th'>) => <th className="mdx-th" {...props} />,
+	td: (props: ComponentPropsWithoutRef<'td'>) => <td className="mdx-td" {...props} />,
+	pre: (props: ComponentPropsWithoutRef<'pre'>) => <pre className="mdx-pre" {...props} />,
+	code: (props: ComponentPropsWithoutRef<'code'>) => {
 		if (typeof props.children === 'string') {
 			return <code className="mdx-inline-code" {...props} />;
 		}
 		return <code {...props} />;
 	},
-	figure: (props: ComponentProps<'figure'>) => <figure className="mdx-figure" {...props} />,
-	figcaption: (props: ComponentProps<'figcaption'>) => <figcaption className="mdx-figcaption" {...props} />,
+	figure: (props: ComponentPropsWithoutRef<'figure'>) => <figure className="mdx-figure" {...props} />,
+	figcaption: (props: ComponentPropsWithoutRef<'figcaption'>) => <figcaption className="mdx-figcaption" {...props} />,
 	Button,
 	Callout,
 	Step,

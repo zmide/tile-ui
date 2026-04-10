@@ -46,8 +46,7 @@ function buildVueCore(workspaceRoot: string) {
 		cardTypes,
 		'',
 		cardLogic,
-	]
-		.join('\n');
+	].join('\n');
 }
 
 export function createVueRegistryConfig(input: { workspaceRoot: string; outDir: string }): Omit<RegistryBuildOptions, 'manifest'> {

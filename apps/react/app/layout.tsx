@@ -39,13 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 									<Link href="/docs/examples">Examples</Link>
 								</nav>
 								<div className="docs-app-header__divider" aria-hidden="true" />
-								<a
-									href="https://github.com/ice909/tile-ui"
-									target="_blank"
-									rel="noreferrer"
-									className="docs-app-github"
-									aria-label="Tile UI GitHub repository"
-								>
+								<a href="https://github.com/ice909/tile-ui" target="_blank" rel="noreferrer" className="docs-app-github" aria-label="Tile UI GitHub repository">
 									<GitHubIcon />
 									<span>Source code</span>
 								</a>

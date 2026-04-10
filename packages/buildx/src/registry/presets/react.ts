@@ -29,8 +29,10 @@ function buildReactCore(workspaceRoot: string) {
 		'',
 		buttonTypes,
 		'',
-		stripImport(stripImport(buttonLogic, "import type { ButtonVariant, ButtonSize } from './button.types';\n"), "import { capitalize } from '../../utils/helpers';\n")
-			.replace(/\n$/, ''),
+		stripImport(stripImport(buttonLogic, "import type { ButtonVariant, ButtonSize } from './button.types';\n"), "import { capitalize } from '../../utils/helpers';\n").replace(
+			/\n$/,
+			'',
+		),
 		'',
 		inputTypes,
 		'',
@@ -47,8 +49,7 @@ function buildReactCore(workspaceRoot: string) {
 		cardTypes,
 		'',
 		cardLogic,
-	]
-		.join('\n');
+	].join('\n');
 }
 
 export function createReactRegistryConfig(input: { workspaceRoot: string; outDir: string }): Omit<RegistryBuildOptions, 'manifest'> {
