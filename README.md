@@ -1,11 +1,31 @@
 # Tile UI
 
-Tile UI is a lightweight component library built around a shared SCSS design system and framework-specific React and Vue packages.
+Tile UI is a cross-framework component library built around a shared SCSS design system, framework-specific React and Vue packages, and a shadcn-style registry distribution model.
+
+## Vision
+
+Tile UI aims to become a lightweight, practical UI toolkit with a shared design foundation and a consistent experience across React and Vue.
+
+The goal is not to build an oversized component library that tries to cover every possible case. The goal is to steadily build a solid base: a clear design language, stable shared styles, reusable core logic, and framework-specific packages that feel aligned rather than fragmented. A big part of that direction is offering a cleaner styling workflow than long, noisy utility class strings, while still keeping the registry-based distribution model flexible and practical.
+
+That vision is still actively being implemented. Many ideas are already clear, but turning them into stable components, reliable documentation, a smooth installation flow, a predictable release process, and maintainable project structure still takes steady work.
+
+Contributions are welcome in all forms, including:
+
+- design direction and visual refinement
+- documentation improvements and examples
+- new components and component improvements
+- API design and implementation work
+- ideas, use cases, product needs, and feedback
+- issues, bug reports, and reproducible cases
+
+Whether you want to write code, improve docs, suggest an idea, report a problem, or help sharpen a rough edge, your contribution can move the project forward. For contribution guidelines and development workflow details, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 This repository exposes two framework-specific applications and two package-local registries.
 
 - `apps/react` for the React documentation site and React registry.
 - `apps/vue` for the Vue documentation site and Vue registry.
+- In the future, I hope that more contributors will participate and provide more framework adaptation.
 
 Shared docs styles and layout primitives live in `apps/common`.
 
@@ -30,6 +50,12 @@ Docs architecture:
 
 Documentation pages now follow a richer structure with installation, usage, highlights, dependency notes, and API-style sections.
 
+Quick links:
+
+- [Package install](#package-install)
+- [Registry install](#registry-install)
+- [Release](#release)
+
 ## Workspace Layout
 
 ```text
@@ -41,8 +67,6 @@ tile-ui/
 ├── packages/
 │   ├── core/                       # Shared framework-agnostic logic
 │   ├── styles/                     # Shared SCSS design system
-│   ├── react/                      # React package, the only React component source
-│   └── vue/                        # Vue package, the only Vue component source
 │   ├── buildx/                     # Shared registry build core and tests
 │   ├── react/                      # React package and registry source
 │   └── vue/                        # Vue package and registry source
@@ -64,7 +88,7 @@ tile-ui/
 
 - App path: `apps/react`
 - Local dev port: `3001`
-- Docs site: `https://react.tileui.zmorg.cn`
+- Docs site: <https://react.tileui.zmorg.cn>
 - Registry output: `apps/react/public/r/*`
 - Public registry URL shape: `https://react.tileui.zmorg.cn/r/{name}.json`
 
@@ -72,7 +96,7 @@ tile-ui/
 
 - App path: `apps/vue`
 - Local dev port: `3002`
-- Docs site: `https://vue.tileui.zmorg.cn`
+- Docs site: <https://vue.tileui.zmorg.cn>
 - Registry output: `apps/vue/public/r/*`
 - Public registry URL shape: `https://vue.tileui.zmorg.cn/r/{name}.json`
 
@@ -120,12 +144,18 @@ Example items:
 - `use-media-query`
 - `use-local-storage`
 
-## Installation
+## Package install
 
 ### React package
 
 ```bash
 pnpm add @tile-ui/react @tile-ui/styles @tile-ui/core
+```
+
+Import shared styles once in your app entry:
+
+```tsx
+import '@tile-ui/styles/scss/globals.scss';
 ```
 
 ### Vue package
@@ -134,17 +164,82 @@ pnpm add @tile-ui/react @tile-ui/styles @tile-ui/core
 pnpm add @tile-ui/vue @tile-ui/styles @tile-ui/core
 ```
 
+In Nuxt, a common setup is:
+
+```ts
+export default defineNuxtConfig({
+	css: ['@tile-ui/styles/scss/globals.scss'],
+});
+```
+
+## Registry install
+
 ### React registry item
 
+First, register the Tile UI namespace in `components.json`:
+
+```json
+{
+	"registries": {
+		"@tile-ui": "https://react.tileui.zmorg.cn/r/{name}.json"
+	}
+}
+```
+
 ```bash
-pnpm dlx shadcn@latest add https://react.tileui.zmorg.cn/r/button.json
+pnpm dlx shadcn@latest add @tile-ui/styles @tile-ui/button
 ```
 
 ### Vue registry item
 
-```bash
-pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/button.json
+First, register the Tile UI namespace in `components.json`:
+
+```json
+{
+	"registries": {
+		"@tile-ui": "https://vue.tileui.zmorg.cn/r/{name}.json"
+	}
+}
 ```
+
+```bash
+pnpm dlx shadcn@latest add @tile-ui/styles @tile-ui/button
+```
+
+## Release
+
+Package publishing is handled by GitHub Actions with npm Trusted Publishing and OIDC.
+
+Release tags are package-specific and use this format:
+
+```bash
+<package>/v<version>
+```
+
+Examples:
+
+```bash
+git tag core/v1.0.1
+git push origin core/v1.0.1
+
+git tag styles/v1.0.1
+git push origin styles/v1.0.1
+```
+
+Supported package prefixes:
+
+- `core`
+- `styles`
+- `react`
+- `vue`
+
+Before tagging a release:
+
+1. Update the target package version in `packages/<name>/package.json`
+2. Make sure the package version matches the tag version exactly
+3. Build and validate the target package locally when possible
+
+For the full release workflow and npm Trusted Publishing setup requirements, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Development
 
@@ -161,8 +256,10 @@ corepack pnpm registry:build:vue
 corepack pnpm registry:build
 corepack pnpm test:buildx
 corepack pnpm docs:check
-corepack pnpm --filter react build
-corepack pnpm --filter vue build
+corepack pnpm --filter @tile-ui/react build
+corepack pnpm --filter @tile-ui/vue build
+corepack pnpm --filter @tile-ui/react-docs build
+corepack pnpm --filter @tile-ui/vue-docs build
 ```
 
 `docs:check` validates both expected docs entry routes and internal `/docs/...` links inside MDX content.

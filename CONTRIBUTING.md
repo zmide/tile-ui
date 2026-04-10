@@ -89,7 +89,7 @@ corepack pnpm type:check
 
 Notes:
 
-- Root `type:check` runs through Turbo
+- Root `type:check` runs each workspace check from the repository root
 - Library packages use `tsc --noEmit`
 - `packages/styles` includes a no-op `type:check` script so the workspace can participate in the shared pipeline
 - `apps/react` currently sets `typescript.ignoreBuildErrors: true` in `next.config.ts`, so `pnpm type:check` should be treated as a required validation step
