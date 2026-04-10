@@ -65,14 +65,14 @@ tile-ui/
 - App path: `apps/react`
 - Local dev port: `3001`
 - Registry output: `apps/react/public/r/*`
-- Public registry URL shape: `https://react.tile-ui.dev/r/{name}.json`
+- Public registry URL shape: `https://react.tileui.zmorg.cn/r/{name}.json`
 
 ### Vue
 
 - App path: `apps/vue`
 - Local dev port: `3002`
 - Registry output: `apps/vue/public/r/*`
-- Public registry URL shape: `https://vue.tile-ui.dev/r/{name}.json`
+- Public registry URL shape: `https://vue.tileui.zmorg.cn/r/{name}.json`
 
 ## Registries
 
@@ -135,13 +135,13 @@ pnpm add @tile-ui/vue @tile-ui/styles @tile-ui/core
 ### React registry item
 
 ```bash
-pnpm dlx shadcn@latest add https://react.tile-ui.dev/r/button.json
+pnpm dlx shadcn@latest add https://react.tileui.zmorg.cn/r/button.json
 ```
 
 ### Vue registry item
 
 ```bash
-pnpm dlx shadcn@latest add https://vue.tile-ui.dev/r/button.json
+pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/button.json
 ```
 
 ## Development

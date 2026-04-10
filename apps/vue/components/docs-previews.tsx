@@ -143,12 +143,12 @@ export const VueCopyToClipboardPreview = defineComponent({
 				description="This mirrors the common UI pattern where the copy action updates local feedback state for a short period.">
 				<div class="component-preview__stack">
 					<div class="card-link">
-						<p class="component-preview__text">Registry URL: https://vue.tile-ui.dev/r/button.json</p>
+						<p class="component-preview__text">Registry URL: https://vue.tileui.zmorg.cn/r/button.json</p>
 						<div class="button-group">
 							<button
 								class="component-preview__action"
 								onClick={async () => {
-									await navigator.clipboard.writeText('https://vue.tile-ui.dev/r/button.json');
+									await navigator.clipboard.writeText('https://vue.tileui.zmorg.cn/r/button.json');
 									copied.value = true;
 									window.setTimeout(() => {
 										copied.value = false;

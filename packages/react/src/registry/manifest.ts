@@ -7,6 +7,6 @@ import { reactFileItems } from './items/files';
 
 export const reactRegistryManifest: PackageRegistryManifest = {
 	name: 'tile-ui-react',
-	homepage: 'https://react.tile-ui.dev',
+	homepage: 'https://react.tileui.zmorg.cn',
 	items: [...reactLibItems, ...reactFileItems, ...reactHookItems, ...reactUiItems],
 };

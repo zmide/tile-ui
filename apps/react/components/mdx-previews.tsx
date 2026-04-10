@@ -109,11 +109,11 @@ export function CopyToClipboardPreview() {
 		<ComponentPreview title="Clipboard interaction" description="This mirrors the common UI pattern where the copy action updates local feedback state for a short period.">
 			<div className="component-preview__stack">
 				<div className="card-link">
-					<p className="component-preview__text">Registry URL: https://react.tile-ui.dev/r/button.json</p>
+					<p className="component-preview__text">Registry URL: https://react.tileui.zmorg.cn/r/button.json</p>
 					<div className="button-group">
 						<Button
 							onClick={async () => {
-								await navigator.clipboard.writeText('https://react.tile-ui.dev/r/button.json');
+								await navigator.clipboard.writeText('https://react.tileui.zmorg.cn/r/button.json');
 								setCopied(true);
 								window.setTimeout(() => setCopied(false), 1200);
 							}}>

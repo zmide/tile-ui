@@ -7,6 +7,6 @@ import { vueFileItems } from './items/files';
 
 export const vueRegistryManifest: PackageRegistryManifest = {
 	name: 'tile-ui-vue',
-	homepage: 'https://vue.tile-ui.dev',
+	homepage: 'https://vue.tileui.zmorg.cn',
 	items: [...vueLibItems, ...vueFileItems, ...vueComposableItems, ...vueUiItems],
 };
