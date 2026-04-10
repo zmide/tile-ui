@@ -6,6 +6,7 @@ import { createMDX } from 'fumadocs-mdx/next';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
+	output: 'export',
 	typescript: {
 		ignoreBuildErrors: true,
 	},
