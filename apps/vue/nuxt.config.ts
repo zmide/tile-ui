@@ -32,6 +32,7 @@ const docsHmrPlugin: Plugin = {
 export default defineNuxtConfig({
 	compatibilityDate: '2025-01-01',
 	devtools: { enabled: true },
+	trailingSlash: true,
 	extensions: ['.tsx', '.ts', '.js'],
 	alias: {
 		'@tile-ui/buildx': path.join(workspaceRoot, 'packages/buildx/src/index.ts'),

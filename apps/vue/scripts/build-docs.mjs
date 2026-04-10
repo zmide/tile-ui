@@ -18,6 +18,18 @@ const markdown = new MarkdownIt({ html: true, linkify: true, typographer: true }
 
 const sectionOrder = ['installation', 'components', 'composables', 'examples', 'registry'];
 
+function toDocUrl(slug) {
+	if (!slug.length) {
+		return '/docs';
+	}
+
+	return `/docs/${slug.join('/')}/`;
+}
+
+function normalizeInternalDocLinks(content) {
+	return content.replace(/(href=["']|\]\()\/docs(?!\/)(?=["')])/g, '$1/docs').replace(/(href=["']|\]\()((?:\/docs(?:\/[a-z0-9-]+)+))(?!\/)(?=["')])/gi, '$1$2/');
+}
+
 function walkDocs(dir, base = '') {
 	const entries = fs.readdirSync(dir, { withFileTypes: true });
 	const files = [];
@@ -175,15 +187,16 @@ export function buildDocs() {
 			const raw = fs.readFileSync(fullPath, 'utf-8');
 			const parsed = matter(raw);
 			const slug = normalizeSlug(relativeFile);
-			const url = `/docs${slug.length ? `/${slug.join('/')}` : ''}`;
+			const url = toDocUrl(slug);
+			const normalizedContent = normalizeInternalDocLinks(parsed.content);
 
 			return {
 				slug,
 				url,
 				title: String(parsed.data.title ?? 'Untitled'),
 				description: String(parsed.data.description ?? ''),
-				html: markdown.render(parsed.content),
-				toc: extractToc(parsed.content),
+				html: markdown.render(normalizedContent),
+				toc: extractToc(normalizedContent),
 			};
 		})
 		.sort(compareDocs);
