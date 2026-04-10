@@ -1,4 +1,15 @@
+import path from 'node:path';
+
 import type { TransformFileInput, TransformFileOutput } from '../types';
+
+function rewriteStyleImports(content: string, target: string) {
+	const fromDir = path.posix.dirname(target);
+	const stylesDir = path.posix.relative(fromDir, 'styles') || '.';
+
+	return content
+		.replace(/@use 'variables\/colors' as \*;/g, `@use '${stylesDir}/variables/colors' as *;`)
+		.replace(/@use 'mixins\/utils' as \*;/g, `@use '${stylesDir}/mixins/utils' as *;`);
+}
 
 export async function transformVueFile(input: TransformFileInput): Promise<TransformFileOutput> {
 	if (input.file.transform === 'vue-component') {
@@ -12,6 +23,15 @@ export async function transformVueFile(input: TransformFileInput): Promise<Trans
 		};
 	}
 
+	if (input.file.transform === 'style') {
+		const target = input.file.target ?? `components/ui/${input.item.name}/${input.item.name}.module.scss`;
+
+		return {
+			content: rewriteStyleImports(input.content, target),
+			target,
+		};
+	}
+
 	if (input.file.transform === 'vue-composable') {
 		return {
 			content: input.content,
@@ -21,6 +41,6 @@ export async function transformVueFile(input: TransformFileInput): Promise<Trans
 
 	return {
 		content: input.content,
-		target: input.file.target ?? (input.file.transform === 'style' ? `components/ui/${input.item.name}/${input.item.name}.module.scss` : undefined),
+		target: input.file.target,
 	};
 }

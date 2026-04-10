@@ -53,20 +53,22 @@ export default defineComponent({
 
 Use the registry when you want to pull source files into your project rather than consume the published package.
 
-```bash
-pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/button.json
-pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/card.json
+First, register the Tile UI namespace in `components.json` so shadcn can resolve shared registry dependencies without hardcoding the docs domain into each item:
+
+```json
+{
+  "registries": {
+    "@tile-ui": "https://vue.tileui.zmorg.cn/r/{name}.json"
+  }
+}
 ```
 
-## Recommended registry baseline
-
-Most Vue registry installs should start with these shared items so component dependencies resolve cleanly.
-
 ```bash
-pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/styles.json
-pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/core.json
-pnpm dlx shadcn@latest add https://vue.tileui.zmorg.cn/r/utils.json
+pnpm dlx shadcn@latest add @tile-ui/styles @tile-ui/button
+pnpm dlx shadcn@latest add @tile-ui/card
 ```
+
+The CLI will resolve shared items such as `@tile-ui/core` and `@tile-ui/utils` automatically.
 
 ## Registry output
 
@@ -81,12 +83,6 @@ styles/*
 That keeps Vue components, composables, and shared SCSS assets colocated in a way that works well for Nuxt projects.
 
 ## Global styles for registry installs
-
-```ts
-import '@tile-ui/styles/scss/globals.scss';
-```
-
-If you are consuming copied registry styles locally, point the import at the generated path instead.
 
 ```ts
 import '~/styles/globals.scss';

@@ -8,8 +8,8 @@
     "sass"
   ],
   "registryDependencies": [
-    "core",
-    "utils"
+    "@tile-ui/core",
+    "@tile-ui/utils"
   ],
   "files": [
     {
@@ -22,7 +22,7 @@
       "path": "packages/styles/scss/components/input.module.scss",
       "type": "registry:file",
       "target": "components/ui/input/input.module.scss",
-      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.inputWrapper {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\twidth: 100%;\n}\n\n.input {\n\tdisplay: flex;\n\theight: 2.25rem;\n\twidth: 100%;\n\tborder-radius: $radius;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tpadding: 0 $spacing-3;\n\tfont-size: $text-sm;\n\tcolor: $foreground;\n\ttransition: all $transition-fast;\n\toutline: none;\n\n\t&::placeholder {\n\t\tcolor: color.mix(white, $foreground, 60%);\n\t}\n\n\t&:focus {\n\t\toutline: none;\n\t\tborder-color: $ring;\n\t\tbox-shadow: 0 0 0 1px $ring;\n\t}\n\n\t&:disabled,\n\t&.disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t\tcursor: not-allowed;\n\t\tbackground-color: color.mix(white, $background, 50%);\n\t}\n\n\t&.error {\n\t\tborder-color: $destructive;\n\n\t\t&:focus {\n\t\t\tborder-color: $destructive;\n\t\t\tbox-shadow: 0 0 0 1px $destructive;\n\t\t}\n\t}\n}\n\n.label {\n\tdisplay: block;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\tcolor: $foreground;\n\tline-height: $leading-normal;\n\n\t&.required::after {\n\t\tcontent: ' *';\n\t\tcolor: $destructive;\n\t}\n}\n\n.helperText {\n\tfont-size: $text-xs;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n}\n\n.errorText {\n\tfont-size: $text-xs;\n\tcolor: $destructive;\n\tline-height: $leading-normal;\n}\n"
+      "content": "@use 'sass:color';\n@use '../../../styles/variables/colors' as *;\n\n.inputWrapper {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\twidth: 100%;\n}\n\n.input {\n\tdisplay: flex;\n\theight: 2.25rem;\n\twidth: 100%;\n\tborder-radius: $radius;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tpadding: 0 $spacing-3;\n\tfont-size: $text-sm;\n\tcolor: $foreground;\n\ttransition: all $transition-fast;\n\toutline: none;\n\n\t&::placeholder {\n\t\tcolor: color.mix(white, $foreground, 60%);\n\t}\n\n\t&:focus {\n\t\toutline: none;\n\t\tborder-color: $ring;\n\t\tbox-shadow: 0 0 0 1px $ring;\n\t}\n\n\t&:disabled,\n\t&.disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t\tcursor: not-allowed;\n\t\tbackground-color: color.mix(white, $background, 50%);\n\t}\n\n\t&.error {\n\t\tborder-color: $destructive;\n\n\t\t&:focus {\n\t\t\tborder-color: $destructive;\n\t\t\tbox-shadow: 0 0 0 1px $destructive;\n\t\t}\n\t}\n}\n\n.label {\n\tdisplay: block;\n\tfont-size: $text-sm;\n\tfont-weight: $font-medium;\n\tcolor: $foreground;\n\tline-height: $leading-normal;\n\n\t&.required::after {\n\t\tcontent: ' *';\n\t\tcolor: $destructive;\n\t}\n}\n\n.helperText {\n\tfont-size: $text-xs;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n}\n\n.errorText {\n\tfont-size: $text-xs;\n\tcolor: $destructive;\n\tline-height: $leading-normal;\n}\n"
     }
   ]
 }

@@ -8,7 +8,7 @@ export const reactUiItems: PackageRegistryItem[] = [
 		description: 'Multi-variant React button component for Tile UI.',
 		dependencies: ['@radix-ui/react-slot'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core', 'utils'],
+		registryDependencies: ['@tile-ui/core', '@tile-ui/utils'],
 		files: [
 			{
 				source: 'packages/react/src/components/button/button.tsx',
@@ -29,7 +29,7 @@ export const reactUiItems: PackageRegistryItem[] = [
 		title: 'Input',
 		description: 'Accessible React input component for Tile UI.',
 		devDependencies: ['sass'],
-		registryDependencies: ['core', 'utils'],
+		registryDependencies: ['@tile-ui/core', '@tile-ui/utils'],
 		files: [
 			{
 				source: 'packages/react/src/components/input/input.tsx',
@@ -50,7 +50,7 @@ export const reactUiItems: PackageRegistryItem[] = [
 		title: 'Textarea',
 		description: 'Accessible React textarea component for Tile UI.',
 		devDependencies: ['sass'],
-		registryDependencies: ['core', 'utils'],
+		registryDependencies: ['@tile-ui/core', '@tile-ui/utils'],
 		files: [
 			{
 				source: 'packages/react/src/components/textarea/textarea.tsx',
@@ -72,7 +72,7 @@ export const reactUiItems: PackageRegistryItem[] = [
 		description: 'React label primitive for Tile UI forms.',
 		dependencies: ['@radix-ui/react-label'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core'],
+		registryDependencies: ['@tile-ui/core'],
 		files: [
 			{
 				source: 'packages/react/src/components/label/label.tsx',
@@ -93,7 +93,7 @@ export const reactUiItems: PackageRegistryItem[] = [
 		title: 'Card',
 		description: 'Composable React card primitives for Tile UI.',
 		devDependencies: ['sass'],
-		registryDependencies: ['core'],
+		registryDependencies: ['@tile-ui/core'],
 		files: [
 			{
 				source: 'packages/react/src/components/card/card.tsx',

@@ -8,7 +8,7 @@ export const vueUiItems: PackageRegistryItem[] = [
 		description: 'Multi-variant Vue button component for Tile UI.',
 		dependencies: ['vue'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core', 'utils'],
+		registryDependencies: ['@tile-ui/core', '@tile-ui/utils'],
 		files: [
 			{
 				source: 'packages/vue/src/components/button/button.tsx',
@@ -30,7 +30,7 @@ export const vueUiItems: PackageRegistryItem[] = [
 		description: 'Accessible Vue input component for Tile UI.',
 		dependencies: ['vue'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core', 'utils'],
+		registryDependencies: ['@tile-ui/core', '@tile-ui/utils'],
 		files: [
 			{
 				source: 'packages/vue/src/components/input/input.tsx',
@@ -52,7 +52,7 @@ export const vueUiItems: PackageRegistryItem[] = [
 		description: 'Accessible Vue textarea component for Tile UI.',
 		dependencies: ['vue'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core', 'utils'],
+		registryDependencies: ['@tile-ui/core', '@tile-ui/utils'],
 		files: [
 			{
 				source: 'packages/vue/src/components/textarea/textarea.tsx',
@@ -74,7 +74,7 @@ export const vueUiItems: PackageRegistryItem[] = [
 		description: 'Vue label primitive for Tile UI forms.',
 		dependencies: ['vue'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core'],
+		registryDependencies: ['@tile-ui/core'],
 		files: [
 			{
 				source: 'packages/vue/src/components/label/label.tsx',
@@ -96,7 +96,7 @@ export const vueUiItems: PackageRegistryItem[] = [
 		description: 'Composable Vue card primitives for Tile UI.',
 		dependencies: ['vue'],
 		devDependencies: ['sass'],
-		registryDependencies: ['core'],
+		registryDependencies: ['@tile-ui/core'],
 		files: [
 			{
 				source: 'packages/vue/src/components/card/card.tsx',

@@ -11,7 +11,7 @@
     "sass"
   ],
   "registryDependencies": [
-    "core"
+    "@tile-ui/core"
   ],
   "files": [
     {
@@ -24,7 +24,7 @@
       "path": "packages/styles/scss/components/card.module.scss",
       "type": "registry:file",
       "target": "components/ui/card/card.module.scss",
-      "content": "@use 'sass:color';\n@use 'variables/colors' as *;\n\n.card {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-4;\n\tborder-radius: $radius-lg;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tcolor: $foreground;\n\tbox-shadow: $shadow;\n\toverflow: hidden;\n\ttransition: box-shadow $transition-normal;\n\n\t&:hover {\n\t\tbox-shadow: $shadow-md;\n\t}\n}\n\n.cardHeader {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\tpadding: $spacing-6 $spacing-6 0;\n}\n\n.cardTitle {\n\tfont-size: $text-xl;\n\tfont-weight: $font-semibold;\n\tline-height: $leading-tight;\n\tcolor: $foreground;\n\tmargin: 0;\n}\n\n.cardDescription {\n\tfont-size: $text-sm;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n\tmargin: 0;\n}\n\n.cardContent {\n\tpadding: 0 $spacing-6;\n}\n\n.cardFooter {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: $spacing-4;\n\tpadding: 0 $spacing-6 $spacing-6;\n}\n"
+      "content": "@use 'sass:color';\n@use '../../../styles/variables/colors' as *;\n\n.card {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-4;\n\tborder-radius: $radius-lg;\n\tborder: 1px solid $border;\n\tbackground-color: $background;\n\tcolor: $foreground;\n\tbox-shadow: $shadow;\n\toverflow: hidden;\n\ttransition: box-shadow $transition-normal;\n\n\t&:hover {\n\t\tbox-shadow: $shadow-md;\n\t}\n}\n\n.cardHeader {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: $spacing-1;\n\tpadding: $spacing-6 $spacing-6 0;\n}\n\n.cardTitle {\n\tfont-size: $text-xl;\n\tfont-weight: $font-semibold;\n\tline-height: $leading-tight;\n\tcolor: $foreground;\n\tmargin: 0;\n}\n\n.cardDescription {\n\tfont-size: $text-sm;\n\tcolor: color.mix(white, $foreground, 60%);\n\tline-height: $leading-normal;\n\tmargin: 0;\n}\n\n.cardContent {\n\tpadding: 0 $spacing-6;\n}\n\n.cardFooter {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: $spacing-4;\n\tpadding: 0 $spacing-6 $spacing-6;\n}\n"
     }
   ]
 }

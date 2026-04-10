@@ -1,4 +1,4 @@
-import type { PackageRegistryItem, RegistryBuildOptions, RegistryItemType } from '../types';
+import type { PackageRegistryItem, PackageRegistryManifest, RegistryBuildOptions, RegistryItemType } from '../types';
 
 export interface BuiltRegistryFile {
 	path: string;
@@ -7,7 +7,7 @@ export interface BuiltRegistryFile {
 	content: string;
 }
 
-export function buildItemJson(item: PackageRegistryItem, files: BuiltRegistryFile[]) {
+export function buildItemJson(manifest: PackageRegistryManifest, item: PackageRegistryItem, files: BuiltRegistryFile[]) {
 	return {
 		$schema: 'https://ui.shadcn.com/schema/registry-item.json',
 		name: item.name,

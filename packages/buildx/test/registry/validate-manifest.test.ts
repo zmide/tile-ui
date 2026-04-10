@@ -28,4 +28,42 @@ describe('validateManifest', () => {
 			}),
 		).toThrow(/Duplicate registry item name/);
 	});
+
+	it('accepts URL registry dependencies', () => {
+		expect(() =>
+			validateManifest({
+				...manifest,
+				items: [
+					...manifest.items,
+					{
+						name: 'card',
+						type: 'registry:ui',
+						title: 'Card',
+						description: 'Card',
+						registryDependencies: ['https://example.com/r/core.json'],
+						files: [{ source: 'card.tsx', type: 'registry:ui', transform: 'react-component' }],
+					},
+				],
+			}),
+		).not.toThrow();
+	});
+
+	it('accepts namespaced registry dependencies that map to local items', () => {
+		expect(() =>
+			validateManifest({
+				...manifest,
+				items: [
+					...manifest.items,
+					{
+						name: 'card',
+						type: 'registry:ui',
+						title: 'Card',
+						description: 'Card',
+						registryDependencies: ['@tile-ui/button'],
+						files: [{ source: 'card.tsx', type: 'registry:ui', transform: 'react-component' }],
+					},
+				],
+			}),
+		).not.toThrow();
+	});
 });

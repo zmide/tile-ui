@@ -13,13 +13,31 @@ pnpm add @tile-ui/react @tile-ui/styles @tile-ui/core
 
 ## Registry install
 
-```bash
-pnpm dlx shadcn@latest add https://react.tileui.zmorg.cn/r/button.json
-pnpm dlx shadcn@latest add https://react.tileui.zmorg.cn/r/card.json
+First, register the Tile UI namespace in `components.json` so shadcn can resolve shared registry dependencies without hardcoding the docs domain into each item:
+
+```json
+{
+  "registries": {
+    "@tile-ui": "https://react.tileui.zmorg.cn/r/{name}.json"
+  }
+}
 ```
+
+```bash
+pnpm dlx shadcn@latest add @tile-ui/styles @tile-ui/button
+pnpm dlx shadcn@latest add @tile-ui/card
+```
+
+The CLI will resolve shared items such as `@tile-ui/core` and `@tile-ui/utils` automatically.
 
 ## Global styles
 
 ```tsx
 import '@tile-ui/styles/scss/globals.scss';
+```
+
+For registry installs, point the import at the copied local file instead:
+
+```tsx
+import './styles/globals.scss';
 ```

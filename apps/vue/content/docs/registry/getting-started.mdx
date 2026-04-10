@@ -5,6 +5,20 @@ description: Understand the package-local manifest and Vue registry build flow.
 
 The Vue registry is assembled from the package-local registry definitions in `packages/vue/src/registry/*` and published under `apps/vue/public/r`.
 
+## Consumer setup
+
+Projects that install Tile UI through the shadcn CLI should register the Tile UI namespace in `components.json`:
+
+```json
+{
+  "registries": {
+    "@tile-ui": "https://vue.tileui.zmorg.cn/r/{name}.json"
+  }
+}
+```
+
+Once configured, registry dependencies such as `@tile-ui/core` and `@tile-ui/utils` resolve without hardcoding the docs site domain into each item payload.
+
 ## Build flow
 
 ```bash

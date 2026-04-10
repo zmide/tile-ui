@@ -1,5 +1,18 @@
 import type { PackageRegistryManifest } from '../types';
 
+function resolveDependencyName(dependency: string) {
+	if (/^https?:\/\//.test(dependency)) {
+		return null;
+	}
+
+	if (dependency.startsWith('@')) {
+		const slashIndex = dependency.indexOf('/');
+		return slashIndex === -1 ? dependency : dependency.slice(slashIndex + 1);
+	}
+
+	return dependency;
+}
+
 export function validateManifest(manifest: PackageRegistryManifest) {
 	const itemNames = new Set<string>();
 
@@ -14,7 +27,12 @@ export function validateManifest(manifest: PackageRegistryManifest) {
 		}
 
 		for (const dependency of item.registryDependencies ?? []) {
-			if (!manifest.items.some((candidate) => candidate.name === dependency)) {
+			const resolvedDependency = resolveDependencyName(dependency);
+			if (!resolvedDependency) {
+				continue;
+			}
+
+			if (!manifest.items.some((candidate) => candidate.name === resolvedDependency)) {
 				throw new Error(`Registry item '${item.name}' references unknown registry dependency '${dependency}'.`);
 			}
 		}

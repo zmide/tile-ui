@@ -147,20 +147,20 @@ export default defineComponent({
 									</div>
 									<div class="docs-page__footer">
 										{neighbours.previous ? (
-											<a href={neighbours.previous.url} class="docs-page__pager-link" data-direction="previous">
+											<NuxtLink to={neighbours.previous.url} class="docs-page__pager-link" data-direction="previous">
 												<PagerIcon direction="previous" />
 												<span class="docs-page__pager-label">Previous</span>
 												<strong>{neighbours.previous.title}</strong>
-											</a>
+											</NuxtLink>
 										) : (
 											<div class="docs-page__pager-spacer" />
 										)}
 										{neighbours.next ? (
-											<a href={neighbours.next.url} class="docs-page__pager-link" data-direction="next">
+											<NuxtLink to={neighbours.next.url} class="docs-page__pager-link" data-direction="next">
 												<span class="docs-page__pager-label">Next</span>
 												<strong>{neighbours.next.title}</strong>
 												<PagerIcon direction="next" />
-											</a>
+											</NuxtLink>
 										) : (
 											<div class="docs-page__pager-spacer" />
 										)}

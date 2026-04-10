@@ -34,9 +34,14 @@ describe('buildRegistry', () => {
 		});
 
 		const content = await fs.readFile(path.join(outDir, 'button.json'), 'utf-8');
+		const core = await fs.readFile(path.join(outDir, 'core.json'), 'utf-8');
 		expect(content).toContain('"name": "button"');
-		expect(content).not.toContain('@tile-ui/core');
 		expect(content).not.toContain('@tile-ui/styles');
+		expect(content).toContain('"registryDependencies": [');
+		expect(content).toContain('"@tile-ui/core"');
+		expect(content).toContain('"@tile-ui/utils"');
+		expect(content).toContain("@use '../../../styles/variables/colors' as *;");
+		expect(core).toContain("import { capitalize } from './utils';");
 	});
 
 	it('builds expanded react registry items', async () => {
@@ -72,9 +77,14 @@ describe('buildRegistry', () => {
 		});
 
 		const content = await fs.readFile(path.join(outDir, 'button.json'), 'utf-8');
+		const core = await fs.readFile(path.join(outDir, 'core.json'), 'utf-8');
 		expect(content).toContain('"name": "button"');
-		expect(content).not.toContain('@tile-ui/core');
 		expect(content).not.toContain('@tile-ui/styles');
+		expect(content).toContain('"registryDependencies": [');
+		expect(content).toContain('"@tile-ui/core"');
+		expect(content).toContain('"@tile-ui/utils"');
+		expect(content).toContain("@use '../../../styles/variables/colors' as *;");
+		expect(core).toContain("import { capitalize } from './utils';");
 	});
 
 	it('builds expanded vue registry items', async () => {

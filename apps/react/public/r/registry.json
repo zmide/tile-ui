@@ -105,8 +105,8 @@
         "sass"
       ],
       "registryDependencies": [
-        "core",
-        "utils"
+        "@tile-ui/core",
+        "@tile-ui/utils"
       ],
       "files": [
         {
@@ -129,8 +129,8 @@
         "sass"
       ],
       "registryDependencies": [
-        "core",
-        "utils"
+        "@tile-ui/core",
+        "@tile-ui/utils"
       ],
       "files": [
         {
@@ -153,8 +153,8 @@
         "sass"
       ],
       "registryDependencies": [
-        "core",
-        "utils"
+        "@tile-ui/core",
+        "@tile-ui/utils"
       ],
       "files": [
         {
@@ -180,7 +180,7 @@
         "sass"
       ],
       "registryDependencies": [
-        "core"
+        "@tile-ui/core"
       ],
       "files": [
         {
@@ -203,7 +203,7 @@
         "sass"
       ],
       "registryDependencies": [
-        "core"
+        "@tile-ui/core"
       ],
       "files": [
         {

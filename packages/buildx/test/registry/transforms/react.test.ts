@@ -50,4 +50,28 @@ describe('transformReactFile', () => {
 		expect(output.content).toContain("from './input.module.scss'");
 		expect(output.content).not.toContain('@tile-ui/styles');
 	});
+
+	it('rewrites style @use paths relative to the output target', async () => {
+		const output = await transformReactFile({
+			framework: 'react',
+			workspaceRoot: '/workspace',
+			item: {
+				name: 'button',
+				type: 'registry:ui',
+				title: 'Button',
+				description: 'Button',
+				files: [],
+			},
+			file: {
+				source: 'button.module.scss',
+				type: 'registry:file',
+				transform: 'style',
+				target: 'components/ui/button/button.module.scss',
+			},
+			content: "@use 'variables/colors' as *;\n@use 'mixins/utils' as *;\n",
+		});
+
+		expect(output.content).toContain("@use '../../../styles/variables/colors' as *;");
+		expect(output.content).toContain("@use '../../../styles/mixins/utils' as *;");
+	});
 });

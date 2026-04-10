@@ -46,7 +46,7 @@ export async function buildRegistry(options: RegistryBuildOptions) {
 			});
 		}
 
-		const itemJson = buildItemJson(item, files);
+		const itemJson = buildItemJson(options.manifest, item, files);
 		const itemFileName = `${item.name}.json`;
 		expectedFileNames.push(itemFileName);
 		await writeJsonFile(path.join(options.outDir, itemFileName), itemJson);

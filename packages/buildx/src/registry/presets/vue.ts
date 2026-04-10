@@ -25,6 +25,8 @@ function buildVueCore(workspaceRoot: string) {
 	const cardLogic = read(workspaceRoot, 'packages/core/src/components/card/card.logic.ts');
 
 	return [
+		"import { capitalize } from './utils';",
+		'',
 		buttonTypes,
 		'',
 		stripImport(stripImport(buttonLogic, "import type { ButtonVariant, ButtonSize } from './button.types';\n"), "import { capitalize } from '../../utils/helpers';\n"),
@@ -45,8 +47,7 @@ function buildVueCore(workspaceRoot: string) {
 		'',
 		cardLogic,
 	]
-		.join('\n')
-		.replace('export function getButtonStyleKeys(\n', "import { capitalize } from './utils';\n\nexport function getButtonStyleKeys(\n");
+		.join('\n');
 }
 
 export function createVueRegistryConfig(input: { workspaceRoot: string; outDir: string }): Omit<RegistryBuildOptions, 'manifest'> {
