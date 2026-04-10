@@ -71,7 +71,14 @@ jobs:
           '
 
       - name: Build target package
-        run: pnpm --filter "$PACKAGE_FULL_NAME" build
+        run: |
+          case "$PACKAGE_NAME" in
+            react|vue)
+              pnpm --filter @tile-ui/core build
+              ;;
+          esac
+
+          pnpm --filter "$PACKAGE_FULL_NAME" build
 
       - name: Publish target package
         run: pnpm --filter "$PACKAGE_FULL_NAME" publish --access public --provenance --no-git-checks

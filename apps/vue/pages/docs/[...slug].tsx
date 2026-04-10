@@ -109,7 +109,8 @@ export default defineComponent({
 		const route = useRoute();
 		const getSlug = () => {
 			const slugParam = route.params.slug;
-			return Array.isArray(slugParam) ? slugParam : slugParam ? [String(slugParam)] : [];
+			const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [String(slugParam)] : [];
+			return parts.map((part) => String(part).trim()).filter(Boolean);
 		};
 		const payload = computed(() => getDocPayload(getSlug()));
 
