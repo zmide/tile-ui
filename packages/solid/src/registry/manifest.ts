@@ -7,6 +7,6 @@ import { solidUiItems } from './items/ui';
 
 export const solidRegistryManifest: PackageRegistryManifest = {
 	name: 'tile-ui-solid',
-	homepage: 'https://github.com/zmide/tile-ui/tree/main/packages/solid',
+	homepage: 'https://github.com/zmide/tile-ui/tree/master/packages/solid',
 	items: [...solidLibItems, ...solidFileItems, ...solidPrimitiveItems, ...solidUiItems],
 };

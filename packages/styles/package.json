@@ -11,7 +11,7 @@
 		"styles",
 		"ui"
 	],
-	"homepage": "https://github.com/zmide/tile-ui/tree/main/packages/styles",
+	"homepage": "https://github.com/zmide/tile-ui/tree/master/packages/styles",
 	"bugs": {
 		"url": "https://github.com/zmide/tile-ui/issues"
 	},

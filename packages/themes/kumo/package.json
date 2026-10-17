@@ -2,7 +2,16 @@
 	"name": "@tile-ui/theme-kumo",
 	"version": "1.0.1",
 	"description": "Opt-in Kumo appearance for Tile UI with dynamic light and dark modes",
+	"homepage": "https://github.com/zmide/tile-ui/tree/master/packages/themes/kumo",
+	"bugs": {
+		"url": "https://github.com/zmide/tile-ui/issues"
+	},
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/zmide/tile-ui.git",
+		"directory": "packages/themes/kumo"
+	},
 	"files": [
 		"LICENSE",
 		"README.md",

@@ -10,7 +10,7 @@
 		"types",
 		"ui"
 	],
-	"homepage": "https://github.com/zmide/tile-ui/tree/main/packages/core",
+	"homepage": "https://github.com/zmide/tile-ui/tree/master/packages/core",
 	"bugs": {
 		"url": "https://github.com/zmide/tile-ui/issues"
 	},
