@@ -1,6 +1,6 @@
 {
 	"name": "@tile-ui/theme-kumo",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Opt-in Kumo appearance for Tile UI with dynamic light and dark modes",
 	"license": "MIT",
 	"files": [
