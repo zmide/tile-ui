@@ -1,0 +1,86 @@
+/* A neutral consumer, shared by both pages. No Kumo CSS reaches the Tile page.
+ * Base typography is 14px; root/rem units remain 16px. The reference's text
+ * utilities come from the actual Kumo + consumer Tailwind compilation.
+ * Do not add control-specific corrections here to make a comparison pass. */
+@layer base {
+	html {
+		font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+		font-size: 16px;
+		line-height: 1.5;
+		letter-spacing: normal;
+		color-scheme: light;
+	}
+	html.dark {
+		color-scheme: dark;
+	}
+	body {
+		margin: 0;
+		font-size: 14px;
+		background: #fff;
+		color: #202020;
+	}
+	html.dark body {
+		background: #141414;
+		color: #f5f5f5;
+	}
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+	button,
+	input {
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		letter-spacing: inherit;
+		margin: 0;
+	}
+	button {
+		padding: 0;
+		border: 0;
+		background: transparent;
+	}
+}
+.fixture-root {
+	isolation: isolate;
+	display: grid;
+	grid-template-columns: 512px 512px;
+	gap: 16px 32px;
+	padding: 24px;
+}
+section {
+	width: 512px;
+}
+h2 {
+	margin: 0 0 8px;
+	font:
+		500 12px/20px ui-monospace,
+		monospace;
+}
+[data-sample] {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 512px;
+	height: 128px;
+	padding: 24px;
+	background: #fff;
+}
+html.dark [data-sample] {
+	background: #141414;
+}
+.input-consumer {
+	width: 280px;
+}
+.input-consumer input {
+	width: 100%;
+}
+/* Stabilize measurement, not appearance. Hover/focus are real browser states. */
+*,
+*::before,
+*::after {
+	animation-duration: 0s !important;
+	transition-duration: 0s !important;
+	caret-color: transparent !important;
+}

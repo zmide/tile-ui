@@ -15,22 +15,28 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 		return (
 			<Comp ref={ref} className={classes} disabled={isButtonDisabled(disabled, loading)} {...props}>
-				{loading && (
-					<svg
-						className={styles.spinner}
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round">
-						<circle cx="12" cy="12" r="10" />
-					</svg>
+				{asChild ? (
+					children
+				) : (
+					<>
+						{loading && (
+							<svg
+								className={styles.spinner}
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round">
+								<circle cx="12" cy="12" r="10" />
+							</svg>
+						)}
+						{children}
+					</>
 				)}
-				{children}
 			</Comp>
 		);
 	},

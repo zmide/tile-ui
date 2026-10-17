@@ -81,7 +81,7 @@ async function renderMarkdown(source) {
 	return html;
 }
 
-const sectionOrder = ['installation', 'theming', 'primitives', 'components', 'registry', 'examples'];
+const sectionOrder = ['installation', 'theming', 'themes', 'primitives', 'components', 'registry', 'examples'];
 const docs = [];
 for (const file of walk(docsRoot)) {
 	const parsed = matter(fs.readFileSync(path.join(docsRoot, file), 'utf8'));

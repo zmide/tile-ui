@@ -5,7 +5,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: $z-modal;
-	background-color: $overlay;
+	background-color: var(--tile-sheet-overlay, $overlay);
 
 	&[data-state='open'] {
 		animation: sheet-overlay-in $transition-normal;
@@ -33,9 +33,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-4;
-	background-color: $card;
+	background-color: var(--tile-sheet-background, $card);
 	color: $card-foreground;
-	box-shadow: $shadow-lg;
+	box-shadow: var(--tile-sheet-shadow, $shadow-lg);
 	outline: none;
 	transition:
 		transform $transition-slow,
@@ -46,7 +46,7 @@
 		width: 75%;
 		height: 100%;
 		max-width: 24rem;
-		border-left: 1px solid $border;
+		border-left: 1px solid var(--tile-sheet-border, $border);
 	}
 
 	&[data-side='left'] {
@@ -54,19 +54,19 @@
 		width: 75%;
 		height: 100%;
 		max-width: 24rem;
-		border-right: 1px solid $border;
+		border-right: 1px solid var(--tile-sheet-border, $border);
 	}
 
 	&[data-side='top'] {
 		inset: 0 0 auto 0;
 		width: 100%;
-		border-bottom: 1px solid $border;
+		border-bottom: 1px solid var(--tile-sheet-border, $border);
 	}
 
 	&[data-side='bottom'] {
 		inset: auto 0 0 0;
 		width: 100%;
-		border-top: 1px solid $border;
+		border-top: 1px solid var(--tile-sheet-border, $border);
 	}
 }
 
@@ -93,9 +93,7 @@
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-sheet-close-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	.xIcon {
@@ -109,7 +107,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-1_5;
-	padding: $spacing-4;
+	padding: var(--tile-sheet-header-padding, $spacing-4);
 }
 
 .footer {
@@ -117,12 +115,12 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-2;
-	padding: $spacing-4;
+	padding: var(--tile-sheet-footer-padding, $spacing-4);
 }
 
 .title {
 	margin: 0;
-	font-size: $text-base;
+	font-size: var(--tile-sheet-title-size, $text-base);
 	font-weight: $font-semibold;
 	color: $foreground;
 }
@@ -131,5 +129,5 @@
 	margin: 0;
 	font-size: $text-sm;
 	line-height: $leading-normal;
-	color: $muted-foreground;
+	color: var(--tile-sheet-description-color, $muted-foreground);
 }

@@ -5,7 +5,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: $z-modal;
-	background-color: $overlay;
+	background-color: var(--tile-dialog-overlay, $overlay);
 
 	&[data-state='open'] {
 		animation: dialog-overlay-in $transition-normal;
@@ -29,24 +29,25 @@
 // 弹层内容面板
 .content {
 	position: fixed;
-	top: 50%;
+	top: var(--tile-dialog-top, 50%);
 	left: 50%;
 	z-index: $z-modal;
 	display: grid;
 	width: 100%;
 	max-width: calc(100% - 2rem);
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, var(--tile-dialog-translate-y, -50%));
 	gap: $spacing-4;
-	border: 1px solid $border;
-	border-radius: $radius-lg;
-	background-color: $card;
+	border: 1px solid var(--tile-dialog-border, $border);
+	border-radius: var(--tile-dialog-radius, $radius-lg);
+	background-color: var(--tile-dialog-background, $card);
 	color: $card-foreground;
-	padding: $spacing-6;
-	box-shadow: $shadow-lg;
+	padding: var(--tile-dialog-padding, $spacing-6);
+	box-shadow: var(--tile-dialog-shadow, $shadow-lg);
 	outline: none;
 
 	@media (min-width: 640px) {
-		max-width: 32rem;
+		top: var(--tile-dialog-top-desktop, 50%);
+		max-width: var(--tile-dialog-max-width, 32rem);
 	}
 
 	&[data-state='open'] {
@@ -55,19 +56,19 @@
 
 	&[data-state='closed'] {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(0.95);
+		transform: translate(-50%, var(--tile-dialog-translate-y, -50%)) scale(0.95);
 	}
 }
 
 @keyframes dialog-content-in {
 	from {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(0.95);
+		transform: translate(-50%, var(--tile-dialog-translate-y, -50%)) scale(0.95);
 	}
 
 	to {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1);
+		transform: translate(-50%, var(--tile-dialog-translate-y, -50%)) scale(1);
 	}
 }
 
@@ -81,10 +82,10 @@
 	justify-content: center;
 	padding: $spacing-1;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-dialog-close-radius, $radius);
 	background-color: transparent;
-	color: $muted-foreground;
-	opacity: 0.7;
+	color: var(--tile-dialog-close-color, $muted-foreground);
+	opacity: var(--tile-dialog-close-opacity, 0.7);
 	cursor: pointer;
 	transition: opacity $transition-fast;
 	outline: none;
@@ -94,9 +95,7 @@
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-dialog-close-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	.xIcon {
@@ -110,7 +109,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-2;
-	text-align: center;
+	text-align: var(--tile-dialog-header-align, center);
 
 	@media (min-width: 640px) {
 		text-align: left;
@@ -130,15 +129,15 @@
 
 .title {
 	margin: 0;
-	font-size: $text-lg;
+	font-size: var(--tile-dialog-title-size, $text-lg);
 	font-weight: $font-semibold;
-	line-height: $leading-none;
+	line-height: var(--tile-dialog-title-leading, $leading-none);
 	color: $foreground;
 }
 
 .description {
 	margin: 0;
-	font-size: $text-sm;
+	font-size: var(--tile-dialog-description-size, $text-sm);
 	line-height: $leading-normal;
-	color: $muted-foreground;
+	color: var(--tile-dialog-description-color, $muted-foreground);
 }

@@ -13,14 +13,14 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: $spacing-2;
-	border-radius: $radius;
-	border: 1px solid $input;
-	background-color: transparent;
-	padding: $spacing-2 $spacing-3;
-	font-size: $text-sm;
+	border-radius: var(--tile-select-trigger-radius, $radius);
+	border: 1px solid var(--tile-select-trigger-border, $input);
+	background-color: var(--tile-select-trigger-background, transparent);
+	padding: var(--tile-select-trigger-padding, $spacing-2 $spacing-3);
+	font-size: var(--tile-select-font-size, $text-sm);
 	white-space: nowrap;
-	color: $foreground;
-	box-shadow: $shadow-sm;
+	color: var(--tile-select-foreground, $foreground);
+	box-shadow: var(--tile-select-trigger-shadow, $shadow-sm);
 	transition:
 		color $transition-fast,
 		box-shadow $transition-fast;
@@ -28,16 +28,17 @@
 	cursor: pointer;
 
 	&:focus-visible {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-select-focus-border, $ring);
+		box-shadow: var(--tile-select-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 
 	&[data-size='default'] {
-		height: 2.25rem;
+		height: var(--tile-select-height, 2.25rem);
 	}
 
 	&[data-size='sm'] {
-		height: 2rem;
+		height: var(--tile-select-sm-height, 2rem);
+		font-size: var(--tile-select-sm-font-size, $text-sm);
 	}
 
 	&[data-disabled='true'] {
@@ -46,7 +47,7 @@
 	}
 
 	&[data-placeholder='true'] {
-		color: $muted-foreground;
+		color: var(--tile-select-placeholder, $muted-foreground);
 	}
 
 	& > svg {
@@ -54,7 +55,7 @@
 		flex-shrink: 0;
 		width: 1rem;
 		height: 1rem;
-		color: $muted-foreground;
+		color: var(--tile-select-subtle, $muted-foreground);
 	}
 }
 
@@ -76,12 +77,12 @@
 	max-height: 300px;
 	overflow-x: hidden;
 	overflow-y: auto;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $popover;
-	color: $popover-foreground;
-	padding: $spacing-1;
-	box-shadow: $shadow-md;
+	border-radius: var(--tile-select-panel-radius, $radius);
+	border: 1px solid var(--tile-select-panel-border, $border);
+	background-color: var(--tile-select-panel-background, $popover);
+	color: var(--tile-select-panel-foreground, $popover-foreground);
+	padding: var(--tile-select-panel-padding, $spacing-1);
+	box-shadow: var(--tile-select-panel-shadow, $shadow-md);
 	outline: none;
 	transition:
 		opacity $transition-fast,
@@ -110,7 +111,7 @@
 
 // 内容视口（可滚动）
 .viewport {
-	padding: $spacing-1;
+	padding: var(--tile-select-viewport-padding, $spacing-1);
 }
 
 // 选项
@@ -120,18 +121,18 @@
 	width: 100%;
 	align-items: center;
 	gap: $spacing-2;
-	border-radius: $radius-sm;
-	padding: $spacing-1_5 $spacing-2 $spacing-1_5 $spacing-8;
-	font-size: $text-sm;
+	border-radius: var(--tile-select-item-radius, $radius-sm);
+	padding: var(--tile-select-item-padding, $spacing-1_5 $spacing-2 $spacing-1_5 $spacing-8);
+	font-size: var(--tile-select-font-size, $text-sm);
 	line-height: $leading-normal;
-	color: $popover-foreground;
+	color: var(--tile-select-panel-foreground, $popover-foreground);
 	outline: none;
 	cursor: default;
 	user-select: none;
 
 	&[data-highlighted='true'] {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-select-highlight-background, $accent);
+		color: var(--tile-select-highlight-foreground, $accent-foreground);
 	}
 
 	&[data-disabled='true'] {
@@ -144,14 +145,19 @@
 		flex-shrink: 0;
 		width: 1rem;
 		height: 1rem;
-		color: $muted-foreground;
+		color: var(--tile-select-subtle, $muted-foreground);
+	}
+
+	&:focus-visible {
+		box-shadow: var(--tile-select-item-focus-shadow, none);
 	}
 }
 
 // 选中指示器
 .indicator {
 	position: absolute;
-	left: $spacing-2;
+	left: var(--tile-select-indicator-left, $spacing-2);
+	right: var(--tile-select-indicator-right, auto);
 	display: inline-flex;
 	width: 0.875rem;
 	height: 0.875rem;
@@ -166,17 +172,17 @@
 
 // 分组标题
 .label {
-	padding: $spacing-1_5 $spacing-2;
-	font-size: $text-xs;
-	font-weight: $font-medium;
-	color: $muted-foreground;
+	padding: var(--tile-select-label-padding, $spacing-1_5 $spacing-2);
+	font-size: var(--tile-select-label-font-size, $text-xs);
+	font-weight: var(--tile-select-label-font-weight, $font-medium);
+	color: var(--tile-select-subtle, $muted-foreground);
 }
 
 // 分隔线
 .separator {
 	margin: $spacing-1 (-$spacing-1);
 	height: 1px;
-	background-color: $border;
+	background-color: var(--tile-select-separator, $border);
 }
 
 // 上下滚动按钮
@@ -185,7 +191,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: $spacing-1;
-	color: $muted-foreground;
+	color: var(--tile-select-subtle, $muted-foreground);
 
 	& > svg {
 		width: 1rem;
@@ -197,5 +203,11 @@
 .chevron {
 	width: 1rem;
 	height: 1rem;
-	opacity: 0.5;
+	opacity: var(--tile-select-chevron-opacity, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.content {
+		transition: none;
+	}
 }

@@ -4,7 +4,7 @@
 	display: flex;
 	width: 100%;
 	flex-direction: column;
-	gap: $spacing-1_5;
+	gap: var(--tile-field-gap, #{$spacing-1_5});
 
 	&[data-invalid='true'] {
 		color: $destructive;
@@ -13,9 +13,9 @@
 
 .label {
 	width: fit-content;
-	font-size: $text-sm;
+	font-size: var(--tile-field-label-font-size, #{$text-sm});
 	font-weight: $font-medium;
-	line-height: $leading-tight;
+	line-height: var(--tile-field-label-line-height, #{$leading-tight});
 	color: $foreground;
 	transition: color $transition-fast;
 
@@ -25,22 +25,22 @@
 }
 
 .description {
-	font-size: $text-sm;
-	line-height: $leading-normal;
-	color: $muted-foreground;
+	font-size: var(--tile-field-description-font-size, #{$text-sm});
+	line-height: var(--tile-field-description-line-height, #{$leading-normal});
+	color: var(--tile-field-description-color, #{$muted-foreground});
 }
 
 .message {
 	display: flex;
 	align-items: center;
 	gap: $spacing-1;
-	font-size: $text-xs;
-	line-height: $leading-normal;
-	color: $muted-foreground;
+	font-size: var(--tile-field-message-font-size, #{$text-xs});
+	line-height: var(--tile-field-description-line-height, #{$leading-normal});
+	color: var(--tile-field-description-color, #{$muted-foreground});
 
 	// 样式变体
 	&.variantDefault {
-		color: $muted-foreground;
+		color: var(--tile-field-description-color, #{$muted-foreground});
 	}
 
 	&.variantError {

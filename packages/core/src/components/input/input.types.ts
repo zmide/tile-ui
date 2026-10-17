@@ -5,4 +5,6 @@ export interface InputBaseProps {
 	label?: string;
 	error?: string;
 	helperText?: string;
+	/** Visual control size; independent of the native numeric HTML `size` attribute. */
+	controlSize?: 'default' | 'xs' | 'sm' | 'lg';
 }

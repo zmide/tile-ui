@@ -14,14 +14,15 @@
 	appearance: none;
 	width: 100%;
 	min-width: 0;
-	height: 2.25rem;
-	border-radius: $radius;
-	border: 1px solid $input;
-	background-color: $background;
-	padding: $spacing-2 2.25rem $spacing-2 $spacing-3;
-	font-size: $text-sm;
+	height: var(--tile-native-select-height, 2.25rem);
+	border-radius: var(--tile-native-select-radius, #{$radius});
+	border: var(--tile-native-select-border-width, 1px) solid var(--tile-native-select-border, #{$input});
+	background-color: var(--tile-native-select-background, #{$background});
+	padding: var(--tile-native-select-padding, #{$spacing-2} 2.25rem #{$spacing-2} #{$spacing-3});
+	font-size: var(--tile-native-select-font-size, #{$text-sm});
+	line-height: var(--tile-native-select-line-height, inherit);
 	color: $foreground;
-	box-shadow: $shadow-sm;
+	box-shadow: var(--tile-native-select-shadow, #{$shadow-sm});
 	transition:
 		border-color $transition-fast,
 		box-shadow $transition-fast;
@@ -33,12 +34,12 @@
 	}
 
 	&:hover:not(:disabled) {
-		background-color: $field-hover;
+		background-color: var(--tile-native-select-hover-background, #{$field-hover});
 	}
 
 	&:focus-visible {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-native-select-focus-border, #{$ring});
+		box-shadow: var(--tile-native-select-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 	}
 
 	&:disabled {
@@ -47,7 +48,9 @@
 	}
 
 	&[data-size='sm'] {
-		height: 2rem;
+		height: var(--tile-native-select-sm-height, 2rem);
+		font-size: var(--tile-native-select-sm-font-size, #{$text-sm});
+		border-radius: var(--tile-native-select-sm-radius, #{$radius});
 		padding-top: $spacing-1;
 		padding-bottom: $spacing-1;
 	}
@@ -58,9 +61,10 @@
 
 	&[aria-invalid='true'] {
 		border-color: $destructive;
+		box-shadow: var(--tile-native-select-error-shadow, #{$shadow-sm});
 
 		&:focus-visible {
-			box-shadow: 0 0 0 3px color-mix(in srgb, $destructive 20%, transparent);
+			box-shadow: var(--tile-native-select-error-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$destructive} 20%, transparent));
 		}
 	}
 }

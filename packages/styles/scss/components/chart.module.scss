@@ -8,8 +8,8 @@
 	aspect-ratio: 16 / 9;
 	flex-direction: column;
 	justify-content: center;
-	font-size: $text-xs;
-	color: $muted-foreground;
+	font-size: var(--tile-chart-font-size, $text-xs);
+	color: var(--tile-chart-muted-foreground, $muted-foreground);
 }
 
 // 绘图画布
@@ -17,20 +17,20 @@
 	overflow: visible;
 
 	text {
-		fill: $muted-foreground;
+		fill: var(--tile-chart-muted-foreground, $muted-foreground);
 	}
 }
 
 // 网格线
 .gridLine {
-	stroke: $border;
-	stroke-opacity: 0.5;
-	stroke-dasharray: 4 4;
+	stroke: var(--tile-chart-grid-color, $border);
+	stroke-opacity: var(--tile-chart-grid-opacity, 0.5);
+	stroke-dasharray: var(--tile-chart-grid-dasharray, 4 4);
 }
 
 // 坐标轴线
 .axisLine {
-	stroke: $border;
+	stroke: var(--tile-chart-axis-color, $border);
 }
 
 // 图例容器
@@ -52,7 +52,7 @@
 	display: flex;
 	align-items: center;
 	gap: $spacing-1_5;
-	color: $muted-foreground;
+	color: var(--tile-chart-muted-foreground, $muted-foreground);
 }
 
 // 图例色块
@@ -70,13 +70,13 @@
 	min-width: 8rem;
 	align-items: start;
 	gap: $spacing-1_5;
-	border: 1px solid color-mix(in srgb, $border 50%, transparent);
-	border-radius: $radius;
-	background-color: $popover;
+	border: 1px solid var(--tile-chart-tooltip-border, color-mix(in srgb, $border 50%, transparent));
+	border-radius: var(--tile-chart-tooltip-radius, $radius);
+	background-color: var(--tile-chart-tooltip-background, $popover);
 	padding: $spacing-1_5 $spacing-2_5;
-	color: $popover-foreground;
-	font-size: $text-xs;
-	box-shadow: $shadow-lg;
+	color: var(--tile-chart-tooltip-foreground, $popover-foreground);
+	font-size: var(--tile-chart-font-size, $text-xs);
+	box-shadow: var(--tile-chart-tooltip-shadow, $shadow-lg);
 }
 
 // Tooltip 标签
@@ -105,14 +105,14 @@
 
 // Tooltip 条目名称
 .tooltipItemName {
-	color: $muted-foreground;
+	color: var(--tile-chart-muted-foreground, $muted-foreground);
 }
 
 // Tooltip 条目数值
 .tooltipItemValue {
 	font-family: $font-mono;
 	font-weight: $font-medium;
-	color: $foreground;
+	color: var(--tile-chart-foreground, $foreground);
 	font-variant-numeric: tabular-nums;
 }
 

@@ -41,28 +41,28 @@
 
 	// 变体
 	&.variantDefault .content {
-		background-color: $primary;
-		color: $primary-foreground;
+		background-color: var(--tile-bubble-background, $primary);
+		color: var(--tile-bubble-color, $primary-foreground);
 	}
 
 	&.variantSecondary .content {
-		background-color: $secondary;
+		background-color: var(--tile-bubble-secondary-background, $secondary);
 		color: $secondary-foreground;
 	}
 
 	&.variantMuted .content {
-		background-color: $muted;
+		background-color: var(--tile-bubble-muted-background, $muted);
 		color: $foreground;
 	}
 
 	&.variantTinted .content {
-		background-color: color-mix(in srgb, $primary 15%, $background);
+		background-color: var(--tile-bubble-tinted-background, color-mix(in srgb, $primary 15%, $background));
 		color: $foreground;
 	}
 
 	&.variantOutline .content {
-		border-color: $border;
-		background-color: $background;
+		border-color: var(--tile-bubble-border, $border);
+		background-color: var(--tile-bubble-outline-background, $background);
 		color: $foreground;
 	}
 
@@ -74,13 +74,13 @@
 	}
 
 	&.variantDestructive .content {
-		background-color: color-mix(in srgb, $destructive 10%, transparent);
-		color: $destructive;
+		background-color: var(--tile-bubble-error-background, color-mix(in srgb, $destructive 10%, transparent));
+		color: var(--tile-bubble-error-color, $destructive);
 	}
 
 	// 按钮/链接形态的内容悬停效果
 	&.variantDefault .content:is(button, a):hover {
-		background-color: color-mix(in srgb, $primary 80%, transparent);
+		background-color: var(--tile-bubble-hover-background, color-mix(in srgb, $primary 80%, transparent));
 	}
 
 	&.variantSecondary .content:is(button, a):hover,
@@ -92,7 +92,7 @@
 	}
 
 	&.variantDestructive .content:is(button, a):hover {
-		background-color: color-mix(in srgb, $destructive 20%, transparent);
+		background-color: var(--tile-bubble-error-hover-background, color-mix(in srgb, $destructive 20%, transparent));
 	}
 }
 
@@ -104,8 +104,8 @@
 	min-width: 0;
 	overflow: hidden;
 	border: 1px solid transparent;
-	border-radius: $radius;
-	padding: $spacing-2 $spacing-3;
+	border-radius: var(--tile-bubble-radius, $radius);
+	padding: var(--tile-bubble-padding, $spacing-2 $spacing-3);
 	font-size: $text-sm;
 	line-height: $leading-relaxed;
 	overflow-wrap: anywhere;
@@ -122,7 +122,7 @@
 
 	&:is(button, a):focus-visible {
 		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		box-shadow: var(--tile-bubble-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 }
 
@@ -137,7 +137,7 @@
 	justify-content: center;
 	gap: $spacing-1;
 	border-radius: $radius-full;
-	background-color: $muted;
+	background-color: var(--tile-bubble-reactions-background, $muted);
 	padding: 0.125rem $spacing-1_5;
 	font-size: $text-sm;
 	box-shadow: 0 0 0 3px $card;

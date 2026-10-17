@@ -2,8 +2,10 @@ import { createEffect, createSignal, For, onCleanup, onMount, Show, splitProps, 
 import {
 	SERIES_COLORS,
 	createLivelineEngine,
-	resolveSeriesPalettes,
-	resolveTheme,
+	observeLivelineAppearance,
+	readLivelineAppearance,
+	resolveLivelinePalette,
+	type LivelineAppearance,
 	type LivelineEngine,
 	type LivelineEngineConfig,
 	type LivelineOptions,
@@ -92,6 +94,7 @@ export function Liveline(props: LivelineProps) {
 		'aria-label',
 		'aria-describedby',
 	]);
+	let root: HTMLDivElement | undefined;
 	let surface: HTMLDivElement | undefined;
 	let canvas: HTMLCanvasElement | undefined;
 	let valueElement: HTMLSpanElement | undefined;
@@ -105,8 +108,15 @@ export function Liveline(props: LivelineProps) {
 	const [hiddenSeries, setHiddenSeries] = createSignal(new Set<string>());
 	const [activeWindowSecs, setActiveWindowSecs] = createSignal(props.windows?.[0]?.secs ?? props.window ?? 30);
 	const [lastSeries, setLastSeries] = createSignal(props.series ?? []);
+	const [appearance, setAppearance] = createSignal<LivelineAppearance>({ mode: props.theme ?? 'dark', palette: {}, colors: {} });
+	const appearanceOptions = () => ({
+		theme: props.theme,
+		colors: [props.color ?? '#3b82f6', ...(props.series?.map((series, index) => series.color || SERIES_COLORS[index % SERIES_COLORS.length]) ?? [])],
+	});
+	const currentAppearance = (): LivelineAppearance =>
+		props.theme && appearance().mode !== props.theme ? { mode: props.theme, palette: {}, colors: appearance().colors } : appearance();
 
-	const theme = () => props.theme ?? 'dark';
+	const theme = () => currentAppearance().mode;
 	const windowStyle = () => props.windowStyle ?? 'default';
 	const activeMode = () => ((props.mode ?? 'line') === 'candle' && props.lineMode ? 'line' : (props.mode ?? 'line'));
 	const shownSeries = () => lastSeries();
@@ -122,18 +132,16 @@ export function Liveline(props: LivelineProps) {
 	};
 
 	function readConfig(): LivelineEngineConfig {
-		const currentTheme = props.theme ?? 'dark';
 		const color = props.color ?? '#3b82f6';
 		const series = props.series;
 		const multi = Boolean(series?.length);
-		const palettes = series?.length ? resolveSeriesPalettes(series, currentTheme) : null;
 		const currentPadding = padding();
-		const palette = { ...resolveTheme(color, currentTheme), ...(props.lineWidth == null ? {} : { lineWidth: props.lineWidth }) };
+		const palette = { ...resolveLivelinePalette(color, currentAppearance()), ...(props.lineWidth == null ? {} : { lineWidth: props.lineWidth }) };
 		const multiSeries = series?.map((item, index) => ({
 			id: item.id,
 			data: item.data,
 			value: item.value,
-			palette: palettes?.get(item.id) ?? resolveTheme(item.color || SERIES_COLORS[index % SERIES_COLORS.length], currentTheme),
+			palette: resolveLivelinePalette(item.color || SERIES_COLORS[index % SERIES_COLORS.length], currentAppearance()),
 			label: item.label,
 		}));
 		const momentum = props.momentum ?? true;
@@ -184,13 +192,20 @@ export function Liveline(props: LivelineProps) {
 
 	onMount(() => {
 		if (!surface || !canvas) return;
+		const stopAppearance = root ? observeLivelineAppearance(root, appearanceOptions, setAppearance) : undefined;
 		engine = createLivelineEngine({ container: surface, canvas }, readConfig());
 		setWindowIndicator(indicatorFor(windowBar, windowButtons.get(activeWindowSecs())));
 		if (props.onModeChange) setModeIndicator(indicatorFor(modeBar, modeButtons.get(activeMode())));
 		onCleanup(() => {
+			stopAppearance?.();
 			engine?.destroy();
 			engine = undefined;
 		});
+	});
+
+	createEffect(() => {
+		const { theme, colors } = appearanceOptions();
+		if (root) setAppearance(readLivelineAppearance(root, theme, colors));
 	});
 
 	createEffect(() => {
@@ -242,15 +257,17 @@ export function Liveline(props: LivelineProps) {
 
 	const summary = () => props['aria-label'] ?? `Live chart, current value ${(props.formatValue ?? defaultFormatValue)(props.value)}`;
 	const hasControls = () => Boolean(props.windows?.length || props.onModeChange || shownSeries().length > 1);
-	const activeColor = () => (theme() === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.55)');
-	const inactiveColor = () => (theme() === 'dark' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.22)');
 
 	return (
 		<div
 			{...rootProps}
-			ref={(element) => props.ref?.(element)}
+			ref={(element) => {
+				root = element;
+				props.ref?.(element);
+			}}
 			data-slot="liveline"
-			data-theme={theme()}
+			data-theme={currentAppearance().inherited ? undefined : theme()}
+			data-color-mode={theme()}
 			class={`${styles.root} ${props.class ?? ''} ${props.className ?? ''}`}
 			style={props.style}>
 			<Show when={props.showValue}>
@@ -333,13 +350,7 @@ export function Liveline(props: LivelineProps) {
 											<Show
 												when={item === 'line'}
 												fallback={
-													<svg
-														aria-hidden="true"
-														width="12"
-														height="12"
-														viewBox="0 0 12 12"
-														fill="none"
-														color={active() ? activeColor() : inactiveColor()}>
+													<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
 														<line x1="3.5" y1="1" x2="3.5" y2="11" stroke="currentColor" />
 														<rect x="2" y="3" width="3" height="5" rx="0.5" fill="currentColor" />
 														<line x1="8.5" y1="2" x2="8.5" y2="10" stroke="currentColor" />
@@ -349,7 +360,7 @@ export function Liveline(props: LivelineProps) {
 												<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
 													<path
 														d="M1 8.5C2.5 8.5 3 4 5.5 4S7.5 7 8.5 7C9.5 7 10 3.5 11 3.5"
-														stroke={active() ? activeColor() : inactiveColor()}
+														stroke="currentColor"
 														stroke-width={active() ? 1.5 : 1.2}
 														stroke-linecap="round"
 													/>

@@ -5,7 +5,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: $z-modal;
-	background-color: $overlay;
+	background-color: var(--tile-drawer-overlay, $overlay);
 
 	&[data-state='open'] {
 		animation: drawer-overlay-in $transition-normal;
@@ -32,9 +32,9 @@
 	z-index: $z-modal;
 	display: flex;
 	flex-direction: column;
-	background-color: $card;
+	background-color: var(--tile-drawer-background, $card);
 	color: $card-foreground;
-	box-shadow: $shadow-lg;
+	box-shadow: var(--tile-drawer-shadow, $shadow-lg);
 	outline: none;
 	transition:
 		transform $transition-slow,
@@ -45,7 +45,7 @@
 		width: 75%;
 		height: 100%;
 		max-width: 24rem;
-		border-left: 1px solid $border;
+		border-left: 1px solid var(--tile-drawer-border, $border);
 	}
 
 	&[data-direction='left'] {
@@ -53,21 +53,21 @@
 		width: 75%;
 		height: 100%;
 		max-width: 24rem;
-		border-right: 1px solid $border;
+		border-right: 1px solid var(--tile-drawer-border, $border);
 	}
 
 	&[data-direction='top'] {
 		inset: 0 0 auto 0;
 		width: 100%;
 		max-height: 80vh;
-		border-bottom: 1px solid $border;
+		border-bottom: 1px solid var(--tile-drawer-border, $border);
 	}
 
 	&[data-direction='bottom'] {
 		inset: auto 0 0 0;
 		width: 100%;
 		max-height: 80vh;
-		border-top: 1px solid $border;
+		border-top: 1px solid var(--tile-drawer-border, $border);
 	}
 }
 
@@ -79,7 +79,7 @@
 	width: 100px;
 	flex-shrink: 0;
 	border-radius: $radius-full;
-	background-color: $muted;
+	background-color: var(--tile-drawer-handle-background, $muted);
 }
 
 .content[data-direction='top'] .handle,
@@ -110,9 +110,7 @@
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-drawer-close-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	.xIcon {
@@ -126,7 +124,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-1_5;
-	padding: $spacing-4;
+	padding: var(--tile-drawer-header-padding, $spacing-4);
 }
 
 .footer {
@@ -134,14 +132,14 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-2;
-	padding: $spacing-4;
+	padding: var(--tile-drawer-footer-padding, $spacing-4);
 }
 
 .title {
 	margin: 0;
-	font-size: $text-base;
+	font-size: var(--tile-drawer-title-size, $text-base);
 	font-weight: $font-semibold;
-	line-height: $leading-none;
+	line-height: var(--tile-drawer-title-leading, $leading-none);
 	color: $foreground;
 }
 
@@ -149,5 +147,5 @@
 	margin: 0;
 	font-size: $text-sm;
 	line-height: $leading-normal;
-	color: $muted-foreground;
+	color: var(--tile-drawer-description-color, $muted-foreground);
 }

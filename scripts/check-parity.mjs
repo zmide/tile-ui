@@ -13,7 +13,7 @@ const ts = require('typescript');
 const { tsImport } = await import(pathToFileURL(require.resolve('tsx/esm/api')).href);
 
 const FRAMEWORKS = ['react', 'vue', 'solid'];
-const EXPECTED_TOTALS = { react: 71, vue: 71, solid: 70 };
+const EXPECTED_TOTALS = { react: 72, vue: 72, solid: 71 };
 const EXTRA_DEMOS = {
 	react: { hooks: ['use-copy-to-clipboard', 'use-local-storage', 'use-media-query'], examples: ['contact-form', 'newsletter-card', 'profile-settings'], primitives: [] },
 	vue: { hooks: ['use-copy-to-clipboard', 'use-local-storage', 'use-media-query'], examples: ['contact-form', 'newsletter-card', 'profile-settings'], primitives: [] },
@@ -21,17 +21,17 @@ const EXTRA_DEMOS = {
 };
 const EXCEPTIONS = {
 	react: {
-		helperItems: ['core', 'liveline-core', 'portal', 'styles', 'theme-default', 'use-copy-to-clipboard', 'use-local-storage', 'use-media-query', 'utils'],
+		helperItems: ['core', 'liveline-core', 'portal', 'styles', 'theme-default', 'theme-kumo', 'use-copy-to-clipboard', 'use-local-storage', 'use-media-query', 'utils'],
 		helperSubpath: './hooks',
 		portal: 'registry item',
 	},
 	vue: {
-		helperItems: ['core', 'liveline-core', 'portal', 'styles', 'theme-default', 'use-copy-to-clipboard', 'use-local-storage', 'use-media-query', 'utils'],
+		helperItems: ['core', 'liveline-core', 'portal', 'styles', 'theme-default', 'theme-kumo', 'use-copy-to-clipboard', 'use-local-storage', 'use-media-query', 'utils'],
 		helperSubpath: './composables',
 		portal: 'registry item',
 	},
 	solid: {
-		helperItems: ['core', 'create-copy-to-clipboard', 'create-local-storage', 'create-media-query', 'liveline-core', 'styles', 'theme-default', 'utils'],
+		helperItems: ['core', 'create-copy-to-clipboard', 'create-local-storage', 'create-media-query', 'liveline-core', 'styles', 'theme-default', 'theme-kumo', 'utils'],
 		helperSubpath: './primitives',
 		portal: 'component-internal',
 	},

@@ -9,9 +9,9 @@
 	min-width: 0;
 	flex-shrink: 0;
 	flex-wrap: wrap;
-	border: 1px solid $border;
-	border-radius: $radius;
-	background-color: $card;
+	border: 1px solid var(--tile-attachment-border, $border);
+	border-radius: var(--tile-attachment-radius, $radius);
+	background-color: var(--tile-attachment-background, $card);
 	color: $card-foreground;
 	transition:
 		background-color $transition-fast,
@@ -19,7 +19,7 @@
 
 	&:focus-within {
 		outline: none;
-		box-shadow: 0 0 0 1px color-mix(in srgb, $ring 50%, transparent);
+		box-shadow: var(--tile-attachment-focus-shadow, 0 0 0 1px color-mix(in srgb, $ring 50%, transparent));
 	}
 
 	// 尺寸
@@ -84,11 +84,11 @@
 	}
 
 	&[data-state='error'] {
-		border-color: color-mix(in srgb, $destructive 30%, transparent);
+		border-color: var(--tile-attachment-error-border, color-mix(in srgb, $destructive 30%, transparent));
 	}
 
 	&:has(> a, > button):hover {
-		background-color: color-mix(in srgb, $muted 50%, transparent);
+		background-color: var(--tile-attachment-hover-background, color-mix(in srgb, $muted 50%, transparent));
 	}
 }
 
@@ -100,8 +100,8 @@
 	min-width: 0;
 	align-items: center;
 	gap: $spacing-2;
-	border-radius: $radius;
-	background-color: $card;
+	border-radius: var(--tile-attachment-radius, $radius);
+	background-color: var(--tile-attachment-background, $card);
 	color: $card-foreground;
 	transition:
 		background-color $transition-fast,
@@ -113,11 +113,11 @@
 	}
 
 	&[data-state='idle'] {
-		border: 1px dashed $border;
+		border: 1px dashed var(--tile-attachment-border, $border);
 	}
 
 	&[data-state='error'] {
-		border-color: color-mix(in srgb, $destructive 30%, transparent);
+		border-color: var(--tile-attachment-error-border, color-mix(in srgb, $destructive 30%, transparent));
 	}
 }
 
@@ -132,7 +132,7 @@
 	justify-content: center;
 	overflow: hidden;
 	border-radius: $radius;
-	background-color: $muted;
+	background-color: var(--tile-attachment-media-background, $muted);
 	color: $foreground;
 
 	svg {
@@ -183,8 +183,8 @@
 
 	// 状态
 	[data-state='error'] & {
-		background-color: color-mix(in srgb, $destructive 10%, transparent);
-		color: $destructive;
+		background-color: var(--tile-attachment-error-background, color-mix(in srgb, $destructive 10%, transparent));
+		color: var(--tile-attachment-error-color, $destructive);
 	}
 }
 
@@ -225,7 +225,7 @@
 	white-space: nowrap;
 
 	[data-state='error'] & {
-		color: color-mix(in srgb, $destructive 80%, transparent);
+		color: var(--tile-attachment-error-color, color-mix(in srgb, $destructive 80%, transparent));
 	}
 }
 
@@ -267,7 +267,7 @@
 
 	&:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 1px $ring;
+		box-shadow: var(--tile-attachment-focus-shadow, 0 0 0 1px $ring);
 	}
 
 	&:disabled {

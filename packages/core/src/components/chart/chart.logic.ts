@@ -392,7 +392,9 @@ export function buildChartThemeCss(id: string, config: ChartConfig): string {
 	const lightDeclarations = declarations('light');
 	const darkDeclarations = declarations('dark');
 
-	const css = [`.light, [data-theme="light"] {\n${lightDeclarations}\n}`, `.dark, [data-theme="dark"] {\n${darkDeclarations}\n}`].join('\n');
+	// Supply the light config when no mode boundary exists, without overriding inherited
+	// dark variables on the chart itself. Each nested boundary still wins by inheritance.
+	const css = [`:root {\n${lightDeclarations}\n}`, `.light, [data-theme="light"] {\n${lightDeclarations}\n}`, `.dark, [data-theme="dark"] {\n${darkDeclarations}\n}`].join('\n');
 
 	// style 元素是 HTML raw-text，上屏前转义 `<`，同时由 CSS 解析器还原原值。
 	return css.replace(/</g, '\\3c ');

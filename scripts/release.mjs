@@ -28,7 +28,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
 // 顺序即发布顺序：core 必须先于各 adapter（adapter 的 prepack 依赖 core 构建产物）
-const PUBLISHABLE = ['core', 'styles', 'react', 'vue', 'solid'];
+const PUBLISHABLE = ['core', 'styles', 'theme-kumo', 'react', 'vue', 'solid'];
 const BUMP_DEFAULT = 'patch';
 
 function fail(message) {
@@ -55,7 +55,7 @@ function main() {
 
 	const released = [];
 	for (const name of PUBLISHABLE) {
-		const pkgDir = path.join(root, 'packages', name);
+		const pkgDir = path.join(root, 'packages', name === 'theme-kumo' ? 'themes/kumo' : name);
 		console.log(`\n\x1b[36m发布 @tile-ui/${name}（${bump}）\x1b[0m`);
 		execSync(`pnpm exec release-it ${bump} --no-git${dryRun ? ' --dry-run' : ''}`, { cwd: pkgDir, stdio: 'inherit' });
 		const version = JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf8')).version;
@@ -80,7 +80,7 @@ function main() {
 		}
 	}
 
-	execSync(`git add ${released.map((r) => path.join('packages', r.name, 'package.json')).join(' ')}`, { stdio: 'inherit' });
+	execSync(`git add ${released.map((r) => path.join('packages', r.name === 'theme-kumo' ? 'themes/kumo' : r.name, 'package.json')).join(' ')}`, { stdio: 'inherit' });
 	execSync(`git commit -m "${message}"`, { stdio: 'inherit' });
 	for (const { name, version } of released) {
 		execSync(`git tag "${name}/v${version}"`, { stdio: 'inherit' });

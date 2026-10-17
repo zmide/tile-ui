@@ -4,11 +4,12 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const disposableRoot = fs.mkdtempSync(path.join('/tmp/opencode', 'tile-generated-'));
+const disposableRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'tile-generated-'));
 const copyRoot = path.join(disposableRoot, 'tile-ui');
 const startedAt = performance.now();
 const sourceDateEpoch = '1787961600';
@@ -32,8 +33,9 @@ const managedPaths = [
 	'apps/solid/public/favicon.svg',
 	'apps/solid/public/og.png',
 	'packages/styles/css',
+	'packages/themes/kumo/dist',
 ];
-const ignoredCopyNames = new Set(['.git', '.next', '.nuxt', '.output', '.turbo', 'node_modules']);
+const ignoredCopyNames = new Set(['.git', '.agents', '.next', '.nuxt', '.output', '.turbo', 'node_modules']);
 const leftoverPattern = /(?:^|\.)(?:bak|backup|candidate|detached|lock|orig|recovery|staging|stale|tmp|transaction)(?:[.-]|$)|~$/i;
 
 function hash(content) {
@@ -104,6 +106,7 @@ function runGenerators(timezone) {
 	run('corepack', ['pnpm', '--filter', '@tile-ui/solid-docs', 'generate'], { timezone });
 	run('corepack', ['pnpm', 'registry:build'], { timezone });
 	run('corepack', ['pnpm', '--filter', '@tile-ui/styles', 'build'], { timezone });
+	run('corepack', ['pnpm', '--filter', '@tile-ui/theme-kumo', 'build'], { timezone });
 }
 
 function linkNodeModules(sourceRoot, targetRoot) {

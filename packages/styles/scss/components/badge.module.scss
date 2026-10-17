@@ -9,10 +9,11 @@
 	gap: $spacing-1;
 	overflow: hidden;
 	border-radius: $radius-full;
-	border: 1px solid transparent;
-	padding: 0.125rem $spacing-2;
+	border: var(--tile-badge-border-width, 1px) solid transparent;
+	padding: var(--tile-badge-padding, 0.125rem #{$spacing-2});
 	font-size: $text-xs;
 	font-weight: $font-medium;
+	line-height: var(--tile-badge-line-height, inherit);
 	white-space: nowrap;
 	transition:
 		color $transition-fast,
@@ -37,34 +38,36 @@
 
 	// 样式变体
 	&.variantDefault {
-		background-color: $primary;
-		color: $primary-foreground;
+		background-color: var(--tile-badge-default-background, #{$primary});
+		color: var(--tile-badge-default-color, #{$primary-foreground});
 
 		a:hover & {
-			background-color: $primary-hover;
+			background-color: var(--tile-badge-default-hover-background, #{$primary-hover});
 		}
 	}
 
 	&.variantSecondary {
-		background-color: $secondary;
-		color: $secondary-foreground;
+		background-color: var(--tile-badge-secondary-background, #{$secondary});
+		color: var(--tile-badge-secondary-color, #{$secondary-foreground});
 
 		a:hover & {
-			background-color: $secondary-hover;
+			background-color: var(--tile-badge-secondary-hover-background, #{$secondary-hover});
 		}
 	}
 
 	&.variantDestructive {
-		background-color: $destructive;
-		color: $destructive-foreground;
+		background-color: var(--tile-badge-destructive-background, #{$destructive});
+		color: var(--tile-badge-destructive-color, #{$destructive-foreground});
 
 		a:hover & {
-			background-color: $destructive-hover;
+			background-color: var(--tile-badge-destructive-hover-background, #{$destructive-hover});
 		}
 	}
 
 	&.variantOutline {
-		border-color: $border;
+		border-width: var(--tile-badge-outline-border-width, 1px);
+		border-color: var(--tile-badge-outline-border, #{$border});
+		background-color: var(--tile-badge-outline-background, transparent);
 		color: $foreground;
 
 		a:hover & {
@@ -87,5 +90,9 @@
 		a:hover & {
 			text-decoration: underline;
 		}
+	}
+
+	a:hover & {
+		outline: var(--tile-badge-link-hover-outline, none);
 	}
 }

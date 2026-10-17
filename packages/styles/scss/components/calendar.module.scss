@@ -3,15 +3,17 @@
 // 日历根容器
 .root {
 	width: fit-content;
-	padding: $spacing-3;
-	background-color: $background;
-	border-radius: $radius-md;
-	border: 1px solid $border;
+	padding: var(--tile-calendar-padding, $spacing-3);
+	background-color: var(--tile-calendar-background, $background);
+	border-radius: var(--tile-calendar-radius, $radius-md);
+	border: var(--tile-calendar-border, 1px solid $border);
+	font-variant-numeric: var(--tile-calendar-numerals, inherit);
 }
 
 // 头部（导航 + 月份标题）
 .header {
 	position: relative;
+	height: var(--tile-calendar-header-height, auto);
 	display: flex;
 	align-items: center;
 }
@@ -29,11 +31,12 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 2rem;
-	height: 2rem;
+	width: var(--tile-calendar-nav-size, 2rem);
+	height: var(--tile-calendar-nav-size, 2rem);
 	padding: 0;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-calendar-day-radius, $radius);
+	box-shadow: var(--tile-calendar-nav-shadow, none);
 	background-color: transparent;
 	color: $foreground;
 	cursor: pointer;
@@ -41,14 +44,12 @@
 	transition: background-color $transition-fast;
 
 	&:hover:not(:disabled) {
-		background-color: $accent;
+		background-color: var(--tile-calendar-hover-background, $accent);
 		color: $accent-foreground;
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-calendar-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	&:disabled {
@@ -71,7 +72,7 @@
 	align-items: center;
 	justify-content: center;
 	font-size: $text-sm;
-	font-weight: $font-medium;
+	font-weight: var(--tile-calendar-caption-weight, $font-medium);
 	user-select: none;
 	pointer-events: none;
 }
@@ -80,17 +81,17 @@
 .weekdays {
 	display: flex;
 	width: 100%;
-	margin-top: $spacing-2;
+	margin-top: var(--tile-calendar-weekdays-margin, $spacing-2);
 }
 
 .weekday {
 	flex: 1;
 	border-radius: $radius;
-	font-size: 0.8rem;
-	font-weight: $font-normal;
+	font-size: var(--tile-calendar-weekday-size, 0.8rem);
+	font-weight: var(--tile-calendar-weekday-weight, $font-normal);
 	color: $muted-foreground;
 	text-align: center;
-	padding-block: $spacing-1;
+	padding-block: var(--tile-calendar-weekday-padding, $spacing-1);
 	user-select: none;
 }
 
@@ -98,8 +99,8 @@
 .weeks {
 	display: flex;
 	flex-direction: column;
-	gap: $spacing-1;
-	margin-top: $spacing-1;
+	gap: var(--tile-calendar-weeks-gap, $spacing-1);
+	margin-top: var(--tile-calendar-weeks-margin, $spacing-1);
 }
 
 .week {
@@ -110,6 +111,7 @@
 // 日期单元格
 .day {
 	flex: 1;
+	padding: var(--tile-calendar-cell-padding, 0);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -124,10 +126,10 @@
 	min-width: 2rem;
 	padding: 0;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-calendar-day-radius, $radius);
 	background-color: transparent;
 	color: $foreground;
-	font-size: $text-sm;
+	font-size: var(--tile-calendar-day-size, $text-sm);
 	font-weight: $font-normal;
 	line-height: 1;
 	text-align: center;
@@ -139,68 +141,68 @@
 	user-select: none;
 
 	&:hover:not(:disabled):not([data-selected='true']) {
-		background-color: $accent;
+		background-color: var(--tile-calendar-hover-background, $accent);
 		color: $accent-foreground;
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-calendar-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	// 今天
 	&[data-today='true'] {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-calendar-today-background, $accent);
+		color: var(--tile-calendar-today-color, $accent-foreground);
+		font-weight: var(--tile-calendar-today-weight, $font-normal);
 
 		&[data-selected='true'] {
-			background-color: $primary;
-			color: $primary-foreground;
+			background-color: var(--tile-calendar-selected-background, $primary);
+			color: var(--tile-calendar-selected-color, $primary-foreground);
 		}
 	}
 
 	// 相邻月份的天
 	&[data-outside='true'] {
 		color: $muted-foreground;
+		opacity: var(--tile-calendar-outside-opacity, 1);
 	}
 
 	// 禁用
 	&[data-disabled='true'] {
 		color: $muted-foreground;
-		opacity: 0.5;
+		opacity: var(--tile-calendar-disabled-opacity, 0.5);
 		cursor: not-allowed;
 		pointer-events: none;
 	}
 
 	// 单选选中态
 	&[data-selected-single='true'] {
-		background-color: $primary;
-		color: $primary-foreground;
+		background-color: var(--tile-calendar-selected-background, $primary);
+		color: var(--tile-calendar-selected-color, $primary-foreground);
 	}
 
 	// 范围起点
 	&[data-range-start='true'] {
-		background-color: $primary;
-		color: $primary-foreground;
-		border-radius: $radius;
+		background-color: var(--tile-calendar-selected-background, $primary);
+		color: var(--tile-calendar-selected-color, $primary-foreground);
+		border-radius: var(--tile-calendar-day-radius, $radius);
 		border-end-end-radius: 0;
 		border-start-end-radius: 0;
 	}
 
 	// 范围终点
 	&[data-range-end='true'] {
-		background-color: $primary;
-		color: $primary-foreground;
-		border-radius: $radius;
+		background-color: var(--tile-calendar-selected-background, $primary);
+		color: var(--tile-calendar-selected-color, $primary-foreground);
+		border-radius: var(--tile-calendar-day-radius, $radius);
 		border-start-start-radius: 0;
 		border-end-start-radius: 0;
 	}
 
 	// 范围中间
 	&[data-range-middle='true'] {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-calendar-range-background, $accent);
+		color: var(--tile-calendar-range-color, $accent-foreground);
 		border-radius: 0;
 	}
 }

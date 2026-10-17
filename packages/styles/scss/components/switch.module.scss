@@ -4,17 +4,14 @@
 	display: inline-flex;
 	flex-shrink: 0;
 	align-items: center;
-	border-radius: $radius-full;
-	border: 1px solid transparent;
-	box-shadow: $shadow-sm;
+	border-radius: var(--tile-switch-radius, #{$radius-full});
+	border: var(--tile-switch-border-width, 1px) solid transparent;
+	box-shadow: var(--tile-switch-shadow, #{$shadow-sm});
 	transition: background-color $transition-fast;
 	outline: none;
 
 	&:focus-visible {
 		border-color: $ring;
-		box-shadow:
-			0 0 0 1px $ring,
-			0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
 	}
 
 	&:disabled {
@@ -23,48 +20,66 @@
 	}
 
 	&[data-size='default'] {
-		width: 2rem;
-		height: 1.15rem;
+		width: var(--tile-switch-width, 2rem);
+		height: var(--tile-switch-height, 1.15rem);
 	}
 
 	&[data-size='sm'] {
-		width: 1.5rem;
-		height: 0.875rem;
+		width: var(--tile-switch-sm-width, 1.5rem);
+		height: var(--tile-switch-sm-height, 0.875rem);
 	}
 
 	&[data-state='checked'] {
-		background-color: $primary;
+		background-color: var(--tile-switch-checked-background, #{$primary});
 		color: $primary-foreground;
+		box-shadow: var(--tile-switch-checked-shadow, #{$shadow-sm});
 	}
 
 	&[data-state='unchecked'] {
-		background-color: $input;
+		background-color: var(--tile-switch-background, #{$input});
 		color: $foreground;
+	}
+
+	&:focus-visible {
+		box-shadow: var(--tile-switch-focus-shadow, 0 0 0 1px #{$ring}, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
+		outline: var(--tile-switch-focus-outline, none);
+		outline-offset: var(--tile-switch-focus-offset, 0px);
 	}
 }
 
 .thumb {
 	pointer-events: none;
 	display: block;
-	border-radius: $radius-full;
-	background-color: $background;
+	border-radius: var(--tile-switch-radius, #{$radius-full});
+	background-color: var(--tile-switch-thumb-background, #{$background});
+	box-shadow: var(--tile-switch-thumb-shadow, none);
 	transition: transform $transition-normal;
 
 	[data-size='default'] & {
-		width: 1rem;
-		height: 1rem;
+		width: var(--tile-switch-thumb-size, 1rem);
+		height: var(--tile-switch-thumb-size, 1rem);
 	}
 
 	[data-size='sm'] & {
-		width: 0.75rem;
-		height: 0.75rem;
+		width: var(--tile-switch-sm-thumb-size, 0.75rem);
+		height: var(--tile-switch-sm-thumb-size, 0.75rem);
 	}
 
 	[data-state='checked'] & {
-		transform: translateX(calc(100% - 2px));
+		transform: translateX(var(--tile-switch-thumb-travel, calc(100% - 2px)));
+		background-color: var(--tile-switch-checked-thumb-background, #{$background});
 	}
 
 	[data-state='unchecked'] & {
 		transform: translateX(0);
+	}
+}
+
+// Optional corner styling falls back to round corners in unsupported browsers.
+@supports (corner-shape: squircle) {
+	.root,
+	.thumb {
+		corner-shape: var(--tile-switch-corner-shape, round);
+		border-radius: var(--tile-switch-squircle-radius, #{$radius-full});
 	}
 }

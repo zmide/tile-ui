@@ -14,7 +14,7 @@
 // Spinner 根元素（svg）
 .root {
 	flex-shrink: 0;
-	color: $muted-foreground;
+	color: var(--tile-spinner-color, $muted-foreground);
 	animation: tile-spinner-rotate 0.8s linear infinite;
 
 	// 尺寸
@@ -24,8 +24,8 @@
 	}
 
 	&[data-size='default'] {
-		width: $spacing-5;
-		height: $spacing-5;
+		width: var(--tile-spinner-size, $spacing-5);
+		height: var(--tile-spinner-size, $spacing-5);
 	}
 
 	&[data-size='lg'] {

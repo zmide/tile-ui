@@ -23,7 +23,7 @@
 
 	&:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		box-shadow: var(--tile-message-scroller-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 
 	&[data-autoscrolling='true'] {
@@ -67,12 +67,12 @@
 	height: $spacing-8;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid $border;
+	border: 1px solid var(--tile-message-scroller-button-border, $border);
 	border-radius: $radius-full;
-	background-color: $background;
+	background-color: var(--tile-message-scroller-button-background, $background);
 	padding: 0;
 	color: $foreground;
-	box-shadow: $shadow-sm;
+	box-shadow: var(--tile-message-scroller-button-shadow, $shadow-sm);
 	cursor: pointer;
 	transition:
 		transform $transition-normal,

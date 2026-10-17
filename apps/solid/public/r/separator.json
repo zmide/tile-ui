@@ -31,7 +31,7 @@
       "path": "packages/styles/scss/components/separator.module.scss",
       "type": "registry:file",
       "target": "components/ui/separator/separator.module.scss",
-      "content": "@use '../../../styles/variables/colors' as *;\n\n.separator {\n\tflex-shrink: 0;\n\tbackground-color: $border;\n\n\t&.orientationHorizontal {\n\t\theight: 1px;\n\t\twidth: 100%;\n\t}\n\n\t&.orientationVertical {\n\t\theight: 100%;\n\t\twidth: 1px;\n\t}\n}\n"
+      "content": "@use '../../../styles/variables/colors' as *;\n\n.separator {\n\tflex-shrink: 0;\n\tbackground-color: var(--tile-separator-color, $border);\n\n\t&.orientationHorizontal {\n\t\theight: 1px;\n\t\twidth: 100%;\n\t}\n\n\t&.orientationVertical {\n\t\theight: 100%;\n\t\twidth: 1px;\n\t}\n}\n"
     }
   ]
 }

@@ -9,7 +9,8 @@ const core = vi.hoisted(() => {
 	return { create: vi.fn(() => ({ destroy, update })), destroy, update };
 });
 
-vi.mock('@tile-ui/core/liveline', () => ({
+vi.mock('@tile-ui/core/liveline', async (importOriginal) => ({
+	...(await importOriginal<typeof import('@tile-ui/core/liveline')>()),
 	SERIES_COLORS: ['#3b82f6', '#ef4444'],
 	resolveTheme: (color: string) => ({ line: color, lineWidth: 2 }),
 	resolveSeriesPalettes: (series: Array<{ id: string; color: string }>) => new Map(series.map((item) => [item.id, { line: item.color, lineWidth: 2 }])),

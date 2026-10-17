@@ -72,6 +72,16 @@ import '@tile-ui/styles/theme.css';
 import '@tile-ui/styles/reset.css';
 ```
 
+## 独立主题
+
+共享组件样式通过带默认 fallback 的 CSS 自定义属性提供视觉接口。独立主题包负责提供外观值；本包不选择或识别具体主题。
+
+在应用入口导入所选主题的 CSS 或 Sass。独立调色板不要与默认 `theme.*` 或 `globals.*` 调色板混用，组件样式照常导入。应用负责模式标记、持久化、系统偏好和字体；模式选择器和安装方式参阅所选主题自身的文档。
+
+`createThemeVariables` 和 `applyThemeVariables` 生成默认调色板的具体值，不是独立主题的通用模式切换机制。
+
+## Sass 兼容入口
+
 ```scss
 @use '@tile-ui/styles/scss/variables/colors' as *;
 @use '@tile-ui/styles/scss/mixins/utils' as *;

@@ -1,1 +1,1 @@
-.label{display:block;font-size:var(--tile-text-sm);font-weight:var(--tile-font-medium);color:var(--foreground);line-height:var(--tile-leading-normal);cursor:pointer}.label.required::after{content:" *";color:var(--destructive)}
+.label{display:block;font-size:var(--tile-label-font-size, var(--tile-text-sm));font-weight:var(--tile-font-medium);color:var(--foreground);line-height:var(--tile-label-line-height, var(--tile-leading-normal));cursor:pointer}.label.required::after{content:" *";color:var(--destructive)}

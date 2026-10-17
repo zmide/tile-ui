@@ -22,7 +22,7 @@
       "path": "packages/styles/scss/components/kbd.module.scss",
       "type": "registry:file",
       "target": "components/ui/kbd/kbd.module.scss",
-      "content": "@use '../../../styles/variables/colors' as *;\n\n.kbd {\n\tpointer-events: none;\n\tdisplay: inline-flex;\n\theight: 1.25rem;\n\twidth: fit-content;\n\tmin-width: 1.25rem;\n\talign-items: center;\n\tjustify-content: center;\n\tgap: $spacing-1;\n\tborder-radius: $radius-sm;\n\tbackground-color: $muted;\n\tpadding: 0 $spacing-1;\n\tfont-family: $font-sans;\n\tfont-size: $text-xs;\n\tfont-weight: $font-medium;\n\tcolor: $muted-foreground;\n\tuser-select: none;\n\n\tsvg {\n\t\twidth: 0.75rem;\n\t\theight: 0.75rem;\n\t}\n}\n\n.kbdGroup {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tgap: $spacing-1;\n}\n"
+      "content": "@use '../../../styles/variables/colors' as *;\n\n.kbd {\n\tpointer-events: none;\n\tdisplay: inline-flex;\n\theight: 1.25rem;\n\twidth: fit-content;\n\tmin-width: 1.25rem;\n\talign-items: center;\n\tjustify-content: center;\n\tgap: $spacing-1;\n\tborder-radius: var(--tile-kbd-radius, $radius-sm);\n\tbackground-color: var(--tile-kbd-background, $muted);\n\tbox-shadow: var(--tile-kbd-shadow, none);\n\tpadding: 0 $spacing-1;\n\tfont-family: $font-sans;\n\tfont-size: $text-xs;\n\tfont-weight: $font-medium;\n\tcolor: var(--tile-kbd-color, $muted-foreground);\n\tuser-select: none;\n\n\tsvg {\n\t\twidth: 0.75rem;\n\t\theight: 0.75rem;\n\t}\n}\n\n.kbdGroup {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tgap: $spacing-1;\n}\n"
     },
     {
       "path": "packages/react/src/components/kbd/index.ts",

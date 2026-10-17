@@ -5,11 +5,12 @@
 	flex-shrink: 0;
 	align-items: center;
 	justify-content: center;
-	width: 1rem;
-	height: 1rem;
-	border-radius: $radius-sm;
-	border: 1px solid $input;
-	box-shadow: $shadow-sm;
+	width: var(--tile-checkbox-size, 1rem);
+	height: var(--tile-checkbox-size, 1rem);
+	border-radius: var(--tile-checkbox-radius, #{$radius-sm});
+	border: var(--tile-checkbox-border-width, 1px) solid var(--tile-checkbox-border, #{$input});
+	background-color: var(--tile-checkbox-background, initial);
+	box-shadow: var(--tile-checkbox-shadow, #{$shadow-sm});
 	transition:
 		background-color $transition-fast,
 		border-color $transition-fast,
@@ -17,8 +18,8 @@
 	outline: none;
 
 	&:focus-visible {
-		border-color: $ring;
-		box-shadow: 0 0 0 1px $ring;
+		border-color: var(--tile-checkbox-focus-border, #{$ring});
+		box-shadow: var(--tile-checkbox-focus-shadow, 0 0 0 1px #{$ring});
 		outline: none;
 	}
 
@@ -29,17 +30,29 @@
 
 	&[aria-invalid='true'] {
 		border-color: $destructive;
+		box-shadow: var(--tile-checkbox-error-shadow, #{$shadow-sm});
 
 		&:focus-visible {
-			box-shadow: 0 0 0 1px $destructive;
+			box-shadow: var(--tile-checkbox-error-focus-shadow, 0 0 0 1px #{$destructive});
 		}
 	}
 
 	&[data-state='checked'],
 	&[data-state='mixed'] {
-		border-color: $primary;
-		background-color: $primary;
-		color: $primary-foreground;
+		border-color: var(--tile-checkbox-checked-border, #{$primary});
+		background-color: var(--tile-checkbox-checked-background, #{$primary});
+		color: var(--tile-checkbox-checked-color, #{$primary-foreground});
+		box-shadow: var(--tile-checkbox-checked-shadow, #{$shadow-sm});
+
+		&:focus-visible {
+			box-shadow: var(--tile-checkbox-checked-focus-shadow, 0 0 0 1px #{$ring});
+			outline: var(--tile-checkbox-checked-focus-outline, none);
+			outline-offset: var(--tile-checkbox-checked-focus-offset, 0px);
+
+			&[aria-invalid='true'] {
+				box-shadow: var(--tile-checkbox-error-focus-shadow, 0 0 0 1px #{$destructive});
+			}
+		}
 	}
 }
 
@@ -49,7 +62,7 @@
 	color: currentColor;
 
 	svg {
-		width: 0.875rem;
-		height: 0.875rem;
+		width: var(--tile-checkbox-indicator-size, 0.875rem);
+		height: var(--tile-checkbox-indicator-size, 0.875rem);
 	}
 }

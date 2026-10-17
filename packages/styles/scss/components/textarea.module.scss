@@ -3,57 +3,60 @@
 .textareaWrapper {
 	display: flex;
 	flex-direction: column;
-	gap: $spacing-1;
+	gap: var(--tile-textarea-label-gap, #{$spacing-1});
 	width: 100%;
 }
 
 .textarea {
 	display: flex;
-	min-height: 5rem;
+	min-height: var(--tile-textarea-min-height, 5rem);
 	width: 100%;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $background;
-	padding: $spacing-3 $spacing-3;
-	font-size: $text-sm;
+	border-radius: var(--tile-textarea-radius, #{$radius});
+	border: var(--tile-textarea-border-width, 1px) solid var(--tile-textarea-border, #{$border});
+	background-color: var(--tile-textarea-background, #{$background});
+	padding: var(--tile-textarea-padding, #{$spacing-3} #{$spacing-3});
+	font-size: var(--tile-textarea-font-size, #{$text-sm});
+	box-shadow: var(--tile-textarea-shadow, none);
 	color: $foreground;
 	transition: all $transition-fast;
 	outline: none;
 	resize: vertical;
 	font-family: inherit;
-	line-height: $leading-normal;
+	line-height: var(--tile-textarea-line-height, #{$leading-normal});
 
 	&::placeholder {
-		color: $muted-foreground;
+		color: var(--tile-textarea-placeholder, #{$muted-foreground});
 	}
 
 	&:focus {
 		outline: none;
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-textarea-focus-border, #{$ring});
+		box-shadow: var(--tile-textarea-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 	}
 
 	&:disabled,
 	&.disabled {
 		pointer-events: none;
-		opacity: 0.5;
+		opacity: var(--tile-textarea-disabled-opacity, 0.5);
 		cursor: not-allowed;
-		background-color: $field-disabled;
+		background-color: var(--tile-textarea-disabled-background, #{$field-disabled});
+		color: var(--tile-textarea-disabled-color, #{$foreground});
 	}
 
 	&.error {
 		border-color: $destructive;
+		box-shadow: var(--tile-textarea-error-shadow, none);
 
 		&:focus {
 			border-color: $destructive;
-			box-shadow: 0 0 0 1px $destructive;
+			box-shadow: var(--tile-textarea-error-focus-shadow, 0 0 0 1px #{$destructive});
 		}
 	}
 }
 
 .label {
 	display: block;
-	font-size: $text-sm;
+	font-size: var(--tile-textarea-label-font-size, #{$text-sm});
 	font-weight: $font-medium;
 	color: $foreground;
 	line-height: $leading-normal;
@@ -65,13 +68,13 @@
 }
 
 .helperText {
-	font-size: $text-xs;
-	color: $muted-foreground;
-	line-height: $leading-normal;
+	font-size: var(--tile-textarea-description-font-size, #{$text-xs});
+	color: var(--tile-textarea-description-color, #{$muted-foreground});
+	line-height: var(--tile-textarea-description-line-height, #{$leading-normal});
 }
 
 .errorText {
-	font-size: $text-xs;
+	font-size: var(--tile-textarea-description-font-size, #{$text-xs});
 	color: $destructive;
-	line-height: $leading-normal;
+	line-height: var(--tile-textarea-description-line-height, #{$leading-normal});
 }

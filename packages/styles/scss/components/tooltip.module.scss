@@ -20,15 +20,17 @@
 	z-index: $z-tooltip;
 	width: fit-content;
 	max-width: 16rem;
-	border-radius: $radius;
-	background-color: $foreground;
-	color: $background;
-	padding: $spacing-1_5 $spacing-3;
-	font-size: $text-xs;
-	font-weight: $font-medium;
-	line-height: $leading-normal;
+	border-radius: var(--tile-tooltip-radius, $radius);
+	background-color: var(--tile-tooltip-background, $foreground);
+	color: var(--tile-tooltip-color, $background);
+	padding: var(--tile-tooltip-padding, $spacing-1_5 $spacing-3);
+	font-size: var(--tile-tooltip-font-size, $text-xs);
+	font-weight: var(--tile-tooltip-font-weight, $font-medium);
+	line-height: var(--tile-tooltip-leading, $leading-normal);
 	text-align: center;
-	box-shadow: $shadow-md;
+	box-shadow: var(--tile-tooltip-shadow, $shadow-md);
+	outline: var(--tile-tooltip-outline, none);
+	outline-offset: var(--tile-tooltip-outline-offset, 0);
 	transition:
 		opacity $transition-fast,
 		visibility $transition-fast,
@@ -68,8 +70,9 @@
 	position: absolute;
 	width: 0.5rem;
 	height: 0.5rem;
-	border-radius: $radius-xs;
-	background-color: $foreground;
+	border-radius: var(--tile-tooltip-arrow-radius, $radius-xs);
+	background-color: var(--tile-tooltip-background, $foreground);
+	box-shadow: var(--tile-tooltip-arrow-shadow, none);
 	pointer-events: none;
 	transform: rotate(45deg);
 
@@ -83,17 +86,20 @@
 		left: -4px;
 		top: 50%;
 		margin-top: -4px;
+		box-shadow: var(--tile-tooltip-arrow-left-shadow, none);
 	}
 
 	[data-side='bottom'] > & {
 		left: 50%;
 		top: -4px;
 		margin-left: -4px;
+		box-shadow: var(--tile-tooltip-arrow-top-shadow, none);
 	}
 
 	[data-side='left'] > & {
 		right: -4px;
 		top: 50%;
 		margin-top: -4px;
+		box-shadow: var(--tile-tooltip-arrow-right-shadow, none);
 	}
 }

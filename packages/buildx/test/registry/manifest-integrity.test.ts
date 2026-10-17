@@ -77,6 +77,31 @@ const EXPECTED_UI_COMPONENTS = [
 const EXPECTED_SOLID_UI_COMPONENTS = EXPECTED_UI_COMPONENTS;
 
 describe.each([
+	['react', reactRegistryManifest, 72],
+	['vue', vueRegistryManifest, 72],
+	['solid', solidRegistryManifest, 71],
+] as const)('%s optional Kumo theme contract', (_framework, manifest, total) => {
+	it('adds one explicit licensed theme without injecting a host palette', () => {
+		expect(manifest.items).toHaveLength(total);
+		const theme = manifest.items.find((item) => item.name === 'theme-kumo');
+		expect(theme).toEqual({
+			name: 'theme-kumo',
+			type: 'registry:theme',
+			title: 'Kumo Theme',
+			description: 'Optional Kumo light and dark theme. Import the copied Sass entry explicitly to opt in.',
+			registryDependencies: ['@tile-ui/styles'],
+			files: [
+				{ source: 'packages/themes/kumo/scss/theme.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/kumo.scss' },
+				{ source: 'packages/themes/kumo/scss/_shared.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/_shared.scss' },
+				{ source: 'packages/themes/kumo/scss/_light.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/_light.scss' },
+				{ source: 'packages/themes/kumo/scss/_dark.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/_dark.scss' },
+				{ source: 'packages/themes/kumo/LICENSE', type: 'registry:file', transform: 'copy', target: 'styles/themes/LICENSE.kumo' },
+			],
+		});
+	});
+});
+
+describe.each([
 	['react', reactRegistryManifest],
 	['vue', vueRegistryManifest],
 ])('%s manifest 完整性', (_framework, manifest) => {
@@ -171,14 +196,14 @@ describe('核心库导出与 UI 组件一致性', () => {
 });
 
 describe('solid manifest 完整性', () => {
-	it('精确包含 70 个 item、62 个 UI 和 3 个 primitive hook', () => {
+	it('精确包含 71 个 item、62 个 UI 和 3 个 primitive hook', () => {
 		const uiNames = solidRegistryManifest.items.filter((item) => item.type === 'registry:ui').map((item) => item.name);
 		const hookNames = solidRegistryManifest.items.filter((item) => item.type === 'registry:hook').map((item) => item.name);
 		expect([...uiNames].sort()).toEqual(EXPECTED_SOLID_UI_COMPONENTS);
 		expect(hookNames.sort()).toEqual(['create-copy-to-clipboard', 'create-local-storage', 'create-media-query']);
-		expect(solidRegistryManifest.items).toHaveLength(70);
+		expect(solidRegistryManifest.items).toHaveLength(71);
 		expect(solidRegistryManifest.items.map((item) => item.name).sort()).toEqual(
-			[...EXPECTED_SOLID_UI_COMPONENTS, 'core', 'liveline-core', 'styles', 'theme-default', 'utils', ...hookNames].sort(),
+			[...EXPECTED_SOLID_UI_COMPONENTS, 'core', 'liveline-core', 'styles', 'theme-default', 'theme-kumo', 'utils', ...hookNames].sort(),
 		);
 	});
 
@@ -254,7 +279,8 @@ describe('solid manifest 完整性', () => {
 				...(item.name === 'dropdown-menu' ? ['packages/solid/src/components/dropdown-menu/menu-internals.tsx'] : []),
 				...(item.name === 'select' ? ['packages/solid/src/components/select/logical-tab.ts'] : []),
 				`packages/solid/src/components/${item.name}/index.ts`,
-				`packages/styles/scss/components/${item.name}.module.scss`,
+				// Direction is a style-free context provider in the existing Solid registry contract.
+				...(item.name === 'direction' ? [] : [`packages/styles/scss/components/${item.name}.module.scss`]),
 			]);
 
 			for (const file of item.files) {

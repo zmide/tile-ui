@@ -19,6 +19,7 @@ export function Input(props: InputProps) {
 		'label',
 		'error',
 		'helperText',
+		'controlSize',
 		'required',
 		'id',
 		'type',
@@ -58,6 +59,7 @@ export function Input(props: InputProps) {
 				{...valueProps}
 				id={inputId()}
 				type={local.type ?? 'text'}
+				data-control-size={local.controlSize}
 				class={`${styles.input} ${local.error ? styles.error : ''} ${local.class ?? ''}`}
 				placeholder={local.placeholder}
 				readonly={local.readOnly}

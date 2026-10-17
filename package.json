@@ -23,13 +23,18 @@
 		"accessibility:check": "node scripts/browser-check.mjs accessibility",
 		"memory:check": "node scripts/browser-check.mjs memory",
 		"liveline:visual": "node scripts/liveline-visual.mjs",
-		"test": "pnpm test:core && pnpm test:buildx && pnpm test:react && pnpm test:vue && pnpm test:solid",
+		"theme:check": "pnpm test:themes",
+		"theme:styles": "node --test packages/styles/test/*.test.mjs",
+		"theme:visual": "node scripts/theme-visual.mjs",
+		"theme:reference": "pnpm --filter @tile-ui/theme-kumo test:reference",
+		"test": "pnpm test:core && pnpm test:themes && pnpm test:buildx && pnpm test:react && pnpm test:vue && pnpm test:solid",
 		"test:core": "pnpm --filter @tile-ui/core test",
 		"test:buildx": "pnpm --filter @tile-ui/buildx test",
 		"test:react": "pnpm --filter @tile-ui/react test",
 		"test:vue": "pnpm --filter @tile-ui/vue test",
 		"test:solid": "pnpm --filter @tile-ui/solid test",
-		"release": "node scripts/release.mjs"
+		"release": "node scripts/release.mjs",
+		"test:themes": "pnpm --filter @tile-ui/theme-kumo test"
 	},
 	"devDependencies": {
 		"axe-core": "^4.10.3",

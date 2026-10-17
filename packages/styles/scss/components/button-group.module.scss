@@ -1,6 +1,8 @@
 @use 'variables/colors' as *;
 
 .buttonGroup {
+	position: var(--tile-button-group-position, static);
+	isolation: var(--tile-button-group-isolation, auto);
 	display: flex;
 	width: fit-content;
 	align-items: stretch;
@@ -8,7 +10,7 @@
 	> * {
 		&:focus-visible {
 			position: relative;
-			z-index: 1;
+			z-index: var(--tile-button-group-focus-z-index, 1);
 		}
 	}
 
@@ -23,7 +25,8 @@
 
 		// 直接子元素之间的连接样式
 		> *:not(:first-child) {
-			border-left: none;
+			border-left: var(--tile-button-group-seam-border, none);
+			margin-inline-start: var(--tile-button-group-seam-overlap, 0);
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
@@ -54,13 +57,13 @@
 	display: flex;
 	align-items: center;
 	gap: $spacing-2;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $muted;
-	padding: 0 $spacing-4;
-	font-size: $text-sm;
-	font-weight: $font-medium;
-	box-shadow: $shadow-sm;
+	border-radius: var(--tile-button-group-radius, $radius);
+	border: 1px solid var(--tile-button-group-border, $border);
+	background-color: var(--tile-button-group-background, $muted);
+	padding: var(--tile-button-group-padding, 0 $spacing-4);
+	font-size: var(--tile-button-group-font-size, $text-sm);
+	font-weight: var(--tile-button-group-font-weight, $font-medium);
+	box-shadow: var(--tile-button-group-shadow, $shadow-sm);
 
 	svg {
 		pointer-events: none;
@@ -73,7 +76,7 @@
 	position: relative;
 	align-self: stretch;
 	margin: 0;
-	background-color: $input;
+	background-color: var(--tile-button-group-separator, $input);
 
 	&[data-orientation='vertical'] {
 		height: auto;

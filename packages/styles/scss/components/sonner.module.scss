@@ -50,12 +50,13 @@
 	align-items: center;
 	gap: $spacing-3;
 	min-width: 0;
-	border: 1px solid $border;
-	border-radius: $radius;
-	background-color: $popover;
+	border: 1px solid var(--tile-toast-border, $border);
+	border-radius: var(--tile-toast-radius, $radius);
+	background-color: var(--tile-toast-background, $popover);
 	color: $popover-foreground;
-	padding: $spacing-3 $spacing-4;
-	box-shadow: $shadow-md;
+	padding: var(--tile-toast-padding, $spacing-3 $spacing-4);
+	box-shadow: var(--tile-toast-shadow, $shadow-md);
+	outline: var(--tile-toast-outline, none);
 	pointer-events: auto;
 	transition:
 		opacity $transition-normal,
@@ -64,6 +65,19 @@
 	&[data-dismissing='true'] {
 		opacity: 0;
 		transform: translateY(0.5rem);
+	}
+
+	// Optional status surfaces and rings can style titles independently.
+	// Unset tokens leave Tile's regular (non-rich) toast untouched.
+	@each $type in success, info, warning, error {
+		&[data-type='#{$type}'] {
+			background-color: var(--tile-toast-#{$type}-background, var(--tile-toast-background, $popover));
+			outline: var(--tile-toast-#{$type}-outline, var(--tile-toast-outline, none));
+
+			.title {
+				color: var(--tile-toast-#{$type}-title-color, inherit);
+			}
+		}
 	}
 }
 
@@ -82,19 +96,19 @@
 	}
 
 	.toast[data-type='success'] & {
-		color: $success;
+		color: var(--tile-toast-success-color, $success);
 	}
 
 	.toast[data-type='info'] & {
-		color: $info;
+		color: var(--tile-toast-info-color, $info);
 	}
 
 	.toast[data-type='warning'] & {
-		color: $warning;
+		color: var(--tile-toast-warning-color, $warning);
 	}
 
 	.toast[data-type='error'] & {
-		color: $destructive;
+		color: var(--tile-toast-error-color, $destructive);
 	}
 }
 
@@ -108,17 +122,17 @@
 
 // 标题
 .title {
-	font-size: $text-sm;
+	font-size: var(--tile-toast-title-size, $text-sm);
 	font-weight: $font-medium;
-	line-height: $leading-tight;
+	line-height: var(--tile-toast-title-leading, $leading-tight);
 }
 
 // 描述
 .description {
 	margin-top: 0.125rem;
-	font-size: $text-sm;
-	color: $muted-foreground;
-	line-height: $leading-normal;
+	font-size: var(--tile-toast-description-size, $text-sm);
+	color: var(--tile-toast-description-color, $muted-foreground);
+	line-height: var(--tile-toast-description-leading, $leading-normal);
 }
 
 // 富色模式：按类型着色整条提示
@@ -127,38 +141,38 @@
 		border-color: transparent;
 
 		&[data-type='success'] {
-			background-color: $success;
-			color: $success-foreground;
+			background-color: var(--tile-toast-success-background, $success);
+			color: var(--tile-toast-rich-color, $success-foreground);
 
 			.icon {
-				color: $success-foreground;
+				color: var(--tile-toast-success-color, $success-foreground);
 			}
 		}
 
 		&[data-type='info'] {
-			background-color: $info;
-			color: $info-foreground;
+			background-color: var(--tile-toast-info-background, $info);
+			color: var(--tile-toast-rich-color, $info-foreground);
 
 			.icon {
-				color: $info-foreground;
+				color: var(--tile-toast-info-color, $info-foreground);
 			}
 		}
 
 		&[data-type='warning'] {
-			background-color: $warning;
-			color: $warning-foreground;
+			background-color: var(--tile-toast-warning-background, $warning);
+			color: var(--tile-toast-rich-color, $warning-foreground);
 
 			.icon {
-				color: $warning-foreground;
+				color: var(--tile-toast-warning-color, $warning-foreground);
 			}
 		}
 
 		&[data-type='error'] {
-			background-color: $destructive;
-			color: $destructive-foreground;
+			background-color: var(--tile-toast-error-background, $destructive);
+			color: var(--tile-toast-rich-color, $destructive-foreground);
 
 			.icon {
-				color: $destructive-foreground;
+				color: var(--tile-toast-error-color, $destructive-foreground);
 			}
 		}
 	}
@@ -168,38 +182,38 @@
 	border-color: transparent;
 
 	&[data-type='success'] {
-		background-color: $success;
-		color: $success-foreground;
+		background-color: var(--tile-toast-success-background, $success);
+		color: var(--tile-toast-rich-color, $success-foreground);
 
 		.icon {
-			color: $success-foreground;
+			color: var(--tile-toast-success-color, $success-foreground);
 		}
 	}
 
 	&[data-type='info'] {
-		background-color: $info;
-		color: $info-foreground;
+		background-color: var(--tile-toast-info-background, $info);
+		color: var(--tile-toast-rich-color, $info-foreground);
 
 		.icon {
-			color: $info-foreground;
+			color: var(--tile-toast-info-color, $info-foreground);
 		}
 	}
 
 	&[data-type='warning'] {
-		background-color: $warning;
-		color: $warning-foreground;
+		background-color: var(--tile-toast-warning-background, $warning);
+		color: var(--tile-toast-rich-color, $warning-foreground);
 
 		.icon {
-			color: $warning-foreground;
+			color: var(--tile-toast-warning-color, $warning-foreground);
 		}
 	}
 
 	&[data-type='error'] {
-		background-color: $destructive;
-		color: $destructive-foreground;
+		background-color: var(--tile-toast-error-background, $destructive);
+		color: var(--tile-toast-rich-color, $destructive-foreground);
 
 		.icon {
-			color: $destructive-foreground;
+			color: var(--tile-toast-error-color, $destructive-foreground);
 		}
 	}
 }
@@ -209,7 +223,7 @@
 	.description,
 	.close,
 	.close:hover {
-		color: inherit;
+		color: var(--tile-toast-rich-description-color, inherit);
 	}
 }
 
@@ -220,7 +234,7 @@
 	align-items: center;
 	justify-content: center;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-toast-close-radius, $radius);
 	background: transparent;
 	color: $muted-foreground;
 	cursor: pointer;
@@ -230,7 +244,7 @@
 		color $transition-fast;
 
 	&:hover {
-		background-color: $muted;
+		background-color: var(--tile-toast-close-hover-background, $muted);
 		color: $foreground;
 	}
 

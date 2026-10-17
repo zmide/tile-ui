@@ -26,7 +26,7 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	background-color: $border;
+	background-color: var(--tile-resizable-line, $border);
 	touch-action: none;
 	outline: none;
 
@@ -39,13 +39,11 @@
 
 	&:hover::after,
 	&[data-active='true']::after {
-		background-color: $ring;
+		background-color: var(--tile-resizable-active-color, $ring);
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-resizable-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	.handleBar {
@@ -55,9 +53,9 @@
 		justify-content: center;
 		width: 0.75rem;
 		height: 1rem;
-		border: 1px solid $border;
+		border: 1px solid var(--tile-resizable-line, $border);
 		border-radius: $radius-xs;
-		background-color: $border;
+		background-color: var(--tile-resizable-line, $border);
 
 		svg {
 			width: 0.625rem;

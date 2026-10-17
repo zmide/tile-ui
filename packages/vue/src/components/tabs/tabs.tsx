@@ -1,5 +1,5 @@
-import { computed, defineComponent, h, inject, provide, ref, useId, type ComputedRef, type InjectionKey, type PropType } from 'vue';
-import { getTabsListVariantKey, getTabsState, tabsStyleKeys } from '@tile-ui/core';
+import { computed, defineComponent, h, inject, onBeforeUnmount, onMounted, onUpdated, provide, ref, useId, type ComputedRef, type InjectionKey, type PropType } from 'vue';
+import { getTabsListVariantKey, getTabsState, observeTabsIndicator, tabsStyleKeys } from '@tile-ui/core';
 import type { TabsListVariant, TabsOrientation } from '@tile-ui/core';
 import styles from '@tile-ui/styles/scss/components/tabs.module.scss';
 
@@ -65,6 +65,14 @@ export const TabsList = defineComponent({
 
 		const variantKey = computed(() => getTabsListVariantKey(props.variant));
 		const isVertical = computed(() => context!.value.orientation === 'vertical');
+		const listRef = ref<HTMLDivElement>();
+		const indicatorRef = ref<HTMLSpanElement>();
+		let measurement: ReturnType<typeof observeTabsIndicator> | undefined;
+		onMounted(() => {
+			if (listRef.value && indicatorRef.value) measurement = observeTabsIndicator(listRef.value, indicatorRef.value);
+		});
+		onUpdated(() => measurement?.update());
+		onBeforeUnmount(() => measurement?.disconnect());
 
 		function handleKeydown(event: KeyboardEvent) {
 			const nextKey = isVertical.value ? 'ArrowDown' : 'ArrowRight';
@@ -110,13 +118,14 @@ export const TabsList = defineComponent({
 			h(
 				'div',
 				{
+					ref: listRef,
 					class: [styles[tabsStyleKeys.list], styles[variantKey.value]],
 					role: 'tablist',
 					'data-orientation': context.value.orientation,
 					'data-variant': props.variant,
 					onKeydown: handleKeydown,
 				},
-				slots.default?.(),
+				[slots.default?.(), h('span', { ref: indicatorRef, 'aria-hidden': 'true', 'data-slot': 'tabs-indicator', 'data-state': 'hidden', class: styles.indicator })],
 			);
 	},
 });

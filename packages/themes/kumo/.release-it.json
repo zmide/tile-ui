@@ -1,0 +1,8 @@
+{
+	"npm": { "publish": false },
+	"git": {
+		"commitMessage": "chore(theme-kumo): release v${version}",
+		"tagName": "theme-kumo/v${version}",
+		"requireCleanWorkingDir": false
+	}
+}

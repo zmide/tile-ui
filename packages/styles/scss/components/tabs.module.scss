@@ -2,7 +2,8 @@
 
 .root {
 	display: flex;
-	gap: $spacing-2;
+	gap: var(--tile-tabs-gap, $spacing-2);
+	font-weight: var(--tile-tabs-root-font-weight, inherit);
 
 	&[data-orientation='horizontal'] {
 		flex-direction: column;
@@ -14,57 +15,80 @@
 }
 
 .list {
+	position: var(--tile-tabs-list-position, static);
+	isolation: var(--tile-tabs-list-isolation, auto);
 	display: inline-flex;
 	width: fit-content;
-	align-items: center;
+	align-items: var(--tile-tabs-list-align, center);
 	justify-content: center;
-	border-radius: $radius-lg;
-	padding: 3px;
-	background-color: $muted;
-	color: $muted-foreground;
+	border-radius: var(--tile-tabs-list-radius, $radius-lg);
+	padding: var(--tile-tabs-list-padding, 3px);
+	background-color: var(--tile-tabs-list-background, $muted);
+	color: var(--tile-tabs-list-foreground, var(--tile-tabs-foreground, $muted-foreground));
+	box-shadow: var(--tile-tabs-list-shadow, none);
 	transition: background-color $transition-fast;
 	outline: none;
 
+	&::before {
+		content: var(--tile-tabs-track-ring-content, none);
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: var(--tile-tabs-track-ring-shadow, none);
+		pointer-events: none;
+	}
+
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-tabs-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
-	[data-orientation='horizontal'] & {
-		height: 2.25rem;
+	&[data-orientation='horizontal'] {
+		height: var(--tile-tabs-list-height, 2.25rem);
 	}
 
-	[data-orientation='vertical'] & {
+	&[data-orientation='vertical'] {
 		height: fit-content;
 		flex-direction: column;
 	}
 
 	// 变体
 	&.variantLine {
-		gap: $spacing-1;
+		gap: var(--tile-tabs-line-gap, $spacing-1);
 		background-color: transparent;
 		border-radius: 0;
+		padding: var(--tile-tabs-line-padding, 3px);
+		box-shadow: var(--tile-tabs-line-shadow, none);
+		border-bottom: var(--tile-tabs-line-border-bottom, 0 solid transparent);
+		border-color: var(--tile-tabs-line-border-color, currentcolor);
 
-		.trigger[data-state='active'] {
+		&::before {
+			content: none;
+		}
+
+		&[data-orientation='horizontal'] {
+			height: var(--tile-tabs-line-height, 2.25rem);
+		}
+
+		> .trigger[data-state='active'] {
 			background-color: transparent;
 			box-shadow: none;
 
 			&::after {
+				display: var(--tile-tabs-active-pseudo-display, block);
 				content: '';
 				position: absolute;
-				background-color: $foreground;
+				background-color: var(--tile-tabs-line-color, $foreground);
 			}
 		}
 
-		&[data-orientation='horizontal'] .trigger[data-state='active']::after {
+		&[data-orientation='horizontal'] > .trigger[data-state='active']::after {
 			left: 0;
 			right: 0;
 			bottom: -5px;
 			height: 2px;
 		}
 
-		&[data-orientation='vertical'] .trigger[data-state='active']::after {
+		&[data-orientation='vertical'] > .trigger[data-state='active']::after {
 			top: 0;
 			bottom: 0;
 			right: -4px;
@@ -75,18 +99,20 @@
 
 .trigger {
 	position: relative;
+	z-index: var(--tile-tabs-trigger-z-index, auto);
 	display: inline-flex;
-	flex: 1;
+	flex: var(--tile-tabs-trigger-flex, 1);
 	align-items: center;
 	justify-content: center;
 	gap: $spacing-1_5;
-	border: 1px solid transparent;
-	border-radius: $radius-md;
-	padding: $spacing-1 $spacing-2;
-	font-size: $text-sm;
-	font-weight: $font-medium;
+	border: var(--tile-tabs-trigger-border-width, 1px) solid transparent;
+	border-radius: var(--tile-tabs-trigger-radius, $radius-md);
+	padding: var(--tile-tabs-trigger-padding, $spacing-1 $spacing-2);
+	margin: var(--tile-tabs-trigger-margin, 0);
+	font-size: var(--tile-tabs-font-size, $text-sm);
+	font-weight: var(--tile-tabs-font-weight, $font-medium);
 	white-space: nowrap;
-	color: $muted-foreground;
+	color: var(--tile-tabs-foreground, $muted-foreground);
 	transition:
 		color $transition-fast,
 		box-shadow $transition-fast;
@@ -94,12 +120,12 @@
 	user-select: none;
 
 	&:hover {
-		color: $foreground;
+		color: var(--tile-tabs-active-foreground, $foreground);
 	}
 
 	&:focus-visible {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-tabs-focus-border, $ring);
+		box-shadow: var(--tile-tabs-trigger-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 
 	&:disabled {
@@ -108,12 +134,12 @@
 	}
 
 	&[data-state='active'] {
-		background-color: $background;
-		color: $foreground;
-		box-shadow: $shadow-sm;
+		background-color: var(--tile-tabs-active-background, $background);
+		color: var(--tile-tabs-active-foreground, $foreground);
+		box-shadow: var(--tile-tabs-active-shadow, $shadow-sm);
 	}
 
-	[data-orientation='vertical'] & {
+	&[data-orientation='vertical'] {
 		width: 100%;
 		justify-content: flex-start;
 	}
@@ -128,10 +154,81 @@
 
 .content {
 	flex: 1;
-	border-radius: $radius;
+	border-radius: var(--tile-tabs-content-radius, $radius);
 	outline: none;
 
 	&:focus-visible {
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		box-shadow: var(--tile-tabs-trigger-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
+	}
+}
+
+// One independent indicator per list. It is inert in the original Tile theme.
+.indicator {
+	display: var(--tile-tabs-indicator-display, none);
+	position: absolute;
+	pointer-events: none;
+	z-index: 0;
+	left: 0;
+	top: 0;
+	width: var(--tile-tabs-indicator-width, 0px);
+	height: var(--tile-tabs-indicator-height, 0px);
+	transform: translate(var(--tile-tabs-indicator-left, 0px), var(--tile-tabs-indicator-top, 0px));
+	border-radius: var(--tile-tabs-indicator-radius, $radius-md);
+	background-color: var(--tile-tabs-indicator-background, $background);
+	box-shadow: var(--tile-tabs-indicator-shadow, $shadow-sm);
+	transition:
+		transform 200ms ease,
+		width 200ms ease,
+		height 200ms ease;
+
+	&[data-state='hidden'] {
+		visibility: hidden;
+	}
+}
+
+.variantLine {
+	> .trigger {
+		padding: var(--tile-tabs-line-trigger-padding, $spacing-1 $spacing-2);
+		margin: var(--tile-tabs-line-trigger-margin, 0);
+		border-radius: var(--tile-tabs-line-trigger-radius, $radius-md);
+
+		&:hover {
+			background-color: var(--tile-tabs-line-hover-background, transparent);
+		}
+	}
+
+	&[data-orientation='horizontal'] > .indicator {
+		top: auto;
+		bottom: 0;
+		height: 2px;
+		transform: translateX(var(--tile-tabs-indicator-left, 0px));
+		border-radius: 0;
+		background-color: var(--tile-tabs-line-color, $foreground);
+		box-shadow: none;
+	}
+
+	&[data-orientation='vertical'] > .indicator {
+		left: auto;
+		inset-inline-end: 0;
+		width: 2px;
+		transform: translateY(var(--tile-tabs-indicator-top, 0px));
+		border-radius: 0;
+		background-color: var(--tile-tabs-line-color, $foreground);
+		box-shadow: none;
+	}
+}
+
+// Selected-state shadows otherwise override keyboard focus, especially in line lists.
+.trigger[data-state='active']:focus-visible {
+	box-shadow: var(--tile-tabs-trigger-focus-shadow, var(--tile-tabs-active-shadow, $shadow-sm));
+}
+
+.list.variantLine > .trigger[data-state='active']:focus-visible {
+	box-shadow: var(--tile-tabs-trigger-focus-shadow, none);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.indicator {
+		transition: none;
 	}
 }

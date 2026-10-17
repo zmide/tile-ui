@@ -9,15 +9,16 @@
 	align-items: center;
 	justify-content: center;
 	gap: $spacing-6;
-	border-radius: $radius;
-	border: 1px dashed $border;
-	padding: $spacing-6;
+	border-radius: var(--tile-empty-radius, $radius);
+	border: 1px var(--tile-empty-border-style, dashed) var(--tile-empty-border, $border);
+	background-color: var(--tile-empty-background, transparent);
+	padding: var(--tile-empty-padding, $spacing-6);
 	text-align: center;
 	text-wrap: balance;
 
 	// 大屏加深内边距
 	@media (min-width: 768px) {
-		padding: $spacing-12;
+		padding: var(--tile-empty-padding, $spacing-12);
 	}
 }
 
@@ -27,7 +28,7 @@
 	max-width: 24rem;
 	flex-direction: column;
 	align-items: center;
-	gap: $spacing-2;
+	gap: var(--tile-empty-header-gap, $spacing-2);
 	text-align: center;
 }
 
@@ -53,7 +54,7 @@
 		width: $spacing-10;
 		height: $spacing-10;
 		border-radius: $radius;
-		background-color: $muted;
+		background-color: var(--tile-empty-media-background, $muted);
 		color: $foreground;
 
 		svg {
@@ -65,16 +66,16 @@
 
 // 标题
 .title {
-	font-size: $text-lg;
-	font-weight: $font-medium;
-	letter-spacing: -0.01em;
+	font-size: var(--tile-empty-title-size, $text-lg);
+	font-weight: var(--tile-empty-title-weight, $font-medium);
+	letter-spacing: var(--tile-empty-title-tracking, -0.01em);
 }
 
 // 描述
 .description {
-	font-size: $text-sm;
-	line-height: $leading-relaxed;
-	color: $muted-foreground;
+	font-size: var(--tile-empty-description-size, $text-sm);
+	line-height: var(--tile-empty-description-leading, $leading-relaxed);
+	color: var(--tile-empty-description-color, $muted-foreground);
 
 	a {
 		text-decoration: underline;

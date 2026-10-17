@@ -34,7 +34,7 @@
 	align-self: flex-end;
 	overflow: hidden;
 	border-radius: $radius-full;
-	background-color: $muted;
+	background-color: var(--tile-message-avatar-background, $muted);
 }
 
 // 消息内容
@@ -57,7 +57,7 @@
 	padding-inline: $spacing-3;
 	font-size: $text-xs;
 	font-weight: $font-medium;
-	color: $muted-foreground;
+	color: var(--tile-message-meta-color, $muted-foreground);
 }
 
 // 消息底部
@@ -69,7 +69,7 @@
 	padding-inline: $spacing-3;
 	font-size: $text-xs;
 	font-weight: $font-medium;
-	color: $muted-foreground;
+	color: var(--tile-message-meta-color, $muted-foreground);
 
 	.message.alignEnd & {
 		justify-content: flex-end;

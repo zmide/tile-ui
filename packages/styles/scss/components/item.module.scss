@@ -11,7 +11,7 @@
 	flex-shrink: 0;
 	height: 1px;
 	width: 100%;
-	background-color: $border;
+	background-color: var(--tile-item-line, $border);
 }
 
 // 条目根容器
@@ -19,7 +19,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	border-radius: $radius;
+	border-radius: var(--tile-item-radius, $radius);
 	border: 1px solid transparent;
 	font-size: $text-sm;
 	transition: background-color $transition-fast;
@@ -27,7 +27,7 @@
 
 	&:focus-visible {
 		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		box-shadow: var(--tile-item-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 
 	a {
@@ -44,22 +44,22 @@
 	}
 
 	&.variantOutline {
-		border-color: $border;
+		border-color: var(--tile-item-line, $border);
 	}
 
 	&.variantMuted {
-		background-color: color-mix(in srgb, $muted 50%, transparent);
+		background-color: var(--tile-item-muted-background, color-mix(in srgb, $muted 50%, transparent));
 	}
 
 	// 尺寸变体
 	&.sizeDefault {
 		gap: $spacing-4;
-		padding: $spacing-4;
+		padding: var(--tile-item-padding, $spacing-4);
 	}
 
 	&.sizeSm {
 		gap: $spacing-2_5;
-		padding: $spacing-3 $spacing-4;
+		padding: var(--tile-item-sm-padding, $spacing-3 $spacing-4);
 	}
 }
 
@@ -88,7 +88,7 @@
 		height: $spacing-8;
 		border-radius: $radius-sm;
 		border: 1px solid $border;
-		background-color: $muted;
+		background-color: var(--tile-item-media-background, $muted);
 
 		svg {
 			width: $spacing-4;
@@ -143,7 +143,7 @@
 	font-size: $text-sm;
 	line-height: $leading-normal;
 	font-weight: $font-normal;
-	color: $muted-foreground;
+	color: var(--tile-item-description-color, $muted-foreground);
 	text-wrap: balance;
 
 	a {

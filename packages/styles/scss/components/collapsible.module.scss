@@ -8,19 +8,20 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: $spacing-2;
-	border-radius: $radius;
+	gap: var(--tile-collapsible-gap, $spacing-2);
+	border-radius: var(--tile-collapsible-radius, $radius);
+	font-size: var(--tile-collapsible-font-size, inherit);
+	font-weight: var(--tile-collapsible-font-weight, inherit);
+	color: var(--tile-collapsible-foreground, inherit);
 	transition: background-color $transition-fast;
 	outline: none;
 
 	&:hover {
-		background-color: $muted;
+		background-color: var(--tile-collapsible-hover-background, $muted);
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-collapsible-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	&[disabled] {
@@ -42,4 +43,11 @@
 .contentInner {
 	overflow: hidden;
 	min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.trigger,
+	.content {
+		transition: none;
+	}
 }

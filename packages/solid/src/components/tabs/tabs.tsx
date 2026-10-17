@@ -1,6 +1,19 @@
-import { children, createContext, createSignal, createUniqueId, onCleanup, splitProps, useContext, type Accessor, type JSX, type ParentProps } from 'solid-js';
+import {
+	children,
+	createContext,
+	createEffect,
+	createSignal,
+	createUniqueId,
+	onCleanup,
+	onMount,
+	splitProps,
+	useContext,
+	type Accessor,
+	type JSX,
+	type ParentProps,
+} from 'solid-js';
 import { isServer } from 'solid-js/web';
-import { getTabsListVariantKey, getTabsState, tabsStyleKeys } from '@tile-ui/core';
+import { getTabsListVariantKey, getTabsState, observeTabsIndicator, tabsStyleKeys } from '@tile-ui/core';
 import type { TabsBaseProps, TabsContentBaseProps, TabsListBaseProps, TabsOrientation, TabsTriggerBaseProps } from '@tile-ui/core';
 import { createControllableSignal, invokeEventHandler, moveRovingFocus } from '../../utils';
 import styles from '@tile-ui/styles/scss/components/tabs.module.scss';
@@ -218,11 +231,27 @@ export function TabsList(props: ParentProps<TabsListProps>) {
 	const context = useTabs();
 	const [local, rest] = splitProps(props, ['variant', 'class', 'children', 'onKeyDown', 'ref']);
 	const variant = () => local.variant ?? 'default';
+	let list: HTMLDivElement | undefined;
+	let indicator: HTMLSpanElement | undefined;
+	let measurement: ReturnType<typeof observeTabsIndicator> | undefined;
+	onMount(() => {
+		if (list && indicator) measurement = observeTabsIndicator(list, indicator);
+	});
+	createEffect(() => {
+		context.value();
+		context.orientation();
+		variant();
+		measurement?.update();
+	});
+	onCleanup(() => measurement?.disconnect());
 
 	return (
 		<div
 			{...rest}
-			ref={(element) => assignRef(local.ref, element)}
+			ref={(element) => {
+				list = element;
+				assignRef(local.ref, element);
+			}}
 			role="tablist"
 			aria-orientation={context.orientation()}
 			data-slot="tabs-list"
@@ -241,6 +270,15 @@ export function TabsList(props: ParentProps<TabsListProps>) {
 					context.moveFocus(event.target, event);
 			}}>
 			{local.children}
+			<span
+				ref={(element) => {
+					indicator = element;
+				}}
+				aria-hidden="true"
+				data-slot="tabs-indicator"
+				data-state="hidden"
+				class={styles.indicator}
+			/>
 		</div>
 	);
 }

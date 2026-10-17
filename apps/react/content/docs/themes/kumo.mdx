@@ -1,0 +1,81 @@
+---
+title: Kumo
+description: Install the independent Kumo theme, configure runtime light and dark modes, and understand compatibility and distribution.
+---
+
+Kumo is an optional appearance for Tile UI, maintained in `@tile-ui/theme-kumo`. It changes visual values, not the component implementation. Its only visual source is SCSS, compiled directly to CSS; React, Vue, and Solid consume the same stylesheet.
+
+## Package installation
+
+Install the independent theme package with `pnpm add @tile-ui/theme-kumo`. Shared component styles remain in `@tile-ui/styles`. The theme is authored in SCSS and exports only CSS/Sass; it has no JavaScript token API.
+
+Choose the global appearance at build time by importing Kumo **instead of** `theme.scss` or `globals.scss`:
+
+```tsx title="app/layout.tsx"
+import '@tile-ui/theme-kumo/theme.css';
+import '@tile-ui/styles/reset.css'; // Optional; keep your host reset if you already have one.
+```
+
+For a Sass pipeline, replace the CSS import with `import '@tile-ui/theme-kumo/theme.scss'`. The Kumo entry includes Tile extension defaults and Kumo light/dark tokens, but not the default palette or reset. Do not combine it with `theme.*` or `globals.*`: globals loads Tile's default palette, not a theme-neutral base. A separate tokens import is unnecessary.
+
+Toggle `.light`/`.dark` or `data-theme="light"`/`data-theme="dark"` on `html` for runtime color-mode changes. Use one convention, or keep both consistent. No theme provider, `data-tile-theme` attribute, or dynamic stylesheet swap is required. Your existing mode manager can resolve the system preference and update the root marker, so body-level portals inherit the same mode.
+
+Kumo styles do not change Tile prop names or defaults and do not mirror the complete Kumo variant/component API. Fonts are not fetched automatically; load desired fonts through your own local assets or application font setup. `createThemeVariables` and `applyThemeVariables` from `@tile-ui/core` still produce Tile default concrete values: do not call them for Kumo class/attribute mode toggles, since inline values can override the Kumo stylesheet.
+
+This is a Kumo-derived appearance, not a claim of verified pixel parity or a complete accessibility audit. The default-palette contrast figures in the general theming guide are not a Kumo contrast report.
+
+### Charts and Liveline
+
+SVG Chart reads CSS variables; an explicit per-mode color in its config still takes priority. Liveline with an omitted `theme` inherits the stylesheet's `--tile-color-mode` marker (Kumo sets light/dark). Without that marker it preserves the legacy dark default. Explicit `theme="light"` or `theme="dark"` always wins; there is no new `"auto"` value. Root mode changes repaint an existing Liveline canvas without recreating it.
+
+## Registry installation
+
+Install the optional file-only item:
+
+```bash
+pnpm dlx shadcn@latest add @tile-ui/theme-kumo
+```
+
+It depends on `@tile-ui/styles` and copies `styles/themes/kumo.scss`, the `_shared.scss`, `_light.scss`, and `_dark.scss` partials, and `styles/themes/LICENSE.kumo` (retain this MIT license and Cloudflare notice). It does not inject Kumo `cssVars`, import the entry for you, or replace the host theme automatically. Import the copied `styles/themes/kumo.scss` explicitly from your root layout using the appropriate local path. Do not import the theme partials separately; the entry includes them. Remove default-theme/globals imports and conflicting host palette declarations when adopting Kumo.
+
+## Runtime mode switching and first paint
+
+Use a single root marker convention. For example, application-side browser code can update the attribute without loading another stylesheet:
+
+```js
+document.documentElement.setAttribute('data-theme', 'dark');
+document.documentElement.setAttribute('data-theme', 'light');
+```
+
+Light is the default. Resolve system preference with your application's mode manager and apply the resolved root marker before first paint where possible. Keep server markup and client hydration consistent. Persistence and system-preference listeners are application concerns, not part of the theme package.
+
+Apply the marker to `html` so body-level portals inherit it. Explicit light/dark resets are provided, but arbitrary nested themes are not a compatibility guarantee.
+
+## Customization and scope
+
+Override semantic and component CSS custom properties in an application stylesheet after the theme. The theme covers palette, dimensions, typography, borders, shadows, state styling, and visual motion; it does not copy component CSS or add behavior. For example:
+
+```css
+:root {
+  --tile-font-sans: 'Avenir Next', sans-serif;
+  --tile-button-height: 2.5rem;
+}
+```
+
+Use existing Tile component APIs for composition and interaction. Any missing state, structure, measurement, or drawing capability must be supplied as a generic framework interface, not theme JavaScript.
+
+## Compatibility and validation limits
+
+Card, Tooltip, Skeleton, Spinner, Calendar, and chart rendering retain Tile's structure and engines, so some upstream visual differences remain. The theme does not promise complete upstream component or variant parity. Chromium checks cover selected states and mode switching, not every browser or a complete accessibility audit.
+
+Accessibility corrections intentionally differ from the reference: light link text is darker, dark links use the semantic text-link value, inactive light Tabs use a higher-contrast neutral, and keyboard focus rings are retained. Verify your own overrides and content for contrast and focus visibility.
+
+## Source and license
+
+The reference is [Cloudflare Kumo](https://github.com/cloudflare/kumo/tree/7e0ff40546f08405d05bc9754f0ff0fd009ece0a), pinned to `7e0ff40546f08405d05bc9754f0ff0fd009ece0a`. The theme package's `LICENSE` contains the complete upstream MIT notice. Preserve that file when redistributing the theme; registry installation carries it as `styles/themes/LICENSE.kumo`.
+
+## Related resources
+
+- [Theme resources](/docs/themes)
+- [Theming and custom visual interfaces](/docs/theming)
+- [Installation](/docs/installation)

@@ -1,0 +1,39 @@
+{
+	"name": "@tile-ui/theme-kumo",
+	"version": "1.0.0",
+	"description": "Opt-in Kumo appearance for Tile UI with dynamic light and dark modes",
+	"license": "MIT",
+	"files": [
+		"LICENSE",
+		"README.md",
+		"README.zh-CN.md",
+		"scss",
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": [
+		"**/*.css",
+		"**/*.scss"
+	],
+	"exports": {
+		"./theme.css": "./dist/theme.css",
+		"./theme.scss": "./scss/theme.scss"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"scripts": {
+		"build": "node build.mjs",
+		"lint": "oxlint .",
+		"test": "node --test test/*.test.mjs",
+		"test:reference": "node scripts/reference.mjs",
+		"release": "release-it"
+	},
+	"devDependencies": {
+		"sass": "^1.86.3"
+	},
+	"peerDependencies": {
+		"@tile-ui/styles": "^1.1.3"
+	}
+}

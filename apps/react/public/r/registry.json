@@ -24,6 +24,11 @@
           "target": "components/ui/lib/liveline/theme.ts"
         },
         {
+          "path": "packages/core/src/liveline/color-mode.ts",
+          "type": "registry:lib",
+          "target": "components/ui/lib/liveline/color-mode.ts"
+        },
+        {
           "path": "packages/core/src/liveline/engine.ts",
           "type": "registry:lib",
           "target": "components/ui/lib/liveline/engine.ts"
@@ -350,6 +355,42 @@
           "path": "packages/styles/scss/theme.scss",
           "type": "registry:file",
           "target": "styles/theme.scss"
+        }
+      ]
+    },
+    {
+      "name": "theme-kumo",
+      "type": "registry:theme",
+      "title": "Kumo Theme",
+      "description": "Optional Kumo light and dark theme. Import the copied Sass entry explicitly to opt in.",
+      "registryDependencies": [
+        "@tile-ui/styles"
+      ],
+      "files": [
+        {
+          "path": "packages/themes/kumo/scss/theme.scss",
+          "type": "registry:file",
+          "target": "styles/themes/kumo.scss"
+        },
+        {
+          "path": "packages/themes/kumo/scss/_shared.scss",
+          "type": "registry:file",
+          "target": "styles/themes/_shared.scss"
+        },
+        {
+          "path": "packages/themes/kumo/scss/_light.scss",
+          "type": "registry:file",
+          "target": "styles/themes/_light.scss"
+        },
+        {
+          "path": "packages/themes/kumo/scss/_dark.scss",
+          "type": "registry:file",
+          "target": "styles/themes/_dark.scss"
+        },
+        {
+          "path": "packages/themes/kumo/LICENSE",
+          "type": "registry:file",
+          "target": "styles/themes/LICENSE.kumo"
         }
       ]
     },

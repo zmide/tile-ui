@@ -5,7 +5,7 @@
 }
 
 .item {
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid var(--tile-accordion-border, $border);
 
 	&:last-child {
 		border-bottom: none;
@@ -22,22 +22,22 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: $spacing-4;
-	border-radius: $radius-md;
-	padding: $spacing-4 0;
+	border-radius: var(--tile-accordion-radius, $radius-md);
+	padding: var(--tile-accordion-trigger-padding, $spacing-4 0);
 	text-align: left;
-	font-size: $text-sm;
+	font-size: var(--tile-accordion-font-size, $text-sm);
 	font-weight: $font-medium;
+	color: var(--tile-accordion-foreground, inherit);
 	transition: all $transition-fast;
 	outline: none;
 
 	&:hover {
-		text-decoration: underline;
+		text-decoration: var(--tile-accordion-hover-decoration, underline);
+		background-color: var(--tile-accordion-hover-background, transparent);
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-accordion-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 
 	&:disabled {
@@ -55,7 +55,7 @@
 	width: 1rem;
 	height: 1rem;
 	flex-shrink: 0;
-	color: $muted-foreground;
+	color: var(--tile-accordion-subtle, $muted-foreground);
 	transition: transform $transition-normal;
 }
 
@@ -65,18 +65,27 @@
 	overflow: hidden;
 	padding-bottom: 0;
 	text-align: left;
-	font-size: $text-sm;
+	font-size: var(--tile-accordion-font-size, $text-sm);
+	color: var(--tile-accordion-content-foreground, inherit);
 	transition:
 		grid-template-rows $transition-slow,
 		padding-bottom $transition-slow;
 
 	&[data-state='open'] {
 		grid-template-rows: 1fr;
-		padding-bottom: $spacing-4;
+		padding-bottom: var(--tile-accordion-content-padding-bottom, $spacing-4);
 	}
 }
 
 .contentInner {
 	overflow: hidden;
 	min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.trigger,
+	.chevron,
+	.content {
+		transition: none;
+	}
 }

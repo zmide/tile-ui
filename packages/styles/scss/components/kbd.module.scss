@@ -9,13 +9,14 @@
 	align-items: center;
 	justify-content: center;
 	gap: $spacing-1;
-	border-radius: $radius-sm;
-	background-color: $muted;
+	border-radius: var(--tile-kbd-radius, $radius-sm);
+	background-color: var(--tile-kbd-background, $muted);
+	box-shadow: var(--tile-kbd-shadow, none);
 	padding: 0 $spacing-1;
 	font-family: $font-sans;
 	font-size: $text-xs;
 	font-weight: $font-medium;
-	color: $muted-foreground;
+	color: var(--tile-kbd-color, $muted-foreground);
 	user-select: none;
 
 	svg {

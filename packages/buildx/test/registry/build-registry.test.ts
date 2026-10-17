@@ -174,7 +174,8 @@ async function buildGeneratedSolidProject(projectDir: string, selectedItems: str
 	const sass = (await import(pathToFileURL(requireSolid.resolve('sass')).href)) as { compile: (file: string) => unknown };
 	const vite = (await import(pathToFileURL(requireSolid.resolve('vite')).href)) as { build: (options: Record<string, unknown>) => Promise<unknown> };
 	const solid = (await import(pathToFileURL(requireSolid.resolve('vite-plugin-solid')).href)).default as (options?: Record<string, unknown>) => unknown;
-	const moduleFiles = selectedItems.map((name) => path.join(projectDir, `components/ui/${name}/${name}.module.scss`));
+	// Direction is the existing style-free provider; every other family must compile its module.
+	const moduleFiles = selectedItems.filter((name) => name !== 'direction').map((name) => path.join(projectDir, `components/ui/${name}/${name}.module.scss`));
 	for (const file of moduleFiles) sass.compile(file);
 	const entry = path.join(projectDir, 'entry.tsx');
 	await fs.writeFile(entry, `${selectedItems.map((name) => `export * from './components/ui/${name}';`).join('\n')}\n`);
@@ -587,7 +588,11 @@ describe('buildRegistry', () => {
 			expect.objectContaining({ name: 'create-media-query' }),
 			expect.objectContaining({ name: 'create-copy-to-clipboard' }),
 		]);
-		expect(registry.items).toHaveLength(70);
+		expect(registry.items).toHaveLength(71);
+		expect(registry.items.filter((item) => item.type === 'registry:theme')).toEqual([
+			expect.objectContaining({ name: 'theme-default' }),
+			expect.objectContaining({ name: 'theme-kumo' }),
+		]);
 		for (const item of [localStorage, mediaQuery, clipboard]) {
 			expect(item.type).toBe('registry:hook');
 			expect(item.dependencies).toEqual(['solid-js']);
@@ -732,7 +737,8 @@ describe('buildRegistry', () => {
 			completeProjectDir,
 			solidRegistryManifest.items.map((item) => item.name),
 		);
-		expect(completeInstall.size).toBe(70);
+		expect(completeInstall.size).toBe(71);
+		expect(completeInstall.has('theme-kumo')).toBe(true);
 		await typeCheckGeneratedSolidProject(completeProjectDir);
 		await buildGeneratedSolidProject(
 			completeProjectDir,

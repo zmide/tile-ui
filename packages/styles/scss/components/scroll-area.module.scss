@@ -18,7 +18,7 @@
 
 	&:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		box-shadow: var(--tile-scroll-area-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 }
 
@@ -52,7 +52,7 @@
 .thumb {
 	position: relative;
 	border-radius: $radius-full;
-	background-color: $border;
+	background-color: var(--tile-scroll-area-thumb, $border);
 
 	.vertical & {
 		width: 100%;

@@ -10,7 +10,7 @@
 	gap: $spacing-2;
 	text-align: left;
 	font-size: $text-sm;
-	color: $muted-foreground;
+	color: var(--tile-marker-color, $muted-foreground);
 
 	a {
 		text-decoration: underline;
@@ -33,7 +33,7 @@
 			height: 1px;
 			min-width: 0;
 			flex: 1;
-			background-color: $border;
+			background-color: var(--tile-marker-line, $border);
 		}
 
 		&::after {
@@ -42,7 +42,7 @@
 			height: 1px;
 			min-width: 0;
 			flex: 1;
-			background-color: $border;
+			background-color: var(--tile-marker-line, $border);
 		}
 
 		.markerContent {
@@ -52,7 +52,7 @@
 	}
 
 	&.variantBorder {
-		border-bottom: 1px solid $border;
+		border-bottom: 1px solid var(--tile-marker-line, $border);
 		padding-bottom: $spacing-2;
 	}
 }

@@ -2,13 +2,13 @@
 
 .item {
 	display: grid;
-	gap: $spacing-2;
+	gap: var(--tile-form-item-gap, #{$spacing-2});
 }
 
 .label {
-	font-size: $text-sm;
+	font-size: var(--tile-form-label-font-size, #{$text-sm});
 	font-weight: $font-medium;
-	line-height: $leading-none;
+	line-height: var(--tile-form-label-line-height, #{$leading-none});
 	color: $foreground;
 
 	&[data-error='true'] {
@@ -23,13 +23,13 @@
 .description {
 	margin: 0;
 	font-size: $text-sm;
-	line-height: $leading-normal;
-	color: $muted-foreground;
+	line-height: var(--tile-form-description-line-height, #{$leading-normal});
+	color: var(--tile-form-description-color, #{$muted-foreground});
 }
 
 .message {
 	margin: 0;
 	font-size: $text-sm;
-	line-height: $leading-normal;
+	line-height: var(--tile-form-description-line-height, #{$leading-normal});
 	color: $destructive;
 }

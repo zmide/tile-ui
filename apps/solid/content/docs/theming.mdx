@@ -22,6 +22,8 @@ import '@tile-ui/styles/scss/globals.scss';
 
 Import this from `src/app.tsx` so server rendering and hydration receive the same styles.
 
+For the default palette without a reset, use `@tile-ui/styles/theme.scss` instead. Add `@tile-ui/styles/reset.scss` only if needed. The equivalent compiled CSS entries are also available.
+
 ## Existing shadcn themes
 
 When the application already defines shadcn semantic variables, import only Tile extension tokens:
@@ -47,9 +49,15 @@ Custom properties inherit, so themes can be limited to a Solid subtree:
 
 Apply `.dark` or `[data-theme='dark']` to `html`. Dialog portals mount under the document body and inherit variables from the root element.
 
+The default theme entry exposes light values on `:root`, `.light`, and `[data-theme='light']`. System preference alone does not toggle these selectors; update the root class or attribute with your application's mode manager.
+
+## Registry theme selection
+
+UI items depend on `@tile-ui/styles`, which copies shared Sass support and injects only Tile extension defaults. Keep your host semantic palette or explicitly choose the optional `@tile-ui/theme-default` item. Independent theme installation belongs to the selected theme's guide in [Theme resources](/docs/themes).
+
 ## Contrast and AA small-text
 
-Tile ships the canonical shadcn palette unchanged. A few native token combinations fall slightly below the WCAG AA small-text threshold (4.5:1): `--destructive` text on white or `#fafafa` (3.60–3.76:1), `--destructive-foreground` on `--destructive` (3.60:1), and `--muted-foreground` on `--muted` (4.39:1). These are upstream shadcn tradeoffs kept for palette parity.
+Tile's default theme ships the canonical shadcn palette unchanged. A few default-theme token combinations fall slightly below the WCAG AA small-text threshold (4.5:1): `--destructive` text on white or `#fafafa` (3.60–3.76:1), `--destructive-foreground` on `--destructive` (3.60:1), and `--muted-foreground` on `--muted` (4.39:1). These are upstream shadcn tradeoffs kept for palette parity.
 
 The accessibility browser check acknowledges exactly those verified `(app, route, pair)` combinations through an explicit allowlist and never blanket-skips contrast. For strict AA compliance, override the affected tokens, for example `--muted-foreground: oklch(0.5 0 0)` or `--destructive-foreground: #ffffff`.
 
@@ -57,3 +65,20 @@ The accessibility browser check acknowledges exactly those verified `(app, route
 
 - [Installation](/docs/installation)
 - [Registry getting started](/docs/registry/getting-started)
+
+## Independent themes and ownership
+
+Select an independent appearance by importing its CSS or Sass entry in the application, rather than adding a component prop or Provider. Do not load two competing palettes together. Keep shared component styles; replace only the palette entry. Applications own fonts, initial mode selection, persistence, and system preference handling.
+
+Themes own colors, typography, dimensions, borders, shadows, state appearance, and visual motion. Shared components expose generic CSS variables, attributes, and composition APIs without identifying any concrete theme. State, measurement, lifecycle, and Canvas repaint behavior belong to the framework, not a theme's stylesheet.
+
+If a theme cannot express a visual requirement through the existing interfaces, request a reusable framework capability with unchanged defaults rather than introducing theme-specific runtime branches. A theme's supported root markers and scoping guarantees are documented by that theme; arbitrary nested theme combinations are not implied.
+
+### Charts and Liveline
+
+SVG Chart consumes CSS variables; explicit per-mode configuration takes priority. When Liveline's `theme` is omitted, it reads the stylesheet's `--tile-color-mode` marker. Without a marker, its legacy dark default remains. Explicit `theme="light"` or `theme="dark"` wins. Mode changes repaint the existing Canvas without recreating it; there is no new `"auto"` value.
+
+## Theme resources
+
+- [Theme directory](/docs/themes) - available themes and their detailed setup guides.
+- [Kumo](/docs/themes/kumo) - independent CSS/Sass appearance with light and dark modes.

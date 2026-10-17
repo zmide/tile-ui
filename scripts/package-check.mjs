@@ -6,8 +6,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const workspaceRoot = path.resolve(import.meta.dirname, '..');
-const tempParent = '/tmp/opencode';
-const packageNames = ['core', 'styles', 'react', 'vue', 'solid'];
+const tempParent = os.tmpdir();
+const packageNames = ['core', 'styles', 'theme-kumo', 'react', 'vue', 'solid'];
 const frameworkNames = ['react', 'vue', 'solid'];
 const timeout = Number(process.env.TILE_PACKAGE_CHECK_TIMEOUT_MS ?? 180_000);
 const startedAt = Date.now();
@@ -76,11 +76,12 @@ function packageDependencyNames(packageJson) {
 async function packAndInspect(packDir) {
 	await run('corepack', ['pnpm', '--filter', '@tile-ui/core', 'build'], { timeout: 300_000 });
 	await run('corepack', ['pnpm', '--filter', '@tile-ui/styles', 'build'], { timeout: 300_000 });
+	await run('corepack', ['pnpm', '--filter', '@tile-ui/theme-kumo', 'build']);
 	for (const name of ['react', 'vue', 'solid']) await run('corepack', ['pnpm', '--filter', `@tile-ui/${name}`, 'build'], { timeout: 300_000 });
 
 	const tarballs = {};
 	for (const name of packageNames) {
-		const packageDir = path.join(workspaceRoot, 'packages', name);
+		const packageDir = path.join(workspaceRoot, 'packages', name === 'theme-kumo' ? 'themes/kumo' : name);
 		const before = new Set(await readdir(packDir));
 		await run('corepack', ['pnpm', 'pack', '--pack-destination', packDir], { cwd: packageDir });
 		const created = (await readdir(packDir)).filter((entry) => !before.has(entry) && entry.endsWith('.tgz'));
@@ -96,7 +97,8 @@ async function packAndInspect(packDir) {
 		for (const entry of entries) {
 			assert(entry.startsWith('package/'), `${name} has an unsafe tar entry: ${entry}`);
 			assert(!/(^|\/)(?:src|test|tests|docs|temp|tmp|node_modules)(?:\/|$)/i.test(entry), `${name} includes unwanted path: ${entry}`);
-			if (name === 'styles') assert(/^package\/(?:package\.json|README(?:\.zh-CN)?\.md|LICENSE|scss\/|css\/)/.test(entry), `${name} includes unexpected path: ${entry}`);
+			if (name === 'styles' || name === 'theme-kumo')
+				assert(/^package\/(?:package\.json|README(?:\.zh-CN)?\.md|LICENSE|scss\/|css\/|dist\/)/.test(entry), `${name} includes unexpected path: ${entry}`);
 			else assert(/^package\/(?:package\.json|README(?:\.zh-CN)?\.md|LICENSE|dist\/)/.test(entry), `${name} includes unexpected path: ${entry}`);
 		}
 
@@ -121,7 +123,19 @@ async function createConsumerWorkspace(tarballs) {
 	await mkdir(consumerRoot, { recursive: true });
 	await writeJson(path.join(consumerRoot, 'package.json'), { name: 'tile-ui-package-consumers', private: true, type: 'module', packageManager: 'pnpm@9.15.0' });
 	await writeFile(path.join(consumerRoot, 'pnpm-workspace.yaml'), "packages:\n  - 'projects/*'\n");
-	const projects = ['node', 'react-vite', 'vue-vite', 'solid-vite', 'solid-ssr', 'styles', 'registry-react', 'registry-vue', 'registry-solid'];
+	const projects = [
+		'node',
+		'react-vite',
+		'vue-vite',
+		'solid-vite',
+		'solid-ssr',
+		'styles',
+		'styles-kumo',
+		'registry-react',
+		'registry-vue',
+		'registry-solid',
+		...frameworkNames.map((framework) => `registry-${framework}-kumo`),
+	];
 	for (const project of projects) {
 		const projectDir = path.join(consumerRoot, 'projects', project);
 		await mkdir(projectDir, { recursive: true });
@@ -329,6 +343,45 @@ console.log('styles-ok');
 	log('passed representative Sass/CSS named and wildcard exports');
 }
 
+async function checkKumoStyleExports(consumerRoot) {
+	const projectDir = path.join(consumerRoot, 'projects/styles-kumo');
+	await writeFile(
+		path.join(projectDir, 'check.mjs'),
+		`import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import * as sass from 'sass';
+const require = createRequire(import.meta.url);
+const css = await readFile(require.resolve('@tile-ui/theme-kumo/theme.css'), 'utf8');
+assert(css.length > 0);
+require.resolve('@tile-ui/theme-kumo/theme.scss');
+const result = sass.compileString("@use 'pkg:@tile-ui/theme-kumo/theme.scss';", { importers: [new sass.NodePackageImporter()] });
+for (const output of [css, result.css]) {
+  assert.match(output, /--background\\s*:/);
+  assert.match(output, /--tile-[\\w-]+\\s*:/);
+  assert.match(output, /\\.light/);
+  assert.match(output, /\\.dark/);
+  assert.match(output, /\\[data-theme=['"]?light['"]?\\]/);
+  assert.match(output, /\\[data-theme=['"]?dark['"]?\\]/);
+  assert.doesNotMatch(output, /@(?:import|font-face)\\b/);
+  assert.doesNotMatch(output, /(?:^|[;{])\\s*(?:box-sizing\\s*:|margin\\s*:\\s*0)/m);
+}
+console.log('styles-kumo-ok');
+`,
+	);
+	await run(process.execPath, ['check.mjs'], { cwd: projectDir });
+	await mkdir(path.join(projectDir, 'src'), { recursive: true });
+	await writeFile(
+		path.join(projectDir, 'vite.config.mjs'),
+		"import { defineConfig } from 'vite'; export default defineConfig({ build: { lib: { entry: 'src/main.js', formats: ['es'] } } });\n",
+	);
+	for (const extension of ['css', 'scss']) {
+		await writeFile(path.join(projectDir, 'src/main.js'), `import '@tile-ui/theme-kumo/theme.${extension}';\nexport const theme = 'kumo';\n`);
+		await runConsumerTool(consumerRoot, projectDir, 'vite', ['build']);
+	}
+	log('passed isolated Kumo CSS/Sass exports and clean Vite consumers');
+}
+
 function localRegistryName(dependency) {
 	return dependency.startsWith('@tile-ui/') ? dependency.slice('@tile-ui/'.length) : undefined;
 }
@@ -369,14 +422,14 @@ function registryClosure(items, selected) {
 	return closure;
 }
 
-async function materializeRegistry(framework, consumerRoot) {
-	const projectDir = path.join(consumerRoot, `projects/registry-${framework}`);
+async function materializeRegistry(framework, consumerRoot, selectedItems) {
+	const projectDir = path.join(consumerRoot, `projects/registry-${framework}${selectedItems ? '-kumo' : ''}`);
 	const items = await loadRegistry(framework);
 	const uiNames = [...items.values()].filter((item) => item.type === 'registry:ui').map((item) => item.name);
 	assert.equal(uiNames.length, 62, `${framework} must expose 62 UI registry items`);
 	const allNames = [...items.keys()];
-	const closure = registryClosure(items, allNames);
-	assert.equal(closure.size, items.size, `${framework} all-item closure is incomplete`);
+	assert.equal(registryClosure(items, allNames).size, items.size, `${framework} all-item closure is incomplete`);
+	const closure = registryClosure(items, selectedItems ?? allNames.filter((name) => name !== 'theme-kumo'));
 
 	const targets = new Map();
 	for (const name of closure) {
@@ -406,6 +459,41 @@ async function materializeRegistry(framework, consumerRoot) {
 	return { projectDir, items, uiNames, targets };
 }
 
+async function checkKumoRegistry(framework, consumerRoot) {
+	const { projectDir, items, targets } = await materializeRegistry(framework, consumerRoot, ['theme-kumo']);
+	const theme = items.get('theme-kumo');
+	assert.equal(theme.type, 'registry:theme');
+	assert.deepEqual(theme.registryDependencies, ['@tile-ui/styles']);
+	for (const property of ['cssVars', 'css', 'tailwind', 'extends', 'theme', 'style', 'baseColor'])
+		assert.equal(theme[property], undefined, `${framework}:theme-kumo must not mutate the host theme through ${property}`);
+	assert.deepEqual(theme.files.map((file) => file.target).sort(), [
+		'styles/themes/LICENSE.kumo',
+		'styles/themes/_dark.scss',
+		'styles/themes/_light.scss',
+		'styles/themes/_shared.scss',
+		'styles/themes/kumo.scss',
+	]);
+	const license = targets.get('styles/themes/LICENSE.kumo')?.content ?? '';
+	assert.match(license, /Cloudflare/);
+	assert.match(license, /Permission is hereby granted, free of charge/);
+	assert.match(license, /THE SOFTWARE IS PROVIDED "AS IS"/);
+	const entry = targets.get('styles/themes/kumo.scss')?.content ?? '';
+	assert.match(entry, /@use ['"]\.\/light['"]/);
+	assert.match(entry, /@use ['"]\.\/dark['"]/);
+	assert.doesNotMatch(entry, /@tile-ui|tokens|generated/);
+	await writeFile(
+		path.join(projectDir, 'sass-check.mjs'),
+		`import assert from 'node:assert/strict'; import * as sass from 'sass';
+const css = sass.compile('styles/themes/kumo.scss').css;
+assert.match(css, /--background\\s*:/);
+assert.match(css, /\\.dark/);
+assert.doesNotMatch(css, /(?:^|[;{])\\s*(?:box-sizing\\s*:|margin\\s*:\\s*0)|@font-face/m);
+console.log('registry-kumo-ok');\n`,
+	);
+	await run(process.execPath, ['sass-check.mjs'], { cwd: projectDir });
+	log(`compiled isolated ${framework} Kumo registry install without workspace Sass paths`);
+}
+
 async function checkRegistryFramework(framework, consumerRoot) {
 	const { projectDir, items, uiNames } = await materializeRegistry(framework, consumerRoot);
 	const extension = framework === 'solid' ? 'tsx' : framework === 'react' ? 'tsx' : 'tsx';
@@ -425,6 +513,7 @@ async function checkRegistryFramework(framework, consumerRoot) {
 	await runConsumerTool(consumerRoot, projectDir, 'tsc', ['--noEmit', '-p', 'tsconfig.json'], { timeout: 420_000 });
 	await runConsumerTool(consumerRoot, projectDir, 'vite', ['build'], { timeout: 420_000 });
 	const sassProbe = [...items.values()]
+		.filter((item) => item.name !== 'theme-kumo')
 		.flatMap((item) => item.files ?? [])
 		.filter((file) => file.target?.endsWith('.scss'))
 		.map((file) => file.target);
@@ -477,10 +566,12 @@ try {
 	await checkVitePackageConsumers(consumerRoot);
 	await checkSolidSsrConsumer(consumerRoot);
 	await checkStyleExports(consumerRoot);
+	await checkKumoStyleExports(consumerRoot);
 	const uiCounts = await runShards(frameworkNames.map((framework) => () => checkRegistryFramework(framework, consumerRoot)));
 	const uiTotal = uiCounts.reduce((sum, count) => sum + count, 0);
 	assert.equal(uiTotal, 186, 'registry gate must compile all 186 UI items');
-	log(`PASS: 5 packages, 186 UI registry items, runtime ${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
+	for (const framework of frameworkNames) await checkKumoRegistry(framework, consumerRoot);
+	log(`PASS: ${packageNames.length} packages, 186 UI registry items, runtime ${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
 } finally {
 	if (tempRoot) {
 		await rm(tempRoot, { recursive: true, force: true });

@@ -27,8 +27,10 @@
 	cursor: pointer;
 
 	&:focus-visible + .item {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-radio-focus-border, #{$ring});
+		box-shadow: var(--tile-radio-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
+		outline: var(--tile-radio-focus-outline, none);
+		outline-offset: var(--tile-radio-focus-offset, 0px);
 	}
 
 	&:disabled {
@@ -48,10 +50,11 @@
 	flex-shrink: 0;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid $input;
+	border: var(--tile-radio-border-width, 1px) solid var(--tile-radio-border, #{$input});
 	border-radius: $radius-full;
-	background-color: $background;
-	color: $primary;
+	background-color: var(--tile-radio-background, #{$background});
+	color: var(--tile-radio-color, #{$primary});
+	box-shadow: var(--tile-radio-shadow, none);
 	transition:
 		border-color $transition-fast,
 		box-shadow $transition-fast,
@@ -59,8 +62,15 @@
 	outline: none;
 
 	&[data-state='checked'] {
-		border-color: $primary;
+		border-color: var(--tile-radio-checked-border, #{$primary});
+		background-color: var(--tile-radio-checked-background, #{$background});
+		color: var(--tile-radio-checked-color, #{$primary});
+		box-shadow: var(--tile-radio-checked-shadow, none);
 	}
+}
+
+.input:focus-visible + .item[data-state='checked'] {
+	box-shadow: var(--tile-radio-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 }
 
 .indicator {

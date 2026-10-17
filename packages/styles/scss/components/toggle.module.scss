@@ -4,11 +4,12 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: $spacing-2;
+	gap: var(--tile-toggle-gap, #{$spacing-2});
 	white-space: nowrap;
-	border-radius: $radius;
+	border-radius: var(--tile-toggle-radius, #{$radius});
 	border: 1px solid transparent;
-	font-size: $text-sm;
+	font-size: var(--tile-toggle-font-size, #{$text-sm});
+	line-height: var(--tile-toggle-line-height, inherit);
 	font-weight: $font-medium;
 	transition:
 		color $transition-fast,
@@ -19,8 +20,8 @@
 	cursor: pointer;
 
 	&:focus-visible {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-toggle-focus-border, #{$ring});
+		box-shadow: var(--tile-toggle-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 	}
 
 	&:disabled {
@@ -38,8 +39,8 @@
 
 	// 状态
 	&[data-state='on'] {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-toggle-selected-background, #{$accent});
+		color: var(--tile-toggle-selected-color, #{$accent-foreground});
 	}
 
 	&[data-state='off'] {
@@ -47,46 +48,52 @@
 		color: $foreground;
 
 		&:hover:not(:disabled) {
-			background-color: $muted;
-			color: $muted-foreground;
+			background-color: var(--tile-toggle-hover-background, #{$muted});
+			color: var(--tile-toggle-hover-color, #{$muted-foreground});
 		}
 	}
 
 	// 样式变体
 	&.variantDefault {
 		background-color: transparent;
+
+		&[data-state='on'] {
+			background-color: var(--tile-toggle-selected-background, transparent);
+		}
 	}
 
 	&.variantOutline {
-		border-color: $border;
-		box-shadow: $shadow-sm;
+		border-color: var(--tile-toggle-border, #{$border});
+		box-shadow: var(--tile-toggle-shadow, #{$shadow-sm});
 	}
 
 	&.variantGhost {
 		background-color: transparent;
 
 		&[data-state='on'] {
-			background-color: $muted;
-			color: $muted-foreground;
+			background-color: var(--tile-toggle-ghost-selected-background, #{$muted});
+			color: var(--tile-toggle-ghost-selected-color, #{$muted-foreground});
 		}
 	}
 
 	// 尺寸变体
 	&.sizeDefault {
-		height: 2.25rem;
-		min-width: 2.25rem;
-		padding: 0 $spacing-2;
+		height: var(--tile-toggle-height, 2.25rem);
+		min-width: var(--tile-toggle-height, 2.25rem);
+		padding: 0 var(--tile-toggle-padding-inline, #{$spacing-2});
 	}
 
 	&.sizeSm {
-		height: 2rem;
-		min-width: 2rem;
-		padding: 0 $spacing-1_5;
+		height: var(--tile-toggle-sm-height, 2rem);
+		min-width: var(--tile-toggle-sm-height, 2rem);
+		padding: 0 var(--tile-toggle-sm-padding-inline, #{$spacing-1_5});
+		font-size: var(--tile-toggle-sm-font-size, #{$text-sm});
+		border-radius: var(--tile-toggle-sm-radius, #{$radius});
 	}
 
 	&.sizeLg {
-		height: 2.5rem;
-		min-width: 2.5rem;
-		padding: 0 $spacing-2_5;
+		height: var(--tile-toggle-lg-height, 2.5rem);
+		min-width: var(--tile-toggle-lg-height, 2.5rem);
+		padding: 0 var(--tile-toggle-lg-padding-inline, #{$spacing-2_5});
 	}
 }

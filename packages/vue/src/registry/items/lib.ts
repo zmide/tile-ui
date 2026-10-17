@@ -10,6 +10,7 @@ export const vueLibItems: PackageRegistryItem[] = [
 			['index.ts', '@tile-ui/core/liveline'],
 			['types.ts'],
 			['theme.ts'],
+			['color-mode.ts'],
 			['engine.ts'],
 			['canvas/dpr.ts'],
 			['draw/badge.ts'],

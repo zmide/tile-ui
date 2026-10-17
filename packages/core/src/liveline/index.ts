@@ -1,5 +1,6 @@
 export * from './types';
 export * from './theme';
+export * from './color-mode';
 export * from './engine';
 export * from './math/lerp';
 export * from './math/range';

@@ -35,6 +35,11 @@ function applyGeneratedToggleGroupCss(group: HTMLElement, item: HTMLElement) {
 	const runtimeClasses = Array.from(group.querySelectorAll<HTMLElement>(':scope > *')).flatMap((element) => Array.from(element.classList));
 	const resolveRuntimeClass = (reference: string) => runtimeClasses.find((className) => className.includes(reference));
 	let runtimeCss = css.replaceAll('.root', `.${rootClass}`).replaceAll('.item', `.${itemClass}`);
+	// Happy DOM does not resolve these custom-property fallbacks in computed sizes.
+	// Assert the generated contract before materializing its default values here.
+	expect(css).toMatch(/var\(--tile-toggle-group-sm-height,\s*2rem\)/);
+	expect(css).toMatch(/var\(--tile-toggle-group-lg-height,\s*2\.5rem\)/);
+	runtimeCss = runtimeCss.replace(/var\(--tile-toggle-group-(?:sm|lg)-height,\s*([^()]+)\)/g, '$1');
 	for (const reference of ['variantOutline', 'variantGhost', 'sizeDefault', 'sizeSm', 'sizeLg']) {
 		const runtimeClass = resolveRuntimeClass(reference);
 		if (runtimeClass) runtimeCss = runtimeCss.replaceAll(`.${reference}`, `.${runtimeClass}`);

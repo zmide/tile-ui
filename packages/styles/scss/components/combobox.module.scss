@@ -11,17 +11,18 @@
 .trigger {
 	display: inline-flex;
 	width: 100%;
+	min-height: var(--tile-combobox-trigger-min-height, auto);
 	align-items: center;
 	justify-content: space-between;
 	gap: $spacing-2;
-	border-radius: $radius;
-	border: 1px solid $input;
-	background-color: transparent;
-	padding: $spacing-2 $spacing-3;
-	font-size: $text-sm;
+	border-radius: var(--tile-select-trigger-radius, $radius);
+	border: 1px solid var(--tile-select-trigger-border, $input);
+	background-color: var(--tile-select-trigger-background, transparent);
+	padding: var(--tile-select-trigger-padding, $spacing-2 $spacing-3);
+	font-size: var(--tile-select-font-size, $text-sm);
 	white-space: nowrap;
-	color: $foreground;
-	box-shadow: $shadow-sm;
+	color: var(--tile-select-foreground, $foreground);
+	box-shadow: var(--tile-select-trigger-shadow, $shadow-sm);
 	transition:
 		color $transition-fast,
 		box-shadow $transition-fast;
@@ -29,8 +30,8 @@
 	cursor: pointer;
 
 	&:focus-visible {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-select-focus-border, $ring);
+		box-shadow: var(--tile-select-focus-shadow, 0 0 0 3px color-mix(in srgb, $ring 50%, transparent));
 	}
 
 	&[data-disabled='true'] {
@@ -49,7 +50,7 @@
 	text-align: left;
 
 	&[data-placeholder='true'] {
-		color: $muted-foreground;
+		color: var(--tile-select-placeholder, $muted-foreground);
 	}
 }
 
@@ -59,7 +60,7 @@
 	flex-shrink: 0;
 	width: 1rem;
 	height: 1rem;
-	color: $muted-foreground;
+	color: var(--tile-select-subtle, $muted-foreground);
 }
 
 // 弹出内容面板
@@ -70,11 +71,11 @@
 	min-width: 8rem;
 	max-height: 24rem;
 	overflow: hidden;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $popover;
-	color: $popover-foreground;
-	box-shadow: $shadow-md;
+	border-radius: var(--tile-select-panel-radius, $radius);
+	border: 1px solid var(--tile-select-panel-border, $border);
+	background-color: var(--tile-select-panel-background, $popover);
+	color: var(--tile-select-panel-foreground, $popover-foreground);
+	box-shadow: var(--tile-select-panel-shadow, $shadow-md);
 	outline: none;
 	transition:
 		opacity $transition-fast,
@@ -101,8 +102,8 @@
 	display: flex;
 	align-items: center;
 	gap: $spacing-2;
-	border-bottom: 1px solid $border;
-	padding: $spacing-2;
+	border-bottom: 1px solid var(--tile-select-separator, $border);
+	padding: var(--tile-combobox-search-padding, $spacing-2);
 }
 
 // 搜索输入框
@@ -111,12 +112,12 @@
 	border: none;
 	background: transparent;
 	padding: 0;
-	font-size: $text-sm;
-	color: $foreground;
+	font-size: var(--tile-select-font-size, $text-sm);
+	color: var(--tile-select-foreground, $foreground);
 	outline: none;
 
 	&::placeholder {
-		color: $muted-foreground;
+		color: var(--tile-select-placeholder, $muted-foreground);
 	}
 }
 
@@ -125,7 +126,7 @@
 	max-height: 15rem;
 	overflow-x: hidden;
 	overflow-y: auto;
-	padding: $spacing-1;
+	padding: var(--tile-combobox-list-padding, $spacing-1);
 }
 
 // 候选项
@@ -135,30 +136,35 @@
 	width: 100%;
 	align-items: center;
 	gap: $spacing-2;
-	border-radius: $radius-sm;
-	padding: $spacing-1_5 $spacing-2 $spacing-1_5 $spacing-8;
-	font-size: $text-sm;
+	border-radius: var(--tile-select-item-radius, $radius-sm);
+	padding: var(--tile-select-item-padding, $spacing-1_5 $spacing-2 $spacing-1_5 $spacing-8);
+	font-size: var(--tile-select-font-size, $text-sm);
 	line-height: $leading-normal;
-	color: $popover-foreground;
+	color: var(--tile-select-panel-foreground, $popover-foreground);
 	outline: none;
 	cursor: default;
 	user-select: none;
 
 	&[data-highlighted='true'] {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-select-highlight-background, $accent);
+		color: var(--tile-select-highlight-foreground, $accent-foreground);
 	}
 
 	&[data-disabled='true'] {
 		pointer-events: none;
 		opacity: 0.5;
 	}
+
+	&:focus-visible {
+		box-shadow: var(--tile-select-item-focus-shadow, none);
+	}
 }
 
 // 选中指示器
 .itemIndicator {
 	position: absolute;
-	left: $spacing-2;
+	left: var(--tile-select-indicator-left, $spacing-2);
+	right: var(--tile-select-indicator-right, auto);
 	display: inline-flex;
 	width: 0.875rem;
 	height: 0.875rem;
@@ -179,8 +185,8 @@
 	justify-content: center;
 	padding: $spacing-6;
 	text-align: center;
-	font-size: $text-sm;
-	color: $muted-foreground;
+	font-size: var(--tile-select-font-size, $text-sm);
+	color: var(--tile-select-subtle, $muted-foreground);
 }
 
 // 分组容器
@@ -190,15 +196,21 @@
 
 // 分组标题
 .label {
-	padding: $spacing-1_5 $spacing-2;
-	font-size: $text-xs;
-	font-weight: $font-medium;
-	color: $muted-foreground;
+	padding: var(--tile-select-label-padding, $spacing-1_5 $spacing-2);
+	font-size: var(--tile-select-label-font-size, $text-xs);
+	font-weight: var(--tile-select-label-font-weight, $font-medium);
+	color: var(--tile-select-subtle, $muted-foreground);
 }
 
 // 分隔线
 .separator {
 	margin: $spacing-1 (-$spacing-1);
 	height: 1px;
-	background-color: $border;
+	background-color: var(--tile-select-separator, $border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.content {
+		transition: none;
+	}
 }

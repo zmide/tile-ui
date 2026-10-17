@@ -8,10 +8,10 @@
 	grid-template-columns: 0 1fr;
 	align-items: start;
 	gap: $spacing-1;
-	border-radius: $radius;
+	border-radius: var(--tile-alert-radius, $radius);
 	border: 1px solid transparent;
-	padding: $spacing-3 $spacing-4;
-	font-size: $text-sm;
+	padding: var(--tile-alert-padding, $spacing-3 $spacing-4);
+	font-size: var(--tile-alert-font-size, $text-sm);
 
 	// 存在直接子 SVG 图标时启用图标列
 	&:has(> svg) {
@@ -28,18 +28,18 @@
 
 	// 样式变体
 	&.variantDefault {
-		background-color: $card;
-		color: $card-foreground;
-		border-color: $border;
+		background-color: var(--tile-alert-background, $card);
+		color: var(--tile-alert-color, $card-foreground);
+		border-color: var(--tile-alert-border, $border);
 	}
 
 	&.variantDestructive {
-		background-color: $card;
-		color: $destructive;
-		border-color: color-mix(in srgb, $destructive 30%, transparent);
+		background-color: var(--tile-alert-error-background, $card);
+		color: var(--tile-alert-error-color, $destructive);
+		border-color: var(--tile-alert-error-border, color-mix(in srgb, $destructive 30%, transparent));
 
 		.description {
-			color: $destructive-muted-foreground;
+			color: var(--tile-alert-error-color, $destructive-muted-foreground);
 		}
 	}
 }
@@ -54,8 +54,8 @@
 .title {
 	min-height: $spacing-4;
 	font-weight: $font-medium;
-	line-height: $leading-tight;
-	letter-spacing: -0.01em;
+	line-height: var(--tile-alert-title-leading, $leading-tight);
+	letter-spacing: var(--tile-alert-title-tracking, -0.01em);
 	overflow-wrap: anywhere;
 }
 
@@ -65,10 +65,10 @@
 	justify-items: start;
 	gap: $spacing-1;
 	font-size: $text-sm;
-	line-height: $leading-relaxed;
-	color: $muted-foreground;
+	line-height: var(--tile-alert-description-leading, $leading-relaxed);
+	color: var(--tile-alert-description-color, $muted-foreground);
 
 	p {
-		line-height: $leading-relaxed;
+		line-height: var(--tile-alert-description-leading, $leading-relaxed);
 	}
 }

@@ -2,10 +2,10 @@
 
 .label {
 	display: block;
-	font-size: $text-sm;
+	font-size: var(--tile-label-font-size, #{$text-sm});
 	font-weight: $font-medium;
 	color: $foreground;
-	line-height: $leading-normal;
+	line-height: var(--tile-label-line-height, #{$leading-normal});
 	cursor: pointer;
 
 	&.required::after {

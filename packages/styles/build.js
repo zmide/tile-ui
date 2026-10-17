@@ -15,11 +15,6 @@ const __dirname = path.dirname(__filename);
 
 const SCSS_DIR = path.resolve(__dirname, 'scss');
 const CSS_DIR = process.env.TILE_STYLES_OUT_DIR ? path.resolve(process.env.TILE_STYLES_OUT_DIR) : path.resolve(__dirname, 'css');
-const COMPONENTS_DIR = path.resolve(CSS_DIR, 'components');
-
-// 确保输出目录存在
-if (!fs.existsSync(CSS_DIR)) fs.mkdirSync(CSS_DIR, { recursive: true });
-if (!fs.existsSync(COMPONENTS_DIR)) fs.mkdirSync(COMPONENTS_DIR, { recursive: true });
 
 // 编译全局样式
 function compileFile(inputPath, outputPath) {
@@ -27,6 +22,7 @@ function compileFile(inputPath, outputPath) {
 		loadPaths: [path.resolve(SCSS_DIR)],
 		style: 'compressed',
 	});
+	fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 	fs.writeFileSync(outputPath, result.css);
 	console.log(`  ${path.relative(__dirname, outputPath)}`);
 }
@@ -38,13 +34,17 @@ for (const entry of ['tokens', 'theme', 'reset', 'globals']) {
 	compileFile(path.resolve(SCSS_DIR, `${entry}.scss`), path.resolve(CSS_DIR, `${entry}.css`));
 }
 
-// 编译组件样式 (CSS Modules 仅用于参考，实际 module 化需框架支持)
-const componentsDir = path.resolve(SCSS_DIR, 'components');
-if (fs.existsSync(componentsDir)) {
-	const files = fs.readdirSync(componentsDir).filter((f) => f.endsWith('.scss'));
+// 编译主题和组件入口；跳过 Sass partial，保持确定性顺序。
+for (const directory of ['themes', 'components']) {
+	const inputDirectory = path.resolve(SCSS_DIR, directory);
+	if (!fs.existsSync(inputDirectory)) continue;
+	const files = fs
+		.readdirSync(inputDirectory)
+		.filter((file) => file.endsWith('.scss') && !file.startsWith('_'))
+		.sort();
 	for (const file of files) {
 		const name = file.replace('.module.scss', '.css').replace('.scss', '.css');
-		compileFile(path.resolve(componentsDir, file), path.resolve(COMPONENTS_DIR, name));
+		compileFile(path.resolve(inputDirectory, file), path.resolve(CSS_DIR, directory, name));
 	}
 }
 

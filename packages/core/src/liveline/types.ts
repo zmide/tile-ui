@@ -60,6 +60,7 @@ export interface LivelineOptions {
 	series?: LivelineSeries[];
 
 	// Appearance
+	/** Explicit modes always win. When omitted, inherits --tile-color-mode if provided by a theme stylesheet; otherwise defaults to dark. */
 	theme?: ThemeMode;
 	color?: string;
 

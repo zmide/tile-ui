@@ -6,13 +6,13 @@
 	width: 100%;
 	overflow: hidden;
 	border-radius: $radius-full;
-	background-color: color-mix(in srgb, $primary 20%, transparent);
+	background-color: var(--tile-progress-track, color-mix(in srgb, $primary 20%, transparent));
 }
 
 .indicator {
 	height: 100%;
 	width: 100%;
 	flex: 1;
-	background-color: $primary;
+	background-color: var(--tile-progress-indicator, $primary);
 	transition: transform $transition-normal;
 }

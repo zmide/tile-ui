@@ -17,7 +17,7 @@ The Vue registry packages framework-agnostic logic into a dedicated item that ot
 
 ## Do I install styles separately?
 
-No. UI items depend on `@tile-ui/styles` automatically. The CLI copies the shared Sass support files and merges semantic CSS variables into the configured global stylesheet. Tile's default theme and reset remain optional; see [Theming](/docs/theming) for when to use them.
+No. UI items depend on `@tile-ui/styles` automatically. The CLI copies shared Sass support files and merges only Tile's `--tile-*` extension defaults into the configured global stylesheet, leaving the host semantic palette alone. The default theme, independent themes, and reset are explicit choices; see [Theming](/docs/theming) and [Theme resources](/docs/themes).
 
 ## How do items resolve `@tile-ui/core`?
 

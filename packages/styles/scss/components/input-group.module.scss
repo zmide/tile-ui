@@ -5,23 +5,24 @@
 	display: flex;
 	width: 100%;
 	align-items: center;
-	border-radius: $radius;
-	border: 1px solid $input;
+	border-radius: var(--tile-input-group-radius, #{$radius});
+	border: var(--tile-input-group-border-width, 1px) solid var(--tile-input-group-border, #{$input});
 	transition:
 		border-color $transition-fast,
 		box-shadow $transition-fast;
 	outline: none;
 
 	&:focus-within {
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-input-group-focus-border, #{$ring});
+		box-shadow: var(--tile-input-group-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 	}
 
 	&:has([aria-invalid='true']) {
 		border-color: $destructive;
+		box-shadow: var(--tile-input-group-error-shadow, none);
 
 		&:focus-within {
-			box-shadow: 0 0 0 3px color-mix(in srgb, $destructive 20%, transparent);
+			box-shadow: var(--tile-input-group-error-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$destructive} 20%, transparent));
 		}
 	}
 
@@ -35,13 +36,29 @@
 
 	// 样式变体
 	&.variantDefault {
-		background-color: transparent;
-		box-shadow: $shadow-sm;
+		background-color: var(--tile-input-group-background, transparent);
+		box-shadow: var(--tile-input-group-shadow, #{$shadow-sm});
+
+		&:focus-within {
+			box-shadow: var(--tile-input-group-focus-shadow, #{$shadow-sm});
+
+			&:has([aria-invalid='true']) {
+				box-shadow: var(--tile-input-group-error-focus-shadow, #{$shadow-sm});
+			}
+		}
 	}
 
 	&.variantOutline {
-		background-color: $field-subtle;
-		box-shadow: none;
+		background-color: var(--tile-input-group-outline-background, #{$field-subtle});
+		box-shadow: var(--tile-input-group-outline-shadow, none);
+
+		&:focus-within {
+			box-shadow: var(--tile-input-group-focus-shadow, none);
+
+			&:has([aria-invalid='true']) {
+				box-shadow: var(--tile-input-group-error-focus-shadow, none);
+			}
+		}
 	}
 }
 
@@ -70,7 +87,7 @@
 
 	// 样式变体
 	&.variantDefault {
-		background-color: $muted;
+		background-color: var(--tile-input-group-addon-background, #{$muted});
 	}
 
 	&.variantOutline {
@@ -138,11 +155,12 @@
 .input {
 	flex: 1;
 	min-width: 0;
-	height: 2.25rem;
+	height: var(--tile-input-group-height, 2.25rem);
 	border: none;
 	background-color: transparent;
 	padding: 0 $spacing-3;
-	font-size: $text-sm;
+	font-size: var(--tile-input-group-font-size, #{$text-sm});
+	line-height: var(--tile-input-group-line-height, inherit);
 	color: $foreground;
 	outline: none;
 
@@ -166,7 +184,8 @@
 	border: none;
 	background-color: transparent;
 	padding: $spacing-3;
-	font-size: $text-sm;
+	font-size: var(--tile-input-group-font-size, #{$text-sm});
+	line-height: var(--tile-input-group-line-height, inherit);
 	color: $foreground;
 	resize: none;
 	outline: none;

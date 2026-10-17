@@ -1,12 +1,12 @@
 @use 'variables/colors' as *;
 
 // 侧边栏使用标准 shadcn 扩展令牌。
-$sidebar-bg: var(--sidebar);
-$sidebar-fg: var(--sidebar-foreground);
-$sidebar-border: var(--sidebar-border);
-$sidebar-accent: var(--sidebar-accent);
-$sidebar-accent-fg: var(--sidebar-accent-foreground);
-$sidebar-ring: var(--sidebar-ring);
+$sidebar-bg: var(--tile-sidebar-background, var(--sidebar));
+$sidebar-fg: var(--tile-sidebar-foreground, var(--sidebar-foreground));
+$sidebar-border: var(--tile-sidebar-border, var(--sidebar-border));
+$sidebar-accent: var(--tile-sidebar-hover-background, var(--sidebar-accent));
+$sidebar-accent-fg: var(--tile-sidebar-hover-foreground, var(--sidebar-accent-foreground));
+$sidebar-ring: var(--tile-sidebar-focus, var(--sidebar-ring));
 
 // 根包裹层
 .wrapper {
@@ -60,9 +60,9 @@ $sidebar-ring: var(--sidebar-ring);
 
 // floating 变体（data-variant 位于 .container 上）
 .container[data-variant='floating'] .sidebar {
-	border-radius: $radius-lg;
+	border-radius: var(--tile-sidebar-panel-radius, $radius-lg);
 	border: 1px solid $sidebar-border;
-	box-shadow: $shadow-sm;
+	box-shadow: var(--tile-sidebar-floating-shadow, $shadow-sm);
 }
 
 // 内容区
@@ -71,7 +71,7 @@ $sidebar-ring: var(--sidebar-ring);
 	min-height: 0;
 	flex: 1;
 	flex-direction: column;
-	gap: $spacing-2;
+	gap: var(--tile-sidebar-content-gap, $spacing-2);
 	overflow: auto;
 }
 
@@ -80,7 +80,7 @@ $sidebar-ring: var(--sidebar-ring);
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-2;
-	padding: $spacing-2;
+	padding: var(--tile-sidebar-header-padding, $spacing-2);
 }
 
 // 分组
@@ -90,7 +90,7 @@ $sidebar-ring: var(--sidebar-ring);
 	width: 100%;
 	min-width: 0;
 	flex-direction: column;
-	padding: $spacing-2;
+	padding: var(--tile-sidebar-group-padding, $spacing-2);
 }
 
 .groupLabel {
@@ -102,7 +102,7 @@ $sidebar-ring: var(--sidebar-ring);
 	padding-inline: $spacing-2;
 	font-size: $text-xs;
 	font-weight: $font-medium;
-	color: color-mix(in srgb, $sidebar-fg 70%, transparent);
+	color: var(--tile-sidebar-label-foreground, color-mix(in srgb, $sidebar-fg 70%, transparent));
 
 	svg {
 		width: 1rem;
@@ -149,7 +149,7 @@ $sidebar-ring: var(--sidebar-ring);
 	width: 100%;
 	min-width: 0;
 	flex-direction: column;
-	gap: $spacing-1;
+	gap: var(--tile-sidebar-menu-gap, $spacing-1);
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -163,12 +163,12 @@ $sidebar-ring: var(--sidebar-ring);
 .menuButton {
 	display: flex;
 	width: 100%;
-	height: 2rem;
+	height: var(--tile-sidebar-button-height, 2rem);
 	align-items: center;
-	gap: $spacing-2;
+	gap: var(--tile-sidebar-button-gap, $spacing-2);
 	overflow: hidden;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-sidebar-button-radius, $radius);
 	background-color: transparent;
 	color: $sidebar-fg;
 	text-align: left;
@@ -190,9 +190,9 @@ $sidebar-ring: var(--sidebar-ring);
 	}
 
 	&[data-active='true'] {
-		background-color: $sidebar-accent;
+		background-color: var(--tile-sidebar-active-background, $sidebar-accent);
 		font-weight: $font-medium;
-		color: $sidebar-accent-fg;
+		color: var(--tile-sidebar-active-foreground, $sidebar-accent-fg);
 	}
 
 	svg {
@@ -217,7 +217,7 @@ $sidebar-ring: var(--sidebar-ring);
 }
 
 .variantOutline {
-	background-color: $background;
+	background-color: var(--tile-sidebar-outline-background, $background);
 	box-shadow: 0 0 0 1px $sidebar-border;
 
 	&:hover {
@@ -229,19 +229,19 @@ $sidebar-ring: var(--sidebar-ring);
 
 // 菜单按钮尺寸 (sizeSm 与子菜单按钮共享)
 .sizeDefault {
-	height: 2rem;
-	padding: $spacing-2;
+	height: var(--tile-sidebar-button-height, 2rem);
+	padding: var(--tile-sidebar-button-padding, $spacing-2);
 }
 
 .sizeSm {
-	height: 1.75rem;
+	height: var(--tile-sidebar-sm-height, 1.75rem);
 	padding-inline: $spacing-2;
-	font-size: $text-xs;
+	font-size: var(--tile-sidebar-sm-font-size, $text-xs);
 }
 
 .sizeLg {
-	height: 3rem;
-	padding: $spacing-2;
+	height: var(--tile-sidebar-lg-height, 3rem);
+	padding: var(--tile-sidebar-button-padding, $spacing-2);
 }
 
 // 菜单操作按钮
@@ -315,7 +315,7 @@ $sidebar-ring: var(--sidebar-ring);
 	gap: $spacing-2;
 	overflow: hidden;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-sidebar-button-radius, $radius);
 	padding-inline: $spacing-2;
 	background-color: transparent;
 	color: $sidebar-fg;
@@ -330,8 +330,8 @@ $sidebar-ring: var(--sidebar-ring);
 	}
 
 	&[data-active='true'] {
-		background-color: $sidebar-accent;
-		color: $sidebar-accent-fg;
+		background-color: var(--tile-sidebar-active-background, $sidebar-accent);
+		color: var(--tile-sidebar-active-foreground, $sidebar-accent-fg);
 	}
 
 	svg {
@@ -360,14 +360,14 @@ $sidebar-ring: var(--sidebar-ring);
 	width: 1.75rem;
 	height: 1.75rem;
 	border: none;
-	border-radius: $radius;
+	border-radius: var(--tile-sidebar-button-radius, $radius);
 	background-color: transparent;
-	color: $foreground;
+	color: var(--tile-sidebar-foreground, $foreground);
 	cursor: pointer;
 
 	&:hover {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-sidebar-hover-background, $accent);
+		color: var(--tile-sidebar-hover-foreground, $accent-foreground);
 	}
 
 	svg {
@@ -385,12 +385,12 @@ $sidebar-ring: var(--sidebar-ring);
 .input {
 	width: 100%;
 	height: 2rem;
-	background-color: $background;
+	background-color: var(--tile-sidebar-input-background, $background);
 	border: 1px solid $sidebar-border;
-	border-radius: $radius;
+	border-radius: var(--tile-sidebar-button-radius, $radius);
 	padding-inline: $spacing-2;
 	font-size: $text-sm;
-	color: $foreground;
+	color: var(--tile-sidebar-foreground, $foreground);
 	box-shadow: none;
 
 	&:focus {
@@ -407,7 +407,7 @@ $sidebar-ring: var(--sidebar-ring);
 	width: 100%;
 	flex: 1;
 	flex-direction: column;
-	background-color: $background;
+	background-color: var(--tile-sidebar-inset-background, $background);
 }
 
 // 折叠为 icon 时隐藏文本内容
@@ -462,4 +462,11 @@ $sidebar-ring: var(--sidebar-ring);
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.container,
+	.menuButton {
+		transition: none;
+	}
 }

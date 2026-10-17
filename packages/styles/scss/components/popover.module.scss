@@ -20,12 +20,14 @@
 	z-index: $z-popover;
 	width: 18rem;
 	max-width: calc(100vw - 2rem);
-	border-radius: $radius-md;
-	border: 1px solid $border;
-	background-color: $popover;
+	border-radius: var(--tile-popover-radius, $radius-md);
+	border: 1px solid var(--tile-popover-border, $border);
+	background-color: var(--tile-popover-background, $popover);
 	color: $popover-foreground;
-	padding: $spacing-4;
-	box-shadow: $shadow-md;
+	padding: var(--tile-popover-padding, $spacing-4);
+	font-size: var(--tile-popover-font-size, inherit);
+	line-height: var(--tile-popover-leading, inherit);
+	box-shadow: var(--tile-popover-shadow, $shadow-md);
 	outline: none;
 	transition:
 		opacity $transition-fast,

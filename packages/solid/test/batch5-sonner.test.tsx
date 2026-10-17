@@ -1,4 +1,6 @@
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { createSignal, type JSX } from 'solid-js';
 import { render } from 'solid-js/web';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -29,6 +31,20 @@ afterEach(() => {
 });
 
 describe('Solid Sonner Batch 5 lane', () => {
+	it('preserves exact shared-style fallbacks for rich and non-rich descendants', () => {
+		const source = readFileSync(path.resolve(import.meta.dirname, '../../styles/scss/components/sonner.module.scss'), 'utf8');
+		expect(source).toContain(".toast:not([data-rich-colors='false'])");
+		expect(source).toContain(".toast[data-rich-colors='true']");
+		expect(source).toMatch(/\.description,\s*\.close,\s*\.close:hover\s*\{\s*color: var\(--tile-toast-rich-description-color, inherit\);/);
+		expect(source).toMatch(/\.description\s*\{[^}]*color: var\(--tile-toast-description-color, \$muted-foreground\);/);
+		expect(source).toMatch(/\.close\s*\{[^}]*color: \$muted-foreground;/);
+		for (const [type, original] of Object.entries({ success: 'success', info: 'info', warning: 'warning', error: 'destructive' })) {
+			expect(source).toContain(`background-color: var(--tile-toast-${type}-background, $${original});`);
+			expect(source).toContain(`color: var(--tile-toast-rich-color, $${original}-foreground);`);
+			expect(source).toContain(`color: var(--tile-toast-${type}-color, $${original}-foreground);`);
+		}
+	});
+
 	it('exports a browser singleton API and subscribes through useToast', () => {
 		vi.useFakeTimers();
 		const { container } = mount(() => {

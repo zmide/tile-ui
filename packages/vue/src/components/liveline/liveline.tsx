@@ -2,8 +2,10 @@ import { defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch, t
 import {
 	SERIES_COLORS,
 	createLivelineEngine,
-	resolveSeriesPalettes,
-	resolveTheme,
+	observeLivelineAppearance,
+	readLivelineAppearance,
+	resolveLivelinePalette,
+	type LivelineAppearance,
 	type BadgeVariant,
 	type CandlePoint,
 	type DegenOptions,
@@ -102,7 +104,7 @@ export const Liveline = defineComponent({
 		data: { type: Array as PropType<LivelinePoint[]>, required: true },
 		value: { type: Number, required: true },
 		series: Array as PropType<LivelineSeries[]>,
-		theme: { type: String as PropType<ThemeMode>, default: 'dark' },
+		theme: String as PropType<ThemeMode>,
 		color: { type: String, default: '#3b82f6' },
 		window: { type: Number, default: 30 },
 		grid: { type: Boolean, default: true },
@@ -159,7 +161,15 @@ export const Liveline = defineComponent({
 		const hiddenSeries = ref(new Set<string>());
 		const activeWindowSecs = ref(props.windows?.[0]?.secs ?? props.window);
 		const lastSeries = ref(props.series);
+		const appearance = ref<LivelineAppearance>({ mode: props.theme ?? 'dark', palette: {}, colors: {} });
 		let engine: LivelineEngine | null = null;
+		let stopAppearance: (() => void) | undefined;
+		const readAppearanceOptions = () => ({
+			theme: props.theme,
+			colors: [props.color, ...(props.series?.map((series, index) => series.color || SERIES_COLORS[index % SERIES_COLORS.length]) ?? [])],
+		});
+		const currentAppearance = (): LivelineAppearance =>
+			props.theme && appearance.value.mode !== props.theme ? { mode: props.theme, palette: {}, colors: appearance.value.colors } : appearance.value;
 
 		expose({ element: root });
 
@@ -173,13 +183,12 @@ export const Liveline = defineComponent({
 				bottom: props.padding?.bottom ?? 28,
 				left: props.padding?.left ?? 12,
 			};
-			const palette = { ...resolveTheme(props.color, props.theme), ...(props.lineWidth == null ? {} : { lineWidth: props.lineWidth }) };
-			const seriesPalettes = props.series?.length ? resolveSeriesPalettes(props.series, props.theme) : null;
+			const palette = { ...resolveLivelinePalette(props.color, currentAppearance()), ...(props.lineWidth == null ? {} : { lineWidth: props.lineWidth }) };
 			const multiSeries = props.series?.map((series, index) => ({
 				id: series.id,
 				data: series.data,
 				value: series.value,
-				palette: seriesPalettes?.get(series.id) ?? resolveTheme(series.color || SERIES_COLORS[index % SERIES_COLORS.length], props.theme),
+				palette: resolveLivelinePalette(series.color || SERIES_COLORS[index % SERIES_COLORS.length], currentAppearance()),
 				label: series.label,
 			}));
 			return {
@@ -227,10 +236,22 @@ export const Liveline = defineComponent({
 
 		onMounted(() => {
 			if (!surface.value || !canvas.value) return;
+			if (root.value)
+				stopAppearance = observeLivelineAppearance(root.value, readAppearanceOptions, (next) => {
+					appearance.value = next;
+				});
 			engine = createLivelineEngine({ container: surface.value, canvas: canvas.value }, buildConfig());
 		});
-		watch([props, activeWindowSecs, hiddenSeries], () => engine?.update(buildConfig()), { deep: true, flush: 'post' });
+		watch(
+			[() => props.theme, () => props.color, () => props.series],
+			() => {
+				if (root.value) appearance.value = readLivelineAppearance(root.value, props.theme, readAppearanceOptions().colors);
+			},
+			{ deep: true, flush: 'post' },
+		);
+		watch([props, activeWindowSecs, hiddenSeries, appearance], () => engine?.update(buildConfig()), { deep: true, flush: 'post' });
 		onBeforeUnmount(() => {
+			stopAppearance?.();
 			engine?.destroy();
 			engine = null;
 		});
@@ -286,8 +307,6 @@ export const Liveline = defineComponent({
 			const isMultiSeries = Boolean(props.series?.length);
 			const showSeriesControls = shownSeries.length > 1;
 			const activeMode = props.mode === 'candle' && props.lineMode ? 'line' : props.mode;
-			const activeColor = props.theme === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.55)';
-			const inactiveColor = props.theme === 'dark' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.22)';
 			const paddingLeft = props.padding?.left ?? 12;
 			const summary = (attrs['aria-label'] as string | undefined) ?? `Live chart, current value ${props.formatValue(props.value)}`;
 			const hasControls = Boolean(props.windows?.length || props.onModeChange || showSeriesControls);
@@ -296,7 +315,14 @@ export const Liveline = defineComponent({
 			delete rootAttrs.style;
 
 			return (
-				<div {...rootAttrs} ref={root} data-slot="liveline" data-theme={props.theme} class={[styles.root, attrs.class]} style={attrs.style as CSSProperties}>
+				<div
+					{...rootAttrs}
+					ref={root}
+					data-slot="liveline"
+					data-theme={currentAppearance().inherited ? undefined : currentAppearance().mode}
+					data-color-mode={currentAppearance().mode}
+					class={[styles.root, attrs.class]}
+					style={attrs.style as CSSProperties}>
 					{props.showValue && <span ref={valueElement} data-slot="liveline-value" class={styles.value} style={{ paddingLeft: `${paddingLeft}px` }} aria-hidden="true" />}
 					{hasControls && (
 						<div data-slot="liveline-controls" class={styles.controls} style={{ paddingLeft: `${paddingLeft}px` }}>
@@ -369,13 +395,13 @@ export const Liveline = defineComponent({
 													<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
 														<path
 															d="M1 8.5C2.5 8.5 3 4 5.5 4S7.5 7 8.5 7C9.5 7 10 3.5 11 3.5"
-															stroke={active ? activeColor : inactiveColor}
+															stroke="currentColor"
 															stroke-width={active ? 1.5 : 1.2}
 															stroke-linecap="round"
 														/>
 													</svg>
 												) : (
-													<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" color={active ? activeColor : inactiveColor}>
+													<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
 														<line x1="3.5" y1="1" x2="3.5" y2="11" stroke="currentColor" />
 														<rect x="2" y="3" width="3" height="5" rx="0.5" fill="currentColor" />
 														<line x1="8.5" y1="2" x2="8.5" y2="10" stroke="currentColor" />

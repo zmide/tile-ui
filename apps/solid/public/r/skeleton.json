@@ -31,7 +31,7 @@
       "path": "packages/styles/scss/components/skeleton.module.scss",
       "type": "registry:file",
       "target": "components/ui/skeleton/skeleton.module.scss",
-      "content": "@use '../../../styles/variables/colors' as *;\n\n@keyframes tile-skeleton-pulse {\n\t50% {\n\t\topacity: 0.5;\n\t}\n}\n\n.skeleton {\n\tanimation: tile-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n\tborder-radius: $radius;\n\tbackground-color: $accent;\n}\n"
+      "content": "@use '../../../styles/variables/colors' as *;\n\n@keyframes tile-skeleton-pulse {\n\t50% {\n\t\topacity: 0.5;\n\t}\n}\n\n.skeleton {\n\tanimation: tile-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n\tborder-radius: var(--tile-skeleton-radius, $radius);\n\tbackground-color: var(--tile-skeleton-background, $accent);\n}\n"
     }
   ]
 }

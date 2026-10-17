@@ -1,0 +1,13 @@
+---
+title: Theme resources
+description: Available Tile UI themes and links to installation, mode switching, and compatibility guides.
+---
+
+Themes are opt-in stylesheets, not separate component implementations. Choose a theme from this directory and follow its detailed guide. For semantic variables, custom themes, default styles, and framework responsibilities, see [Theming](/docs/theming).
+
+| Resource       | Purpose                                                                                              | Guide                                             |
+| -------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Default styles | Existing semantic palette or Tile's optional defaults                                                | [Default setup and customization](/docs/theming)  |
+| Kumo           | Independent SCSS-authored appearance, distributed as CSS and Sass, with runtime light/dark switching | [Kumo setup and compatibility](/docs/themes/kumo) |
+
+Import one palette at the application entry. Shared component styles stay the same across themes. Theme selection does not change component APIs or install a JavaScript theme runtime.

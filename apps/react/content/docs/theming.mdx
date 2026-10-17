@@ -7,7 +7,7 @@ Tile UI reads theme values from CSS custom properties at runtime. Its primary co
 
 ## Style entries
 
-`@tile-ui/styles` exposes four global entries. Choose the smallest set that matches who owns your application theme:
+`@tile-ui/styles` exposes the following global entries. Choose the smallest set that matches who owns your application theme:
 
 | Entry          | Contents                                                            | When to use it                                                                        |
 | -------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -85,7 +85,7 @@ Values are inserted into normal CSS properties rather than decomposed into chann
 
 ## Contrast and AA small-text
 
-Tile ships the canonical shadcn palette unchanged. A few native token combinations fall slightly below the WCAG AA small-text threshold (4.5:1) while remaining clearly legible in practice: `--destructive` text (`#ef4444`) on white or `#fafafa` surfaces (3.60–3.76:1), `--destructive-foreground` on `--destructive` (3.60:1), and `--muted-foreground` on `--muted` (4.39:1). These are upstream shadcn tradeoffs kept for palette parity; the docs site's `--docs-text-muted` on hover surfaces follows the same policy.
+Tile's default theme ships the canonical shadcn palette unchanged. A few default-theme token combinations fall slightly below the WCAG AA small-text threshold (4.5:1) while remaining clearly legible in practice: `--destructive` text (`#ef4444`) on white or `#fafafa` surfaces (3.60–3.76:1), `--destructive-foreground` on `--destructive` (3.60:1), and `--muted-foreground` on `--muted` (4.39:1). These are upstream shadcn tradeoffs kept for palette parity; the docs site's `--docs-text-muted` on hover surfaces follows the same policy.
 
 The accessibility browser check treats exactly those verified `(app, route, pair)` combinations as acknowledged through an explicit allowlist — it never blanket-skips contrast, and any other failing pair is still reported as an error. If your product requires strict AA compliance, override the affected tokens in your theme:
 
@@ -231,3 +231,20 @@ The container must be an actual `Element`, not a selector string. Keep the provi
 Registry UI items declare `@tile-ui/styles` as a dependency. The shadcn CLI resolves it automatically, copies the required Sass files, and injects only Tile's `--tile-*` extension variables into the global stylesheet configured by `components.json`. Your host stylesheet remains responsible for the shadcn semantic palette. If the application has no semantic palette, install the optional `@tile-ui/theme-default` registry item explicitly.
 
 See [Installation](/docs/installation) for package and registry setup, or [Registry Getting Started](/docs/registry/getting-started) for the registry workflow.
+
+## Independent themes and ownership
+
+Select an independent appearance by importing its CSS or Sass entry in the application, rather than adding a component prop or Provider. Do not load two competing palettes together. Keep shared component styles; replace only the palette entry. Applications own fonts, initial mode selection, persistence, and system preference handling.
+
+Themes own colors, typography, dimensions, borders, shadows, state appearance, and visual motion. Shared components expose generic CSS variables, attributes, and composition APIs without identifying any concrete theme. State, measurement, lifecycle, and Canvas repaint behavior belong to the framework, not a theme's stylesheet.
+
+If a theme cannot express a visual requirement through the existing interfaces, request a reusable framework capability with unchanged defaults rather than introducing theme-specific runtime branches. A theme's supported root markers and scoping guarantees are documented by that theme; arbitrary nested theme combinations are not implied.
+
+### Charts and Liveline
+
+SVG Chart consumes CSS variables; explicit per-mode configuration takes priority. When Liveline's `theme` is omitted, it reads the stylesheet's `--tile-color-mode` marker. Without a marker, its legacy dark default remains. Explicit `theme="light"` or `theme="dark"` wins. Mode changes repaint the existing Canvas without recreating it; there is no new `"auto"` value.
+
+## Theme resources
+
+- [Theme directory](/docs/themes) - available themes and their detailed setup guides.
+- [Kumo](/docs/themes/kumo) - independent CSS/Sass appearance with light and dark modes.

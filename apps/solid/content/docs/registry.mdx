@@ -7,7 +7,7 @@ The Solid registry is built from `packages/solid/src/registry/manifest.ts` and p
 
 ## Current inventory
 
-The manifest contains exactly 70 independently installable items: 62 UI components, 3 primitive hooks, and 5 shared items for core logic, Liveline's source-preserving engine, utility helpers, styles, and the default theme.
+The manifest contains exactly 71 independently installable items: 62 UI components, 3 primitive hooks, and 6 shared items for core logic, Liveline's source-preserving engine, utility helpers, styles, the default theme, and an independent theme.
 
 ## Build output
 
@@ -24,6 +24,8 @@ pnpm dlx shadcn@latest add https://solid.tileui.zmorg.cn/r/dialog.json
 ```
 
 Generated component source contains no residual `@tile-ui/core` or `@tile-ui/styles` imports. Build transforms rewrite shared dependencies into owned local files.
+
+See [Theme resources](/docs/themes) for independent appearances and their dedicated setup guides.
 
 ## Related docs
 

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useId, useState } from 'react';
-import { getTabsListVariantKey, getTabsState, tabsStyleKeys } from '@tile-ui/core';
+import React, { createContext, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { getTabsListVariantKey, getTabsState, observeTabsIndicator, tabsStyleKeys } from '@tile-ui/core';
 import type { TabsBaseProps, TabsListBaseProps, TabsTriggerBaseProps, TabsContentBaseProps } from '@tile-ui/core';
 import styles from '@tile-ui/styles/scss/components/tabs.module.scss';
 
@@ -11,6 +11,7 @@ interface TabsContextValue {
 }
 
 const TabsContext = createContext<TabsContextValue | null>(null);
+const useBrowserLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 function useTabsContext(): TabsContextValue {
 	const context = useContext(TabsContext);
@@ -50,6 +51,20 @@ const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(({ className = 
 	const context = useTabsContext();
 	const variantKey = getTabsListVariantKey(variant);
 	const isVertical = context.orientation === 'vertical';
+	const listRef = useRef<HTMLDivElement>(null);
+	const indicatorRef = useRef<HTMLSpanElement>(null);
+	const measurement = useRef<ReturnType<typeof observeTabsIndicator> | null>(null);
+
+	useBrowserLayoutEffect(() => {
+		if (!listRef.current || !indicatorRef.current) return;
+		const observer = observeTabsIndicator(listRef.current, indicatorRef.current);
+		measurement.current = observer;
+		return () => {
+			observer.disconnect();
+			measurement.current = null;
+		};
+	}, []);
+	useBrowserLayoutEffect(() => measurement.current?.update());
 
 	function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
 		onKeyDown?.(event);
@@ -96,7 +111,11 @@ const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(({ className = 
 
 	return (
 		<div
-			ref={ref}
+			ref={(element) => {
+				listRef.current = element;
+				if (typeof ref === 'function') return ref(element);
+				if (ref) ref.current = element;
+			}}
 			role="tablist"
 			data-orientation={context.orientation}
 			data-variant={variant}
@@ -104,6 +123,7 @@ const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(({ className = 
 			className={`${styles[tabsStyleKeys.list]} ${styles[variantKey]} ${className}`}
 			{...props}>
 			{children}
+			<span ref={indicatorRef} aria-hidden="true" data-slot="tabs-indicator" data-state="hidden" className={styles.indicator} />
 		</div>
 	);
 });

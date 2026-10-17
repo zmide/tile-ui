@@ -32,4 +32,18 @@ export const solidFileItems: PackageRegistryItem[] = [
 		},
 		files: [{ source: 'packages/styles/scss/theme.scss', type: 'registry:file', transform: 'style', target: 'styles/theme.scss' }],
 	},
+	{
+		name: 'theme-kumo',
+		type: 'registry:theme',
+		title: 'Kumo Theme',
+		description: 'Optional Kumo light and dark theme. Import the copied Sass entry explicitly to opt in.',
+		registryDependencies: ['@tile-ui/styles'],
+		files: [
+			{ source: 'packages/themes/kumo/scss/theme.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/kumo.scss' },
+			{ source: 'packages/themes/kumo/scss/_shared.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/_shared.scss' },
+			{ source: 'packages/themes/kumo/scss/_light.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/_light.scss' },
+			{ source: 'packages/themes/kumo/scss/_dark.scss', type: 'registry:file', transform: 'copy', target: 'styles/themes/_dark.scss' },
+			{ source: 'packages/themes/kumo/LICENSE', type: 'registry:file', transform: 'copy', target: 'styles/themes/LICENSE.kumo' },
+		],
+	},
 ];

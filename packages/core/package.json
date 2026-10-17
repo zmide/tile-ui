@@ -21,6 +21,7 @@
 		"directory": "packages/core"
 	},
 	"files": [
+		"LICENSE",
 		"README.md",
 		"README.zh-CN.md",
 		"dist"

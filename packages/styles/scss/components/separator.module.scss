@@ -2,7 +2,7 @@
 
 .separator {
 	flex-shrink: 0;
-	background-color: $border;
+	background-color: var(--tile-separator-color, $border);
 
 	&.orientationHorizontal {
 		height: 1px;

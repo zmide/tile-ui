@@ -1,1 +1,1 @@
-@keyframes tile-skeleton-pulse{50%{opacity:.5}}.skeleton{animation:tile-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;border-radius:var(--radius);background-color:var(--accent)}
+@keyframes tile-skeleton-pulse{50%{opacity:.5}}.skeleton{animation:tile-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;border-radius:var(--tile-skeleton-radius, var(--radius));background-color:var(--tile-skeleton-background, var(--accent))}

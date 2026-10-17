@@ -1,4 +1,6 @@
 import { createApp, defineComponent, h, nextTick } from 'vue';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SONNER_DISMISS_DURATION, type SonnerStore } from '@tile-ui/core';
 import { Toaster, toast } from '../src/components/sonner/sonner';
@@ -68,6 +70,20 @@ describe('Vue Sonner ownership', () => {
 		expect([nodes[3].role, nodes[3].ariaLive, nodes[3].ariaAtomic]).toEqual(['alert', 'assertive', 'true']);
 		expect(nodes[0].textContent).toContain('Rich description');
 		expect(nodes[0].querySelector('button[aria-label="关闭"]')).not.toBeNull();
+	});
+
+	it('preserves exact shared-style fallbacks for rich and non-rich descendants', () => {
+		const source = readFileSync(path.resolve(import.meta.dirname, '../../styles/scss/components/sonner.module.scss'), 'utf8');
+		expect(source).toContain(".toast:not([data-rich-colors='false'])");
+		expect(source).toContain(".toast[data-rich-colors='true']");
+		expect(source).toMatch(/\.description,\s*\.close,\s*\.close:hover\s*\{\s*color: var\(--tile-toast-rich-description-color, inherit\);/);
+		expect(source).toMatch(/\.description\s*\{[^}]*color: var\(--tile-toast-description-color, \$muted-foreground\);/);
+		expect(source).toMatch(/\.close\s*\{[^}]*color: \$muted-foreground;/);
+		for (const [type, original] of Object.entries({ success: 'success', info: 'info', warning: 'warning', error: 'destructive' })) {
+			expect(source).toContain(`background-color: var(--tile-toast-${type}-background, $${original});`);
+			expect(source).toContain(`color: var(--tile-toast-rich-color, $${original}-foreground);`);
+			expect(source).toContain(`color: var(--tile-toast-${type}-color, $${original}-foreground);`);
+		}
 	});
 
 	it('keeps the framework store compatible with immutable update patches', () => {

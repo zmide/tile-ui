@@ -121,7 +121,7 @@ for (const slug of [
 }
 const registry = JSON.parse(fs.readFileSync(path.join(appRoot, 'public/r/registry.json'), 'utf8'));
 assert.equal(registry.items.filter((item) => item.type === 'registry:ui').length, 62);
-assert.equal(registry.items.length, 70);
+assert.equal(registry.items.length, 71);
 const hookNames = registry.items
 	.filter((item) => item.type === 'registry:hook')
 	.map((item) => item.name)
@@ -131,7 +131,7 @@ const sharedNames = registry.items
 	.filter((item) => item.type !== 'registry:ui' && item.type !== 'registry:hook')
 	.map((item) => item.name)
 	.sort();
-assert.deepEqual(sharedNames, ['core', 'liveline-core', 'styles', 'theme-default', 'utils']);
+assert.deepEqual(sharedNames, ['core', 'liveline-core', 'styles', 'theme-default', 'theme-kumo', 'utils']);
 const registryFiles = fs
 	.readdirSync(path.join(appRoot, 'public/r'))
 	.filter((file) => file.endsWith('.json'))

@@ -1,15 +1,20 @@
 import type { ThemeMode, LivelinePalette, LivelineSeries } from './types';
 
-/** Parse any CSS color string to [r, g, b]. Handles hex (#rgb, #rrggbb), rgb(), rgba(). */
+/** Parse concrete hex/rgb colors. Resolve CSS variables and modern color spaces at the browser boundary first. */
 export function parseColorRgb(color: string): [number, number, number] {
-	const hex = color.match(/^#([0-9a-f]{3,8})$/i);
+	const hex = color.trim().match(/^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i);
 	if (hex) {
 		let h = hex[1];
-		if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+		if (h.length <= 4) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
 		return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 	}
-	const rgb = color.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
-	if (rgb) return [+rgb[1], +rgb[2], +rgb[3]];
+	const rgb = color.trim().match(/^rgba?\(\s*([\d.+-]+%?)[,\s]+([\d.+-]+%?)[,\s]+([\d.+-]+%?)(?:\s*[,/]\s*[\d.+-]+%?)?\s*\)$/i);
+	if (rgb)
+		return rgb.slice(1, 4).map((channel) => Math.round(Math.max(0, Math.min(255, channel.endsWith('%') ? (parseFloat(channel) / 100) * 255 : parseFloat(channel))))) as [
+			number,
+			number,
+			number,
+		];
 	return [128, 128, 128];
 }
 

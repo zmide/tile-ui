@@ -1,0 +1,86 @@
+/* Neutral consumer reset, deliberately NOT globals.scss or reset.scss. No theme tokens. */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+html {
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+body {
+	background: var(--background);
+	color: var(--foreground);
+}
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+button {
+	appearance: button;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+}
+ul,
+ol {
+	list-style: none;
+}
+[hidden] {
+	display: none !important;
+}
+#fixture-root {
+	width: 100%;
+	padding: 24px;
+	isolation: isolate;
+}
+.fixture-panel {
+	display: grid;
+	gap: 24px;
+	max-width: 1080px;
+	margin-inline: auto;
+}
+.fixture-section {
+	display: grid;
+	gap: 12px;
+	min-width: 0;
+}
+.fixture-section h2 {
+	font:
+		600 14px/1.5 Arial,
+		sans-serif;
+}
+.fixture-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px;
+}
+.fixture-field {
+	width: 320px;
+	max-width: 100%;
+}
+.fixture-plots {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+}
+.fixture-plot {
+	min-width: 0;
+}
+.fixture-plot > [data-slot='liveline'] {
+	width: 100%;
+	height: 240px;
+}
+@media (max-width: 640px) {
+	.fixture-plots {
+		grid-template-columns: 1fr;
+	}
+}

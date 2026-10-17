@@ -35,8 +35,8 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: $radius-full;
-	background-color: $muted;
-	color: $muted-foreground;
+	background-color: var(--tile-avatar-background, $muted);
+	color: var(--tile-avatar-color, $muted-foreground);
 	font-size: $text-sm;
 
 	&[hidden] {
@@ -114,8 +114,8 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: $radius-full;
-	background-color: $muted;
-	color: $muted-foreground;
+	background-color: var(--tile-avatar-background, $muted);
+	color: var(--tile-avatar-color, $muted-foreground);
 	font-size: $text-sm;
 	box-shadow: 0 0 0 2px $background;
 

@@ -21,35 +21,36 @@
 .slot {
 	position: relative;
 	display: flex;
-	width: 2.25rem;
-	height: 2.25rem;
+	width: var(--tile-input-otp-size, 2.25rem);
+	height: var(--tile-input-otp-size, 2.25rem);
 	align-items: center;
 	justify-content: center;
-	border-top: 1px solid $input;
-	border-right: 1px solid $input;
-	border-bottom: 1px solid $input;
-	background-color: $background;
+	border-top: 1px solid var(--tile-input-otp-border, #{$input});
+	border-right: 1px solid var(--tile-input-otp-border, #{$input});
+	border-bottom: 1px solid var(--tile-input-otp-border, #{$input});
+	background-color: var(--tile-input-otp-background, #{$background});
 	color: $foreground;
-	font-size: $text-sm;
-	box-shadow: $shadow-sm;
+	font-size: var(--tile-input-otp-font-size, #{$text-sm});
+	line-height: var(--tile-input-otp-line-height, inherit);
+	box-shadow: var(--tile-input-otp-shadow, #{$shadow-sm});
 	transition:
 		border-color $transition-fast,
 		box-shadow $transition-fast;
 	outline: none;
 
 	&:first-child {
-		border-left: 1px solid $input;
-		border-radius: $radius-sm 0 0 $radius-sm;
+		border-left: 1px solid var(--tile-input-otp-border, #{$input});
+		border-radius: var(--tile-input-otp-radius, #{$radius-sm}) 0 0 var(--tile-input-otp-radius, #{$radius-sm});
 	}
 
 	&:last-child {
-		border-radius: 0 $radius-sm $radius-sm 0;
+		border-radius: 0 var(--tile-input-otp-radius, #{$radius-sm}) var(--tile-input-otp-radius, #{$radius-sm}) 0;
 	}
 
 	&[data-active='true'] {
 		z-index: 10;
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		border-color: var(--tile-input-otp-focus-border, #{$ring});
+		box-shadow: var(--tile-input-otp-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 	}
 
 	input {

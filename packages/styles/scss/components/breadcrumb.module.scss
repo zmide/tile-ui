@@ -8,13 +8,13 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: $spacing-1_5;
-	font-size: $text-sm;
-	color: $muted-foreground;
+	gap: var(--tile-breadcrumb-gap, $spacing-1_5);
+	font-size: var(--tile-breadcrumb-font-size, $text-sm);
+	color: var(--tile-breadcrumb-foreground, $muted-foreground);
 	word-break: break-word;
 
 	@media (min-width: 640px) {
-		gap: $spacing-2_5;
+		gap: var(--tile-breadcrumb-gap, $spacing-2_5);
 	}
 }
 
@@ -28,22 +28,23 @@
 	transition: color $transition-fast;
 
 	&:hover {
-		color: $foreground;
+		color: var(--tile-breadcrumb-active-foreground, $foreground);
 	}
 }
 
 .page {
-	font-weight: $font-normal;
-	color: $foreground;
+	font-weight: var(--tile-breadcrumb-page-font-weight, $font-normal);
+	color: var(--tile-breadcrumb-active-foreground, $foreground);
 }
 
 .separator {
 	display: inline-flex;
 	align-items: center;
+	color: var(--tile-breadcrumb-separator, inherit);
 
 	> svg {
-		width: 0.875rem;
-		height: 0.875rem;
+		width: var(--tile-breadcrumb-separator-size, 0.875rem);
+		height: var(--tile-breadcrumb-separator-size, 0.875rem);
 	}
 }
 

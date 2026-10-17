@@ -5,7 +5,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: $z-modal;
-	background-color: $overlay;
+	background-color: var(--tile-alert-dialog-overlay, $overlay);
 
 	&[data-state='open'] {
 		animation: alert-dialog-overlay-in $transition-normal;
@@ -29,28 +29,29 @@
 // 弹层内容面板
 .content {
 	position: fixed;
-	top: 50%;
+	top: var(--tile-alert-dialog-top, 50%);
 	left: 50%;
 	z-index: $z-modal;
 	display: grid;
 	width: 100%;
 	max-width: calc(100% - 2rem);
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, var(--tile-alert-dialog-translate-y, -50%));
 	gap: $spacing-4;
-	border: 1px solid $border;
-	border-radius: $radius-lg;
-	background-color: $card;
+	border: 1px solid var(--tile-alert-dialog-border, $border);
+	border-radius: var(--tile-alert-dialog-radius, $radius-lg);
+	background-color: var(--tile-alert-dialog-background, $card);
 	color: $card-foreground;
-	padding: $spacing-6;
-	box-shadow: $shadow-lg;
+	padding: var(--tile-alert-dialog-padding, $spacing-6);
+	box-shadow: var(--tile-alert-dialog-shadow, $shadow-lg);
 	outline: none;
 
 	@media (min-width: 640px) {
-		max-width: 32rem;
+		top: var(--tile-alert-dialog-top-desktop, 50%);
+		max-width: var(--tile-alert-dialog-max-width, 32rem);
 	}
 
 	&[data-size='sm'] {
-		max-width: 20rem;
+		max-width: var(--tile-alert-dialog-sm-max-width, 20rem);
 	}
 
 	&[data-state='open'] {
@@ -59,19 +60,19 @@
 
 	&[data-state='closed'] {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(0.95);
+		transform: translate(-50%, var(--tile-alert-dialog-translate-y, -50%)) scale(0.95);
 	}
 }
 
 @keyframes alert-dialog-content-in {
 	from {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(0.95);
+		transform: translate(-50%, var(--tile-alert-dialog-translate-y, -50%)) scale(0.95);
 	}
 
 	to {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1);
+		transform: translate(-50%, var(--tile-alert-dialog-translate-y, -50%)) scale(1);
 	}
 }
 
@@ -105,15 +106,15 @@
 
 .title {
 	margin: 0;
-	font-size: $text-lg;
+	font-size: var(--tile-alert-dialog-title-size, $text-lg);
 	font-weight: $font-semibold;
-	line-height: $leading-tight;
+	line-height: var(--tile-alert-dialog-title-leading, $leading-tight);
 	color: $foreground;
 }
 
 .description {
 	margin: 0;
-	font-size: $text-sm;
+	font-size: var(--tile-alert-dialog-description-size, $text-sm);
 	line-height: $leading-normal;
-	color: $muted-foreground;
+	color: var(--tile-alert-dialog-description-color, $muted-foreground);
 }

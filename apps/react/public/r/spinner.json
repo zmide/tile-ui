@@ -22,7 +22,7 @@
       "path": "packages/styles/scss/components/spinner.module.scss",
       "type": "registry:file",
       "target": "components/ui/spinner/spinner.module.scss",
-      "content": "@use '../../../styles/variables/colors' as *;\n\n// 旋转动画\n@keyframes tile-spinner-rotate {\n\tfrom {\n\t\ttransform: rotate(0deg);\n\t}\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n\n// Spinner 根元素（svg）\n.root {\n\tflex-shrink: 0;\n\tcolor: $muted-foreground;\n\tanimation: tile-spinner-rotate 0.8s linear infinite;\n\n\t// 尺寸\n\t&[data-size='sm'] {\n\t\twidth: $spacing-4;\n\t\theight: $spacing-4;\n\t}\n\n\t&[data-size='default'] {\n\t\twidth: $spacing-5;\n\t\theight: $spacing-5;\n\t}\n\n\t&[data-size='lg'] {\n\t\twidth: $spacing-8;\n\t\theight: $spacing-8;\n\t}\n}\n"
+      "content": "@use '../../../styles/variables/colors' as *;\n\n// 旋转动画\n@keyframes tile-spinner-rotate {\n\tfrom {\n\t\ttransform: rotate(0deg);\n\t}\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n\n// Spinner 根元素（svg）\n.root {\n\tflex-shrink: 0;\n\tcolor: var(--tile-spinner-color, $muted-foreground);\n\tanimation: tile-spinner-rotate 0.8s linear infinite;\n\n\t// 尺寸\n\t&[data-size='sm'] {\n\t\twidth: $spacing-4;\n\t\theight: $spacing-4;\n\t}\n\n\t&[data-size='default'] {\n\t\twidth: var(--tile-spinner-size, $spacing-5);\n\t\theight: var(--tile-spinner-size, $spacing-5);\n\t}\n\n\t&[data-size='lg'] {\n\t\twidth: $spacing-8;\n\t\theight: $spacing-8;\n\t}\n}\n"
     },
     {
       "path": "packages/react/src/components/spinner/index.ts",

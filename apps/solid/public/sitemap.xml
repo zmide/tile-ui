@@ -220,6 +220,12 @@
     <loc>https://solid.tileui.zmorg.cn/docs/registry/schema</loc>
   </url>
   <url>
+    <loc>https://solid.tileui.zmorg.cn/docs/themes</loc>
+  </url>
+  <url>
+    <loc>https://solid.tileui.zmorg.cn/docs/themes/kumo</loc>
+  </url>
+  <url>
     <loc>https://solid.tileui.zmorg.cn/docs/theming</loc>
   </url>
 </urlset>

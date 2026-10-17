@@ -147,7 +147,7 @@ markdown.renderer.rules.fence = function (tokens, idx) {
 	return `<pre><code class="language-${escapeHtml(lang)}"${metastring}>${escapeHtml(token.content)}</code></pre>\n`;
 };
 
-const sectionOrder = ['installation', 'components', 'composables', 'examples', 'registry'];
+const sectionOrder = ['installation', 'theming', 'themes', 'components', 'composables', 'examples', 'registry'];
 
 function toDocUrl(slug) {
 	if (!slug.length) {

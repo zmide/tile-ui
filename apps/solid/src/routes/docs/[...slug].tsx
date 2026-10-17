@@ -16,6 +16,7 @@ const introLinks = [
 	{ title: 'Introduction', href: '/docs' },
 	{ title: 'Installation', href: '/docs/installation' },
 	{ title: 'Theming', href: '/docs/theming' },
+	{ title: 'Theme resources', href: '/docs/themes' },
 	{ title: 'Primitives', href: '/docs/primitives' },
 	{ title: 'Registry', href: '/docs/registry' },
 	{ title: 'Examples', href: '/docs/examples' },

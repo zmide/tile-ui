@@ -18,6 +18,10 @@ import '@tile-ui/styles/scss/globals.scss';
 import { Button } from '@tile-ui/solid';
 ```
 
+`globals.scss` includes Tile's default palette and reset. Keep that entry for the default all-in-one setup, or use `@tile-ui/styles/theme.scss` and an optional `@tile-ui/styles/reset.scss` separately. If your application already owns the semantic palette, use only `@tile-ui/styles/tokens.scss`.
+
+See [Theme resources](/docs/themes) for independent appearances and their dedicated setup guides.
+
 ## Registry install
 
 ```bash
@@ -25,6 +29,8 @@ pnpm dlx shadcn@latest add https://solid.tileui.zmorg.cn/r/button.json
 ```
 
 Registry items include the Solid source, module SCSS, and rewritten framework-independent helpers they depend on.
+
+Independent appearances are listed in [Theme resources](/docs/themes); follow the selected theme's guide for registry installation.
 
 ## SolidStart notes
 

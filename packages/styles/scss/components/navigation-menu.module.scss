@@ -30,17 +30,17 @@
 // 触发器按钮
 .trigger {
 	display: inline-flex;
-	height: 2.25rem;
+	height: var(--tile-navigation-height, 2.25rem);
 	width: max-content;
 	align-items: center;
 	justify-content: center;
 	gap: $spacing-1;
-	border-radius: $radius;
-	background-color: $background;
-	padding: $spacing-2 $spacing-4;
-	font-size: $text-sm;
+	border-radius: var(--tile-navigation-trigger-radius, $radius);
+	background-color: var(--tile-navigation-background, $background);
+	padding: var(--tile-navigation-trigger-padding, $spacing-2 $spacing-4);
+	font-size: var(--tile-navigation-font-size, $text-sm);
 	font-weight: $font-medium;
-	color: $foreground;
+	color: var(--tile-navigation-foreground, $foreground);
 	outline: none;
 	transition:
 		background-color $transition-fast,
@@ -48,18 +48,22 @@
 	cursor: pointer;
 
 	&:hover {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-navigation-hover-background, $accent);
+		color: var(--tile-navigation-hover-foreground, $accent-foreground);
 	}
 
 	&[data-state='open'] {
-		background-color: color-mix(in srgb, $accent 50%, transparent);
-		color: $accent-foreground;
+		background-color: var(--tile-navigation-active-background, color-mix(in srgb, $accent 50%, transparent));
+		color: var(--tile-navigation-hover-foreground, $accent-foreground);
 	}
 
 	&[data-disabled='true'] {
 		pointer-events: none;
 		opacity: 0.5;
+	}
+
+	&:focus-visible {
+		box-shadow: var(--tile-navigation-focus-shadow, none);
 	}
 }
 
@@ -84,12 +88,12 @@
 	z-index: $z-dropdown;
 	min-width: 12rem;
 	margin-top: $spacing-1_5;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $popover;
-	color: $popover-foreground;
-	padding: $spacing-2;
-	box-shadow: $shadow-md;
+	border-radius: var(--tile-navigation-panel-radius, $radius);
+	border: 1px solid var(--tile-navigation-panel-border, $border);
+	background-color: var(--tile-navigation-panel-background, $popover);
+	color: var(--tile-navigation-panel-foreground, $popover-foreground);
+	padding: var(--tile-navigation-panel-padding, $spacing-2);
+	box-shadow: var(--tile-navigation-panel-shadow, $shadow-md);
 	outline: none;
 
 	&[data-state='closed'] {
@@ -126,11 +130,11 @@
 	justify-content: center;
 	margin-top: $spacing-1_5;
 	overflow: hidden;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $popover;
-	color: $popover-foreground;
-	box-shadow: $shadow-md;
+	border-radius: var(--tile-navigation-panel-radius, $radius);
+	border: 1px solid var(--tile-navigation-panel-border, $border);
+	background-color: var(--tile-navigation-panel-background, $popover);
+	color: var(--tile-navigation-panel-foreground, $popover-foreground);
+	box-shadow: var(--tile-navigation-panel-shadow, $shadow-md);
 	transition:
 		opacity $transition-fast,
 		visibility $transition-fast,
@@ -188,8 +192,8 @@
 	height: $spacing-2;
 	transform: rotate(45deg);
 	border-radius: $radius-xs 0 0 0;
-	background-color: $border;
-	box-shadow: $shadow-md;
+	background-color: var(--tile-navigation-panel-border, $border);
+	box-shadow: var(--tile-navigation-panel-shadow, $shadow-md);
 }
 
 // 链接
@@ -197,10 +201,10 @@
 	display: flex;
 	flex-direction: column;
 	gap: $spacing-1;
-	border-radius: $radius-sm;
-	padding: $spacing-2;
-	font-size: $text-sm;
-	color: $popover-foreground;
+	border-radius: var(--tile-navigation-link-radius, $radius-sm);
+	padding: var(--tile-navigation-link-padding, $spacing-2);
+	font-size: var(--tile-navigation-font-size, $text-sm);
+	color: var(--tile-navigation-panel-foreground, $popover-foreground);
 	text-decoration: none;
 	outline: none;
 	transition:
@@ -208,12 +212,26 @@
 		color $transition-fast;
 
 	&:hover {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-navigation-hover-background, $accent);
+		color: var(--tile-navigation-hover-foreground, $accent-foreground);
 	}
 
 	&[data-active='true'] {
-		background-color: color-mix(in srgb, $accent 50%, transparent);
-		color: $accent-foreground;
+		background-color: var(--tile-navigation-active-background, color-mix(in srgb, $accent 50%, transparent));
+		color: var(--tile-navigation-hover-foreground, $accent-foreground);
+	}
+
+	&:focus-visible {
+		box-shadow: var(--tile-navigation-focus-shadow, none);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.trigger,
+	.chevron,
+	.viewport,
+	.indicator,
+	.link {
+		transition: none;
 	}
 }

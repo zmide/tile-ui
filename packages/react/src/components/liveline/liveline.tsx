@@ -2,8 +2,9 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
 	SERIES_COLORS,
 	createLivelineEngine,
-	resolveSeriesPalettes,
-	resolveTheme,
+	observeLivelineAppearance,
+	resolveLivelinePalette,
+	type LivelineAppearance,
 	type LivelineEngine,
 	type LivelineEngineConfig,
 	type LivelineOptions,
@@ -36,7 +37,7 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 			data,
 			value,
 			series: seriesProp,
-			theme = 'dark',
+			theme,
 			color = '#3b82f6',
 			window: windowSecs = 30,
 			grid = true,
@@ -100,6 +101,8 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 		const [windowIndicator, setWindowIndicator] = useState<{ left: number; width: number } | null>(null);
 		const [modeIndicator, setModeIndicator] = useState<{ left: number; width: number } | null>(null);
 		const [hiddenSeries, setHiddenSeries] = useState<Set<string>>(() => new Set());
+		const [appearance, setAppearance] = useState<LivelineAppearance>(() => ({ mode: theme ?? 'dark', palette: {}, colors: {} }));
+		const resolvedAppearance: LivelineAppearance = theme && appearance.mode !== theme ? { mode: theme, palette: {}, colors: appearance.colors } : appearance;
 		const [activeWindowSecs, setActiveWindowSecs] = useState(windows?.[0]?.secs ?? windowSecs);
 		const lastSeriesRef = useRef(seriesProp);
 
@@ -112,9 +115,6 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 		const showSeriesControls = shownSeries.length > 1;
 		const effectiveWindowSecs = windows?.length ? activeWindowSecs : windowSecs;
 		const activeMode = mode === 'candle' && lineMode ? 'line' : mode;
-		const isDark = theme === 'dark';
-		const activeColor = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.55)';
-		const inactiveColor = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.22)';
 		const defaultRight = badge ? 80 : grid ? 54 : 12;
 		const padding = {
 			top: paddingOverride?.top ?? 12,
@@ -122,13 +122,12 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 			bottom: paddingOverride?.bottom ?? 28,
 			left: paddingOverride?.left ?? 12,
 		};
-		const palette = { ...resolveTheme(color, theme), ...(lineWidth == null ? {} : { lineWidth }) };
-		const seriesPalettes = seriesProp?.length ? resolveSeriesPalettes(seriesProp, theme) : null;
+		const palette = { ...resolveLivelinePalette(color, resolvedAppearance), ...(lineWidth == null ? {} : { lineWidth }) };
 		const multiSeries = seriesProp?.map((series, index) => ({
 			id: series.id,
 			data: series.data,
 			value: series.value,
-			palette: seriesPalettes?.get(series.id) ?? resolveTheme(series.color || SERIES_COLORS[index % SERIES_COLORS.length], theme),
+			palette: resolveLivelinePalette(series.color || SERIES_COLORS[index % SERIES_COLORS.length], resolvedAppearance),
 			label: series.label,
 		}));
 		const config: LivelineEngineConfig = {
@@ -203,6 +202,16 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 			if (onModeChange) setIndicator(modeBarRef.current, modeButtonRefs.current.get(activeMode), setModeIndicator);
 		}, [activeMode, onModeChange]);
 
+		useLayoutEffect(() => {
+			const root = rootRef.current;
+			if (!root) return;
+			return observeLivelineAppearance(
+				root,
+				() => ({ theme, colors: [color, ...(seriesProp?.map((series, index) => series.color || SERIES_COLORS[index % SERIES_COLORS.length]) ?? [])] }),
+				setAppearance,
+			);
+		}, [theme, color, seriesProp]);
+
 		useEffect(() => {
 			const container = surfaceRef.current;
 			const canvas = canvasRef.current;
@@ -242,7 +251,14 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 		const hasControls = Boolean(windows?.length || onModeChange || showSeriesControls);
 
 		return (
-			<div {...rootProps} ref={setRootRef} data-slot="liveline" data-theme={theme} className={`${styles.root} ${className}`} style={style}>
+			<div
+				{...rootProps}
+				ref={setRootRef}
+				data-slot="liveline"
+				data-theme={resolvedAppearance.inherited ? undefined : resolvedAppearance.mode}
+				data-color-mode={resolvedAppearance.mode}
+				className={`${styles.root} ${className}`}
+				style={style}>
 				{showValue && <span ref={valueRef} data-slot="liveline-value" className={styles.value} style={{ paddingLeft: padding.left }} aria-hidden="true" />}
 				{hasControls && (
 					<div data-slot="liveline-controls" className={styles.controls} style={{ paddingLeft: padding.left }}>
@@ -311,13 +327,13 @@ const Liveline = React.forwardRef<HTMLDivElement, LivelineProps>(
 												<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
 													<path
 														d="M1 8.5C2.5 8.5 3 4 5.5 4S7.5 7 8.5 7C9.5 7 10 3.5 11 3.5"
-														stroke={active ? activeColor : inactiveColor}
+														stroke="currentColor"
 														strokeWidth={active ? 1.5 : 1.2}
 														strokeLinecap="round"
 													/>
 												</svg>
 											) : (
-												<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" color={active ? activeColor : inactiveColor}>
+												<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
 													<line x1="3.5" y1="1" x2="3.5" y2="11" stroke="currentColor" />
 													<rect x="2" y="3" width="3" height="5" rx="0.5" fill="currentColor" />
 													<line x1="8.5" y1="2" x2="8.5" y2="10" stroke="currentColor" />

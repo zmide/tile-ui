@@ -3,54 +3,92 @@
 .inputWrapper {
 	display: flex;
 	flex-direction: column;
-	gap: $spacing-1;
+	gap: var(--tile-input-label-gap, #{$spacing-1});
 	width: 100%;
+
+	&:has(> input:only-child) {
+		display: var(--tile-input-bare-wrapper-display, flex);
+	}
 }
 
 .input {
-	display: flex;
-	height: 2.25rem;
+	display: var(--tile-input-display, flex);
+	gap: var(--tile-input-gap, normal);
+	height: var(--tile-input-height, 2.25rem);
 	width: 100%;
-	border-radius: $radius;
-	border: 1px solid $border;
-	background-color: $background;
-	padding: 0 $spacing-3;
-	font-size: $text-sm;
+	border-radius: var(--tile-input-radius, #{$radius});
+	border: var(--tile-input-border-width, 1px) solid var(--tile-input-border, #{$border});
+	background-color: var(--tile-input-background, #{$background});
+	padding: 0 var(--tile-input-padding-inline, #{$spacing-3});
+	font-size: var(--tile-input-font-size, #{$text-sm});
+	line-height: var(--tile-input-line-height, inherit);
+	box-shadow: var(--tile-input-shadow, none);
 	color: $foreground;
 	transition: all $transition-fast;
 	outline: none;
 
 	&::placeholder {
-		color: $muted-foreground;
+		color: var(--tile-input-placeholder, #{$muted-foreground});
 	}
 
 	&:focus {
 		outline: none;
-		border-color: $ring;
-		box-shadow: 0 0 0 3px color-mix(in srgb, $ring 50%, transparent);
+		outline: var(--tile-input-focus-outline, none);
+		outline-style: var(--tile-input-focus-outline-style, none);
+		border-color: var(--tile-input-focus-border, #{$ring});
+		box-shadow: var(--tile-input-focus-shadow, 0 0 0 3px color-mix(in srgb, #{$ring} 50%, transparent));
 	}
 
 	&:disabled,
 	&.disabled {
 		pointer-events: none;
-		opacity: 0.5;
+		opacity: var(--tile-input-disabled-opacity, 0.5);
 		cursor: not-allowed;
-		background-color: $field-disabled;
+		background-color: var(--tile-input-disabled-background, #{$field-disabled});
+		color: var(--tile-input-disabled-color, #{$foreground});
 	}
 
 	&.error {
 		border-color: $destructive;
+		box-shadow: var(--tile-input-error-shadow, none);
 
 		&:focus {
 			border-color: $destructive;
-			box-shadow: 0 0 0 1px $destructive;
+			box-shadow: var(--tile-input-error-focus-shadow, 0 0 0 1px #{$destructive});
 		}
+	}
+
+	// Visual size is separate from the native HTML `size` attribute.
+	&[data-control-size='xs'] {
+		height: var(--tile-input-xs-height, 1.5rem);
+		padding-inline: var(--tile-input-xs-padding-inline, #{$spacing-2});
+		border-radius: var(--tile-input-xs-radius, #{$radius-sm});
+		font-size: var(--tile-input-xs-font-size, #{$text-xs});
+		line-height: var(--tile-input-compact-line-height, inherit);
+		gap: var(--tile-input-compact-gap, normal);
+	}
+
+	&[data-control-size='sm'] {
+		height: var(--tile-input-sm-height, 2rem);
+		padding-inline: var(--tile-input-sm-padding-inline, #{$spacing-2});
+		border-radius: var(--tile-input-sm-radius, #{$radius-sm});
+		font-size: var(--tile-input-sm-font-size, #{$text-xs});
+		line-height: var(--tile-input-compact-line-height, inherit);
+		gap: var(--tile-input-compact-gap, normal);
+	}
+
+	&[data-control-size='lg'] {
+		height: var(--tile-input-lg-height, 2.5rem);
+		padding-inline: var(--tile-input-lg-padding-inline, #{$spacing-4});
+		border-radius: var(--tile-input-lg-radius, #{$radius});
+		font-size: var(--tile-input-lg-font-size, #{$text-base});
+		gap: var(--tile-input-lg-gap, normal);
 	}
 }
 
 .label {
 	display: block;
-	font-size: $text-sm;
+	font-size: var(--tile-input-label-font-size, #{$text-sm});
 	font-weight: $font-medium;
 	color: $foreground;
 	line-height: $leading-normal;
@@ -62,13 +100,13 @@
 }
 
 .helperText {
-	font-size: $text-xs;
-	color: $muted-foreground;
-	line-height: $leading-normal;
+	font-size: var(--tile-input-description-font-size, #{$text-xs});
+	color: var(--tile-input-description-color, #{$muted-foreground});
+	line-height: var(--tile-input-description-line-height, #{$leading-normal});
 }
 
 .errorText {
-	font-size: $text-xs;
+	font-size: var(--tile-input-description-font-size, #{$text-xs});
 	color: $destructive;
-	line-height: $leading-normal;
+	line-height: var(--tile-input-description-line-height, #{$leading-normal});
 }

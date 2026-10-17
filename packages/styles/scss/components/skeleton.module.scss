@@ -8,6 +8,6 @@
 
 .skeleton {
 	animation: tile-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-	border-radius: $radius;
-	background-color: $accent;
+	border-radius: var(--tile-skeleton-radius, $radius);
+	background-color: var(--tile-skeleton-background, $accent);
 }

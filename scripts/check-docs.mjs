@@ -91,7 +91,7 @@ async function assertSolidContracts(files, urls, errors) {
 	const demos = getDemoSlugs('solid');
 	if (JSON.stringify(docs) !== JSON.stringify(expectedNames)) errors.push(`solid: component docs differ from source manifest (${docs.join(', ')})`);
 	if (JSON.stringify(demos) !== JSON.stringify(expectedNames)) errors.push(`solid: demos differ from source manifest (${demos.join(', ')})`);
-	if (manifestItems.length !== 70) errors.push(`solid: expected 70 manifest items, received ${manifestItems.length}`);
+	if (manifestItems.length !== 71) errors.push(`solid: expected 71 manifest items, received ${manifestItems.length}`);
 	const hookNames = manifestItems
 		.filter((item) => item.type === 'registry:hook')
 		.map((item) => item.name)
@@ -102,7 +102,7 @@ async function assertSolidContracts(files, urls, errors) {
 		.filter((item) => item.type !== 'registry:ui' && item.type !== 'registry:hook')
 		.map((item) => item.name)
 		.sort();
-	if (JSON.stringify(sharedNames) !== JSON.stringify(['core', 'liveline-core', 'styles', 'theme-default', 'utils']))
+	if (JSON.stringify(sharedNames) !== JSON.stringify(['core', 'liveline-core', 'styles', 'theme-default', 'theme-kumo', 'utils']))
 		errors.push(`solid: shared registry set mismatch (${sharedNames.join(', ')})`);
 	const componentIndex = fs.readFileSync(path.join(root, 'apps/solid/content/docs/components/index.mdx'), 'utf8');
 	for (const name of expectedNames) {
@@ -231,6 +231,9 @@ for (const app of apps) {
 	}
 	const files = walkDocs(app.docsDir);
 	const urls = toDocUrls(files);
+	for (const route of ['/docs/theming', '/docs/themes', '/docs/themes/kumo']) {
+		ensureExists(app.name, route, urls, errors);
+	}
 	if (app.name === 'solid') await assertSolidContracts(files, urls, errors);
 
 	for (const route of app.expected) {

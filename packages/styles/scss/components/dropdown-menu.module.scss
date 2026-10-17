@@ -329,3 +329,87 @@
 		transform: rotate(180deg);
 	}
 }
+
+// Optional theme hooks; every fallback is the original Tile value.
+.content,
+.subContent {
+	min-width: var(--tile-menu-min-width, 8rem);
+	border-radius: var(--tile-menu-panel-radius, $radius-md);
+	border-color: var(--tile-menu-border, $border);
+	background-color: var(--tile-menu-background, $popover);
+	color: var(--tile-menu-foreground, $popover-foreground);
+	padding: var(--tile-menu-padding, $spacing-1);
+}
+.content {
+	box-shadow: var(--tile-menu-shadow, $shadow-md);
+}
+.subContent {
+	box-shadow: var(--tile-menu-shadow, $shadow-lg);
+}
+
+.item,
+.checkboxItem,
+.radioItem,
+.subTrigger {
+	border-radius: var(--tile-menu-item-radius, $radius-sm);
+	font-size: var(--tile-menu-font-size, $text-sm);
+	line-height: var(--tile-menu-line-height, $leading-normal);
+	color: var(--tile-menu-foreground, $popover-foreground);
+
+	&[data-highlighted='true'] {
+		background-color: var(--tile-menu-highlight-background, $accent);
+		color: var(--tile-menu-highlight-foreground, $accent-foreground);
+	}
+	& > svg {
+		color: var(--tile-menu-subtle, $muted-foreground);
+	}
+	&:focus-visible {
+		box-shadow: var(--tile-menu-focus-shadow, none);
+	}
+}
+.item,
+.subTrigger {
+	padding: var(--tile-menu-item-padding, $spacing-1_5 $spacing-2);
+}
+.checkboxItem,
+.radioItem {
+	padding: var(--tile-menu-check-padding, $spacing-1_5 $spacing-2 $spacing-1_5 $spacing-8);
+}
+.subTrigger[data-state='open'] {
+	background-color: var(--tile-menu-highlight-background, $accent);
+	color: var(--tile-menu-highlight-foreground, $accent-foreground);
+}
+.item[data-variant='destructive'] {
+	color: var(--tile-menu-destructive-foreground, $destructive);
+	& > svg {
+		color: var(--tile-menu-destructive-foreground, $destructive);
+	}
+	&[data-highlighted='true'] {
+		background-color: var(--tile-menu-destructive-background, color-mix(in srgb, $destructive 10%, transparent));
+		color: var(--tile-menu-destructive-foreground, $destructive);
+	}
+}
+.label {
+	padding: var(--tile-menu-label-padding, $spacing-1_5 $spacing-2);
+	font-size: var(--tile-menu-label-font-size, $text-sm);
+	font-weight: var(--tile-menu-label-font-weight, $font-medium);
+	color: var(--tile-menu-label-foreground, $foreground);
+}
+.item[data-inset='true'],
+.subTrigger[data-inset='true'],
+.label[data-inset='true'] {
+	padding-left: $spacing-8;
+}
+.separator {
+	background-color: var(--tile-menu-separator, $border);
+}
+.shortcut {
+	color: var(--tile-menu-subtle, $muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.content,
+	.subContent {
+		transition: none;
+	}
+}

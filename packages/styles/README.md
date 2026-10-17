@@ -72,6 +72,16 @@ import '@tile-ui/styles/theme.css';
 import '@tile-ui/styles/reset.css';
 ```
 
+## Independent themes
+
+Shared component styles expose CSS custom properties with default fallbacks. Independent theme packages supply appearance values; this package does not select or identify them.
+
+Import the selected theme's CSS or Sass entry in the application. Do not combine an independent palette with the default `theme.*` or `globals.*` palette. Component styles are imported as usual. Applications own mode markers, persistence, system preferences, and fonts. Consult the selected theme's documentation for its mode selectors and installation details.
+
+`createThemeVariables` and `applyThemeVariables` generate the default palette's concrete values; they are not a generic mode-switching mechanism for independent themes.
+
+## Sass compatibility
+
 ```scss
 @use '@tile-ui/styles/scss/variables/colors' as *;
 @use '@tile-ui/styles/scss/mixins/utils' as *;

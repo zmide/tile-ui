@@ -12,7 +12,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: $spacing-1;
+	gap: var(--tile-pagination-gap, $spacing-1);
 }
 
 .item {
@@ -24,14 +24,14 @@
 	align-items: center;
 	justify-content: center;
 	gap: $spacing-2;
-	height: 2.25rem;
-	min-width: 2.25rem;
-	padding: 0 $spacing-3;
-	border-radius: $radius;
-	font-size: $text-sm;
-	font-weight: $font-medium;
+	height: var(--tile-pagination-height, 2.25rem);
+	min-width: var(--tile-pagination-height, 2.25rem);
+	padding: var(--tile-pagination-padding, 0 $spacing-3);
+	border-radius: var(--tile-pagination-radius, $radius);
+	font-size: var(--tile-pagination-font-size, $text-sm);
+	font-weight: var(--tile-pagination-font-weight, $font-medium);
 	white-space: nowrap;
-	color: $foreground;
+	color: var(--tile-pagination-foreground, $foreground);
 	transition: all $transition-fast;
 	outline: none;
 
@@ -41,40 +41,38 @@
 	}
 
 	&.sizeSm {
-		height: 2rem;
-		min-width: 2rem;
-		padding: 0 $spacing-2;
-		border-radius: $radius-sm;
-		font-size: $text-xs;
+		height: var(--tile-pagination-sm-height, 2rem);
+		min-width: var(--tile-pagination-sm-height, 2rem);
+		padding: var(--tile-pagination-sm-padding, 0 $spacing-2);
+		border-radius: var(--tile-pagination-sm-radius, $radius-sm);
+		font-size: var(--tile-pagination-sm-font-size, $text-xs);
 	}
 
 	&.sizeLg {
-		height: 2.5rem;
-		min-width: 2.5rem;
-		padding: 0 $spacing-5;
+		height: var(--tile-pagination-lg-height, 2.5rem);
+		min-width: var(--tile-pagination-lg-height, 2.5rem);
+		padding: var(--tile-pagination-lg-padding, 0 $spacing-5);
 	}
 
 	&.sizeIcon {
-		width: 2.25rem;
+		width: var(--tile-pagination-height, 2.25rem);
 		padding: 0;
 	}
 
 	&.isActive {
-		border: 1px solid $border;
-		background-color: $background;
-		box-shadow: $shadow-sm;
+		border: 1px solid var(--tile-pagination-active-border, $border);
+		background-color: var(--tile-pagination-active-background, $background);
+		box-shadow: var(--tile-pagination-active-shadow, $shadow-sm);
 	}
 
 	&:hover {
-		background-color: $accent;
-		color: $accent-foreground;
+		background-color: var(--tile-pagination-hover-background, $accent);
+		color: var(--tile-pagination-hover-foreground, $accent-foreground);
 		text-decoration: none;
 	}
 
 	&:focus-visible {
-		box-shadow:
-			0 0 0 2px $background,
-			0 0 0 4px $ring;
+		box-shadow: var(--tile-pagination-focus-shadow, 0 0 0 2px $background, 0 0 0 4px $ring);
 	}
 }
 
